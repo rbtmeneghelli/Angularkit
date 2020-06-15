@@ -1,0 +1,23 @@
+<mat-toolbar color="primary" *ngIf="isAuthenticated()">
+    <mat-toolbar-row>
+        <button mat-button>
+            <mat-icon>reorder</mat-icon>
+        </button>
+        &nbsp;
+        <span>
+            Menu Layout
+        </span>
+        <span class="example-spacer"></span>
+        <button mat-button [matMenuTriggerFor]="menu">
+            <mat-icon>account_circle</mat-icon> UsuarioLogado
+        </button>
+        <mat-menu #menu="matMenu">
+            <button mat-menu-item>
+                <mat-icon>vpn_key</mat-icon> Alterar senha
+            </button>
+            <button mat-menu-item (click)="Logout()">
+                <mat-icon>exit_to_app</mat-icon> Sair
+            </button>
+        </mat-menu>
+    </mat-toolbar-row>
+</mat-toolbar>

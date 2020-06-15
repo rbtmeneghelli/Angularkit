@@ -1,0 +1,48 @@
+<div class="row">
+    <div class="col s10 offset-s1 espacamento-abaixo">
+        <form class="form" (ngSubmit)="btnEnviar()" [formGroup]="formulario">
+            <div class="formulario">
+
+                <div class="row">
+                    <div class="input-field col s6" [formGroup]="formulario">
+                        <label for="nome">Obrigação</label>
+                        <select formControlName="OBRIGACAO" class="validate form-input">
+                            <option value="0">Selecione um tipo de obrigação</option>
+                            <!-- <option *ngFor="let obrigacao of obrigacoes" [value]="obrigacao.id">
+                                {{ obrigacao.nome }}
+                            </option> -->
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="input-field col s12">
+                        <!-- <ngx-dropzone (change)="onSelect($event)" [accept]="'text/*,application/x-zip-compressed'">
+                            <ngx-dropzone-label>Envie ou arraste arquivos aqui</ngx-dropzone-label>
+                            <ngx-dropzone-preview *ngFor="let f of files" [removable]="true" (removed)="onRemove(f)">
+                                <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
+                            </ngx-dropzone-preview>
+                        </ngx-dropzone> -->
+                    </div>
+                </div>
+
+                <div class="botoes">
+                    <div class="row">
+                        <div class="col s2 offset-s8">
+                            <div class="align">
+                                <button type="submit" class="btn btn-primary w-100"
+                                    [disabled]="!formulario.valid || checkArrFile()">Enviar</button>
+                            </div>
+                        </div>
+                        <div class="col s2">
+                            <div class="align">
+                                <button (click)="btnCancelar()" type="button" class="align-right btn btn-primary w-100"
+                                    [disabled]="enableBtnCancelar">Cancelar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

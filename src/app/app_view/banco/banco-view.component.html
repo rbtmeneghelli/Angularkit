@@ -1,0 +1,38 @@
+<div class="container-fluid">
+    <div class="row" style="margin-top: 50px;">
+        <div class="col-lg-12 col-md-12 col-xl-12 col-xs-12 col-sm-12">
+            <mat-card>
+                <app-card-cabecalho [cardCabecalhoDTO]="cardCabecalhoDTO"></app-card-cabecalho>
+                <!-- FORMULARIO ANGULAR -->
+                <div class="row marginDiv">
+                    <div class="col-lg-12 col-md-12 col-xl-12 col-xs-12 col-sm-12">
+                        <mat-form-field class="widthMax">
+                            <input matInput placeholder="Nome Banco" id="txtBanco" #txtBanco maxlength="80"
+                                [value]="banco.nomeBanco" [readonly]="true">
+                            <mat-hint align="end">{{txtBanco.value.length}} / 80</mat-hint>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row marginDiv">
+                    <div class="col-lg-12 col-md-12 col-xl-12 col-xs-12 col-sm-12">
+                        <mat-form-field class="widthMax">
+                            <input matInput placeholder="Status" id="txtStatus" #txtStatus maxlength="80"
+                                [value]="banco.status ? 'Ativo' : 'Inativo'" [readonly]="true">
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row marginDiv">
+                    <div class="col-lg-12 col-md-12 col-xl-12 col-xs-12 col-sm-12 text-right">
+                        <button mat-flat-button color="primary" matTooltip="Voltar" [routerLink]="['/banco']"
+                            class="marginBetweenBtn">
+                            <mat-icon>arrow_back</mat-icon> Voltar
+                        </button>
+                        <button mat-flat-button color="primary" matTooltip="Editar" [routerLink]="['/banco',banco.id,'edit']">
+                            <mat-icon>edit</mat-icon> Editar
+                        </button>
+                    </div>
+                </div>
+            </mat-card>
+        </div>
+    </div>
+</div>

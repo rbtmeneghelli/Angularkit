@@ -1,0 +1,55 @@
+<div class="container-fluid">
+    <div class="row" style="margin-top: 50px;">
+        <div class="col-lg-12 col-md-12">
+            <mat-card>
+                <div class="row">
+                    <div class="col-lg-10">
+                        <mat-card-title>Perfil</mat-card-title>
+                    </div>
+                    <div class="col-lg-2">
+                        <mat-card-subtitle>
+                            <nav aria-label="breadcrumb">
+                                <ol class="breadcrumb" style="background-color: transparent !important;">
+                                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                                    <li class="breadcrumb-item"><a href="#">Library</a></li>
+                                    <li class="breadcrumb-item active" aria-current="page">Data</li>
+                                </ol>
+                            </nav>
+                        </mat-card-subtitle>
+                    </div>
+                </div>
+                <mat-divider></mat-divider>
+                <br>
+                <div class="row">
+                    <div class="col-lg-12 col-md-12">
+                        <mat-selection-list>
+                            <mat-list-option (click)="selectAll(checked)" [selected]="checked" style="font-weight: bold;">Marcar todas opções</mat-list-option>
+                            <mat-list-option *ngFor="let permissao of lista" [value]="permissao" [selected]="permissao.status">
+                                Funcionalidade {{ permissao.nome }}
+                            </mat-list-option>
+                        </mat-selection-list>
+                    </div>
+                </div>
+            </mat-card>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- <br>
+                <div class="text-right" style="margin-bottom: 3em">
+                    <button mat-flat-button color="accent" [routerLink]="['/perfis']" matTooltip="Voltar">
+                        <mat-icon>arrow_back_ios</mat-icon>
+                        Voltar
+                    </button>
+                    <button mat-flat-button color="primary" (click)="salvarPerfil()" [disabled]="nome.invalid"
+                        matTooltip="Salvar">
+                        <mat-icon>save</mat-icon>
+                        Salvar
+                    </button>
+                </div>
+            </div>
+        </form>
+    </mat-card>
+</div> -->

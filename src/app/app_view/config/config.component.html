@@ -1,0 +1,79 @@
+<div class="container-fluid">
+    <div class="row" style="margin-top: 50px;">
+        <div class="col-lg-12 col-md-12 col-xl-12 col-xs-12 col-sm-12">
+            <mat-card>
+                <app-card-cabecalho [cardCabecalhoDTO]="cardCabecalhoDTO"></app-card-cabecalho>
+                <mat-card-subtitle>Dados de gravação do email</mat-card-subtitle>
+                <div class="row margin-top">
+                    <div class="col-md-2" style="align-self: center;">
+                        <mat-label> SMTP de domínio </mat-label>
+                    </div>
+                    <div class="col-md">
+                        <mat-form-field class="widthMax">
+                            <mat-label>SMTP de domínio</mat-label>
+                            <input matInput #txtSmtpDom maxlength="10" placeholder="Ex. Nougat">
+                            <mat-hint align="end">{{txtSmtpDom.value?.length || 0}}/10</mat-hint>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-1" style="align-self: center;">
+                        <mat-label> Porta </mat-label>
+                    </div>
+                    <div class="col-md">
+                        <mat-form-field class="widthMax" hintLabel="Somente números são aceitos">
+                            <mat-label>Porta</mat-label>
+                            <input matInput #txtPort maxlength="10" placeholder="Ex. Nougat">
+                            <mat-hint align="end">{{txtPort.value?.length || 0}}/10</mat-hint>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row margin-top">
+                    <div class="col-md-2" style="align-self: center;">
+                        <mat-label> Endereço de email </mat-label>
+                    </div>
+                    <div class="col-md">
+                        <mat-form-field class="widthMax">
+                            <mat-label>Endereço de email</mat-label>
+                            <input matInput #txtEmail maxlength="10" placeholder="Ex. Nougat">
+                            <mat-hint align="end">{{txtEmail.value?.length || 0}}/10</mat-hint>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-1" style="align-self: center;">
+                        <mat-label> Senha </mat-label>
+                    </div>
+                    <div class="col-md">
+                        <mat-form-field class="widthMax">
+                            <mat-label>Senha do email</mat-label>
+                            <input matInput #txtPassword maxlength="10" placeholder="Ex. Nougat">
+                            <mat-hint align="end">{{txtPassword.value?.length || 0}}/10</mat-hint>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <mat-selection-list #itensEmail>
+                    <mat-list-option style="font-weight: bold;">Marcar todas opções</mat-list-option>
+                    <mat-list-option *ngFor="let item of listaEmail">
+                        {{item}}
+                    </mat-list-option>
+                </mat-selection-list>
+                <br>
+                <mat-divider></mat-divider>
+                <mat-selection-list #itensLog>
+                    <mat-card-subtitle>Dados de gravação do log</mat-card-subtitle>
+                    <mat-list-option style="font-weight: bold;">Marcar todas opções</mat-list-option>
+                    <mat-list-option *ngFor="let item of listaLog">
+                        {{item}}
+                    </mat-list-option>
+                </mat-selection-list>
+                <div class="row marginDiv">
+                    <div class="col-md text-right">
+                        <button mat-flat-button color="primary" matTooltip="Restaurar Padrão" class="marginBetweenBtn">
+                            <mat-icon>autorenew</mat-icon> Restaurar Padrão
+                        </button>
+                        <button mat-flat-button color="primary" matTooltip="Salvar">
+                            <mat-icon>save</mat-icon> Salvar
+                        </button>
+                    </div>
+                </div>
+            </mat-card>
+        </div>
+    </div>
+</div>

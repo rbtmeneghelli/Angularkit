@@ -1,0 +1,39 @@
+import { AngularmaterialModule } from './angularmaterial.module';
+import { NgModule, LOCALE_ID } from '@angular/core';
+import { registerLocaleData, CommonModule } from '@angular/common';
+import localePt from '@angular/common/locales/pt';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { CardCabecalhoComponent } from '../../shared/card-cabecalho/card-cabecalho.component';
+import { BlockCopyPasteDirective } from '../../shared/directive/block-copy-paste.directive';
+import { OnlyNumberDirective } from '../../shared/directive/only-number.directive';
+import { NgxMaskModule, IConfig } from 'ngx-mask';
+export let options: Partial<IConfig> | (() => Partial<IConfig>);
+import { NgxEditorModule } from 'ngx-editor';
+import { CardDocumentosProcessoComponent } from '../../shared/card-processo/card-processo.component';
+registerLocaleData(localePt, 'pt-BR');
+@NgModule({
+    declarations: [
+        CardCabecalhoComponent,
+        BlockCopyPasteDirective,
+        OnlyNumberDirective,
+        CardDocumentosProcessoComponent,
+    ],
+    imports: [
+        NgbModule,
+        CommonModule,
+        AngularmaterialModule,
+        NgxMaskModule.forRoot(options),
+        NgxEditorModule
+    ],
+    exports: [
+        CardCabecalhoComponent,
+        BlockCopyPasteDirective,
+        OnlyNumberDirective,
+        CardDocumentosProcessoComponent
+    ],
+    providers: [
+        { provide: LOCALE_ID, useValue: 'pt-BR' },
+    ]
+})
+
+export class SharedModule { }

@@ -1,0 +1,54 @@
+<div class="container marginContainerModal">
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-xs-12 col-xl-12 col-sm-12">
+            <mat-card>
+                <div class="row">
+                    <div class="col-lg-11 col-md-11 col-xl-11 col-sm-11 col-xs-11">
+                        <mat-card-title>
+                            Upload de arquivo
+                        </mat-card-title>
+                    </div>
+                    <div class="col-lg-1 col-md-1 col-xl-1 col-sm-1 col-xs-1">
+                        <mat-icon class="closeModal" matTooltip="Fechar" (click)="closeModal('Close click')">close
+                        </mat-icon>
+                    </div>
+                </div>
+                <mat-divider></mat-divider>
+                <br>
+                <form name="formulario" id="formulario" [formGroup]="formulario">
+                    <div class="row">
+                        <div class="col-lg-4 col-md-4 col-xs-4 col-xl-4 col-sm-4">
+                            <mat-form-field class="fullwidth removeBorderLeft">
+                                <input matInput placeholder="Nome Arquivo" formControlName="NOMEARQUIVO"
+                                    class="removeBorderLeft" id="txtNomeArq" #txtNomeArq maxlength="40">
+                                <mat-hint align="end">{{txtNomeArq.value?.length || 0}}/40</mat-hint>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-xs-6 col-xl-6 col-sm-6">
+                            <mat-form-field class="fullwidth">
+                                <input matInput placeholder="{{fileName}}" readonly value="{{fileName}}">
+                            </mat-form-field>
+                        </div>
+                        <div class="col-lg-2 col-md-2 col-xs-2 col-xl-2 col-sm-2"
+                            style="display: flex; align-items: center; text-align: end;">
+                            <mat-icon (click)="fileInputIcone.click()" matTooltip="Anexar" class="marginIconRight">
+                                cloud_upload</mat-icon> &nbsp; Anexar
+                            <input hidden #fileInputIcone type="file" id="inpIconeART" name="icone"
+                                accept="application/pdf" (change)="processFile($event)">
+                        </div>
+                    </div>
+
+                    <div class="row marginDiv">
+                        <div class="col-lg-12 col-md-12 col-xs-12 col-xl-12 col-sm-12"
+                            style="text-align: end;">
+                            <button mat-flat-button class="btnStyle" id="btnSend" matTooltip="Enviar"
+                                (click)="sendFile()" [disabled]="!showBtnConfirmar">
+                                <mat-icon>send</mat-icon> Enviar
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </mat-card>
+        </div>
+    </div>
+</div>

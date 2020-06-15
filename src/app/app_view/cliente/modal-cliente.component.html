@@ -1,0 +1,43 @@
+<div class="container marginModalContainer">
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-xs-12 col-xl-12 col-sm-12">
+            <mat-card>
+                <div class="row">
+                    <div class="col-lg-11 col-md-11 col-xl-11 col-sm-11 col-xs-11">
+                        <mat-card-title>
+                            Excluir Cliente
+                        </mat-card-title>
+                    </div>
+                    <div class="col-lg-1 col-md-1 col-xl-1 col-sm-1 col-xs-1">
+                        <mat-icon class="" matTooltip="Fechar" (click)="closeModal('Close click')">close
+                        </mat-icon>
+                    </div>
+                </div>
+                <mat-divider></mat-divider>
+                <br>
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-xl-12 col-sm-12 col-xs-12 text-center">
+
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-1 col-md-1 col-xl-1 col-sm-1 col-xs-1" style="width: 2% !important;">
+                        <mat-icon color="primary">warning</mat-icon>
+                    </div>
+                    <div class="col-lg-11 col-md-11 col-xl-11 col-sm-11 col-xs-11">
+                        <label> Você deseja confirmar a exclusão do cliente <b>{{dados.nomeCliente}}</b> do
+                            sistema?</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-xl-12 col-sm-12 col-xs-12 text-right">
+                        <button mat-flat-button type="button" color="primary" matTooltip="Confirmar"
+                            (click)="excluir()">
+                            <mat-icon>check</mat-icon><span> Confirmar</span>
+                        </button>
+                    </div>
+                </div>
+            </mat-card>
+        </div>
+    </div>
+</div>
