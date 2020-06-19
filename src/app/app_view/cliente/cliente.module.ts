@@ -11,6 +11,8 @@ import { ClienteService } from '../../app_business/service/cliente.service';
 import { ClienteRoutingModule } from './cliente.route';
 import { NgxMaskModule, IConfig } from 'ngx-mask';
 import { SharedModule } from '../../app_entities/library/shared.module';
+import { ListaClienteBackComponent } from './lista-cliente-back.component';
+import { ClienteFilterComponent } from './cliente-filter.component';
 export let options: Partial<IConfig> | (() => Partial<IConfig>);
 @NgModule({
   declarations: [
@@ -18,6 +20,8 @@ export let options: Partial<IConfig> | (() => Partial<IConfig>);
     ModalClienteComponent,
     ClienteComponent,
     ClienteViewComponent,
+    ListaClienteBackComponent,
+    ClienteFilterComponent
   ],
   imports: [
     CommonModule,
@@ -27,7 +31,8 @@ export let options: Partial<IConfig> | (() => Partial<IConfig>);
     NgxMaskModule.forRoot(options)
   ],
   entryComponents: [
-    ModalClienteComponent
+    ModalClienteComponent,
+    ClienteFilterComponent
   ],
   providers: [ClienteService]
 })

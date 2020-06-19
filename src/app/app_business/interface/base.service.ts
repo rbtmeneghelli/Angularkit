@@ -11,6 +11,10 @@ export abstract class BaseService<T> {
     return this.http.get<T[]>(this.actionUrl, { headers: this.getOptions() });
   }
 
+  getAllFilter(filter?: T): Observable<any> {
+    return this.http.post<any>(this.actionUrl, filter, { headers: this.getOptions() });
+  }
+
   getById(clienteid: number): Observable<T> {
     return this.http.get<T>(`${this.actionUrl}/GetById/${clienteid}`, { headers: this.getOptions() });
   }

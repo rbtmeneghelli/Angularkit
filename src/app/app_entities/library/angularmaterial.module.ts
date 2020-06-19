@@ -43,6 +43,7 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 // Material Date Picker
 import { MatNativeDateModule } from '@angular/material/core';
+import { CdkTableModule } from '@angular/cdk/table';
 
 @NgModule({
   declarations: [],
@@ -71,7 +72,9 @@ import { MatNativeDateModule } from '@angular/material/core';
     MatSortModule,
     FormsModule,
     ReactiveFormsModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatDialogModule,
+    CdkTableModule
   ]
 })
 export class AngularmaterialModule { }

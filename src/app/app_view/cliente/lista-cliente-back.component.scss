@@ -1,0 +1,14 @@
+.rowOfTable {
+    cursor: pointer;
+
+    mat-cell {
+        margin-right: 5px;
+    }
+}
+
+.rowOfTable:hover {
+    * {
+        color: darkgreen;
+        background-color: #fafafa;
+    }    
+}

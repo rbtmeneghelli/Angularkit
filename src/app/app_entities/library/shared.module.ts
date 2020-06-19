@@ -1,3 +1,4 @@
+import { GenericTableComponent } from './../../shared/generic-table/generic-table.component';
 import { AngularmaterialModule } from './angularmaterial.module';
 import { NgModule, LOCALE_ID } from '@angular/core';
 import { registerLocaleData, CommonModule } from '@angular/common';
@@ -17,6 +18,7 @@ registerLocaleData(localePt, 'pt-BR');
         BlockCopyPasteDirective,
         OnlyNumberDirective,
         CardDocumentosProcessoComponent,
+        GenericTableComponent
     ],
     imports: [
         NgbModule,
@@ -29,7 +31,8 @@ registerLocaleData(localePt, 'pt-BR');
         CardCabecalhoComponent,
         BlockCopyPasteDirective,
         OnlyNumberDirective,
-        CardDocumentosProcessoComponent
+        CardDocumentosProcessoComponent,
+        GenericTableComponent
     ],
     providers: [
         { provide: LOCALE_ID, useValue: 'pt-BR' },

@@ -1,0 +1,22 @@
+<mat-card class="mt-3">
+    <mat-table #table [dataSource]="dtSource">
+        <ng-container *ngFor="let column of myColumns" [cdkColumnDef]="column.columnDef">
+            <mat-header-cell *cdkHeaderCellDef [ngClass]="column.class ? column.class : 'col-md'">{{ column.header }}
+            </mat-header-cell>
+            <!-- Quando texto -->
+            <div *ngIf="column.columnType === 'text'">
+                <mat-cell *cdkCellDef="let row" [ngClass]="column.class ? column.class : 'col-md'">
+                    {{ column.cell(row) }}</mat-cell>
+            </div>
+            <!-- Quando botão/icone -->
+            <div *ngIf="column.columnType === 'icon'">
+                <button mat-icon-button *cdkCellDef="let row" [ngClass]="column.class ? column.class : 'col-md'"
+                    (click)="column.funcCall(row)" color="accent" matTooltip="{{column.toolTip}}">
+                    <mat-icon>{{ column.cell(row) }}</mat-icon>
+                </button>
+            </div>
+        </ng-container>
+        <mat-header-row *matHeaderRowDef="dsplColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: dsplColumns;" class="rowOfTable"></mat-row>
+    </mat-table>
+</mat-card>

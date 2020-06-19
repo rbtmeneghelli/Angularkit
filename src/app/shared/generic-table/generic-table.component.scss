@@ -1,0 +1,16 @@
+@import '../../../styles.scss';
+
+.rowOfTable {
+    cursor: pointer;
+
+    mat-cell {
+        margin-right: 5px;
+    }
+}
+
+.rowOfTable:hover {
+    background-color: #fafafa;
+    * {
+        color: darkgreen;
+    }    
+}

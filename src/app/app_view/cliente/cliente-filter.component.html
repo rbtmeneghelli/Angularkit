@@ -1,0 +1,33 @@
+<h2 mat-dialog-title>Filtro de pesquisa Cliente</h2>
+
+<mat-dialog-content>
+    <form [formGroup]="formulario">
+        <div class="row">
+            <div class="col-md">
+                <mat-form-field class="fullwidth" color="accent">
+                    <input matInput placeholder="Cpf" type="text" class="form-control" maxlength="20"
+                        #txtCpf formControlName="CPF">
+                    <mat-hint align="end">{{txtCpf.value?.length || 0}}/20</mat-hint>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md">
+                <mat-form-field class="fullwidth" color="accent">
+                    <input matInput placeholder="Nome cliente" type="text" class="form-control" maxlength="20"
+                        #txtNome formControlName="NOME">
+                    <mat-hint align="end">{{txtNome.value?.length || 0}}/20</mat-hint>
+                </mat-form-field>
+            </div>
+        </div>
+    </form>
+</mat-dialog-content>
+
+<mat-dialog-actions class="float-right">
+    <button class="btn btn-sized marginRightBtn" mat-stroked-button color="primary" type="button" (click)="fechar()">
+        <mat-icon>close</mat-icon> Fechar
+    </button>
+    <button class="btn btn-sized text-white" mat-flat-button color="accent" type="button" (click)="pesquisar()">
+        <mat-icon>search</mat-icon> Pesquisar
+    </button>
+</mat-dialog-actions>

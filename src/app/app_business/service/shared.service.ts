@@ -4,6 +4,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { DropDownList } from '../../app_entities/generic/dropdownlist';
 import { AbstractControl } from '@angular/forms';
+import { MatDialogConfig } from '@angular/material/dialog';
 // import * as moment from 'moment';
 
 @Injectable({
@@ -351,6 +352,18 @@ export class SharedService {
         // for (const pair of formData.entries()) {
         //     console.log(pair[0] + ', ' + pair[1]);
         // }
+    }
+
+    getDialogConfig(): MatDialogConfig {
+        const dialogConfig = new MatDialogConfig();
+        dialogConfig.disableClose = true;
+        dialogConfig.autoFocus = true;
+        dialogConfig.hasBackdrop = true;
+        dialogConfig.maxWidth = '80vw';
+        dialogConfig.maxHeight = '40vw';
+        dialogConfig.width = '80vw';
+        dialogConfig.height = 'auto';
+        return dialogConfig;
     }
 }
 
