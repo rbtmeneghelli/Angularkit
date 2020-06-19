@@ -1,3 +1,4 @@
+import { ExportadorService } from 'src/app/app_business/service/exportador.service';
 import { Injectable } from '@angular/core';
 import Swal from 'sweetalert2';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
@@ -5,7 +6,7 @@ import { Router } from '@angular/router';
 import { DropDownList } from '../../app_entities/generic/dropdownlist';
 import { AbstractControl } from '@angular/forms';
 import { MatDialogConfig } from '@angular/material/dialog';
-// import * as moment from 'moment';
+import { ClienteFilterData } from 'src/app/app_entities/filter/cliente-filter-data';
 
 @Injectable({
     providedIn: 'root'
@@ -13,7 +14,7 @@ import { MatDialogConfig } from '@angular/material/dialog';
 
 export class SharedService {
 
-    constructor(public http: HttpClient, public route: Router) { }
+    constructor(protected http: HttpClient, protected route: Router, protected exportadorService: ExportadorService) { }
 
     public enviarNotificacao(titulo: string, texto: string, tipo: any) {
         Swal.fire({
@@ -304,7 +305,7 @@ export class SharedService {
 
     public b64DecodeUnicode(str) {
         // tslint:disable-next-line: only-arrow-functions
-        return decodeURIComponent(atob(str).split('').map(function(c) {
+        return decodeURIComponent(atob(str).split('').map(function (c) {
             return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
         }).join(''));
     }
@@ -340,7 +341,7 @@ export class SharedService {
 
     public objetoParaString(objeto: any) {
         // tslint:disable-next-line: only-arrow-functions
-        Date.prototype.toJSON = function() {
+        Date.prototype.toJSON = function () {
             // TODO: EFETUAR NPM INSTALL DO MOMENT
             // return moment(this).format();
             return null;
@@ -365,6 +366,22 @@ export class SharedService {
         dialogConfig.height = 'auto';
         return dialogConfig;
     }
+
+    exportExcel(lista: ClienteFilterData, url?: string) {
+        this.exportadorService.export2Excel(lista, url).subscribe(
+            node => {
+                const urlTmp = window.URL.createObjectURL(node.data);
+                const hiddenLink = document.createElement('a');
+                document.body.appendChild(hiddenLink);
+                hiddenLink.setAttribute('style', 'display: none');
+                hiddenLink.href = urlTmp;
+                hiddenLink.download = node.filename;
+                hiddenLink.click();
+                window.URL.revokeObjectURL(urlTmp);
+                hiddenLink.remove();
+            });
+    }
+
 }
 
 export function ValidarSelect(control: AbstractControl) {

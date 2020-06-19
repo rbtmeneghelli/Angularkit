@@ -1,3 +1,4 @@
+import { ClienteFilterData } from './../../app_entities/filter/cliente-filter-data';
 import { Input } from '@angular/core';
 import localePtBr from '@angular/common/locales/pt';
 import { registerLocaleData } from '@angular/common';
@@ -8,6 +9,9 @@ import { registerLocaleData } from '@angular/common';
 // import { Document, Paragraph, Packer, TextRun } from 'docx';
 import { Injectable } from '@angular/core';
 import { Column } from '../../app_entities/generic/column';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -15,10 +19,10 @@ import { Column } from '../../app_entities/generic/column';
 
 export class ExportadorService {
 
-  date: Date = new Date();
-  listColumns: Array<Column> = new Array<Column>();
+  public date: Date = new Date();
+  public listColumns: Array<Column> = new Array<Column>();
 
-  constructor() {
+  constructor(protected http: HttpClient) {
     registerLocaleData(localePtBr);
   }
 
@@ -120,5 +124,34 @@ export class ExportadorService {
     }
 
     return this.listColumns;
+  }
+
+  export2Excel(objFilter: ClienteFilterData, url?: string) {
+    const fullUri = `${environment.API}/${url}/` + 'Export2Excel';
+    const preparedObject = JSON.stringify(objFilter);
+    return this.http
+      .post(fullUri, preparedObject, {
+        observe: 'response',
+        responseType: 'blob',
+        headers: this.getOptions()
+      })
+      .pipe(
+        map(response => {
+          return {
+            data: response.body,
+            filename: `Modelo_${url}.xlsx`
+          };
+        })
+      );
+  }
+
+  getOptions(): HttpHeaders {
+    let httpOptions: HttpHeaders = new HttpHeaders();
+    httpOptions = httpOptions.set('Content-Type', 'application/json');
+    httpOptions = httpOptions.set('Access-Control-Allow-Origin', '*');
+    httpOptions = httpOptions.set('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+    // tslint:disable-next-line: max-line-length
+    httpOptions = httpOptions.set('Access-Control-Allow-Headers', 'Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers');
+    return httpOptions;
   }
 }

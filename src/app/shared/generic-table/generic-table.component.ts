@@ -5,12 +5,6 @@ import { Component, Input, OnInit } from '@angular/core';
     templateUrl: './generic-table.component.html',
     styleUrls: ['./generic-table.component.scss']
 })
-
-@Component({
-    selector: 'app-card-cabecalho',
-    templateUrl: './card-cabecalho.component.html',
-    styleUrls: ['./card-cabecalho.component.css']
-  })
   
 export class GenericTableComponent implements OnInit {
     @Input() dataSource: [any];

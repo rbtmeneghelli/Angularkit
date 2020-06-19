@@ -2,10 +2,10 @@ import { BaseFilterData } from './base-filter-data';
 
 export class ClienteFilterData extends BaseFilterData {
     public cpf ?: string;
-    public nome ?: string;
+    public nomeCliente ?: string;
     constructor() {
         super();
         this.cpf = null;
-        this.nome = null;
+        this.nomeCliente = null;
     }
 }

@@ -1,3 +1,4 @@
+import { ClienteFilterData } from './../../app_entities/filter/cliente-filter-data';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
@@ -12,7 +13,7 @@ export abstract class BaseService<T> {
   }
 
   getAllFilter(filter?: T): Observable<any> {
-    return this.http.post<any>(this.actionUrl, filter, { headers: this.getOptions() });
+    return this.http.post<any>(`${this.actionUrl}/getall`, filter, { headers: this.getOptions() });
   }
 
   getById(clienteid: number): Observable<T> {

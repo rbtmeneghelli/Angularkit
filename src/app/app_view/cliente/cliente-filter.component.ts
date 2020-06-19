@@ -33,7 +33,7 @@ export class ClienteFilterComponent implements OnInit {
     pesquisar() {
         const clienteFilterData: ClienteFilterData = new ClienteFilterData();
         clienteFilterData.cpf = this.formulario.controls.CPF.value;
-        clienteFilterData.nome = this.formulario.controls.NOME.value;
+        clienteFilterData.nomeCliente = this.formulario.controls.NOME.value;
         this.dialogRef.close({ filtro: clienteFilterData });
     }
 }

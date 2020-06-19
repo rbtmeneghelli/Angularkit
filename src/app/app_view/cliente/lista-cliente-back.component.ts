@@ -23,11 +23,11 @@ export class ListaClienteBackComponent implements OnInit {
   public clienteFilterData: ClienteFilterData = new ClienteFilterData();
   columns = [
     // tslint:disable-next-line: max-line-length
-    { columnType: 'text', columnDef: 'cpf', header: 'Cpf', cell: (element: any) => `${element.externalCode || '-'}` },
+    { columnType: 'text', columnDef: 'cpf', header: 'Cpf', cell: (element: any) => `${element.cpf || '-'}` },
     // tslint:disable-next-line: max-line-length
-    { columnType: 'text', columnDef: 'nome', header: 'Nome', cell: (element: any) => `${element.tradingName}` },
+    { columnType: 'text', columnDef: 'nome', header: 'Nome', cell: (element: any) => `${element.nomeCliente}` },
     // tslint:disable-next-line: max-line-length
-    { columnType: 'text', columnDef: 'status', header: 'Status', cell: (element: any) => `${element.companyName}` },
+    { columnType: 'text', columnDef: 'status', header: 'Status', cell: (element: any) => `${element.status}` },
     // tslint:disable-next-line: max-line-length
     { columnType: 'icon', columnDef: 'edit', header: '', class: '', cell: (element: any) => 'edit', funcCall: (element: any) => this.editItem(element), toolTip: 'Editar' },
     // tslint:disable-next-line: max-line-length
@@ -51,13 +51,13 @@ export class ListaClienteBackComponent implements OnInit {
     this.clienteFilterData.pageIndex = 1;
     this.clienteFilterData.pageSize = 10;
     this.clienteFilterData.cpf = null;
-    this.clienteFilterData.nome = null;
+    this.clienteFilterData.nomeCliente = null;
   }
 
   loadCliente(page?: any) {
-    this.clienteService.getAllFilter().toPromise().then(data => {
+    this.clienteService.getAllFilter(this.clienteFilterData).toPromise().then(data => {
       if (!!data) {
-        this.dataSource.data = data;
+        this.dataSource.data = data.clienteDTO;
         this.page = data.page;
         this.total = data.total;
         this.nextPage = data.nextPage;
@@ -99,8 +99,8 @@ export class ListaClienteBackComponent implements OnInit {
     const dialogRef = this.dialog.open(ClienteFilterComponent, dialogConfig);
     dialogRef.afterClosed().subscribe(response => {
       if (!!response.filtro) {
-        this.clienteFilterData.cpf = response.filtro.companyName;
-        this.clienteFilterData.nome = response.filtro.tradingName;
+        this.clienteFilterData.cpf = response.filtro.cpf;
+        this.clienteFilterData.nomeCliente = response.filtro.nomeCliente;
         this.loadCliente();
       }
     });
