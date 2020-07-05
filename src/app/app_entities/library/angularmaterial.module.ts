@@ -74,7 +74,8 @@ import { CdkTableModule } from '@angular/cdk/table';
     ReactiveFormsModule,
     MatProgressSpinnerModule,
     MatDialogModule,
-    CdkTableModule
+    CdkTableModule,
+    MatSnackBarModule
   ]
 })
 export class AngularmaterialModule { }

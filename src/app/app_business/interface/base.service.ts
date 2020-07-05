@@ -1,7 +1,7 @@
 import { ClienteFilterData } from './../../app_entities/filter/cliente-filter-data';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, EMPTY } from 'rxjs';
 
 export abstract class BaseService<T> {
 

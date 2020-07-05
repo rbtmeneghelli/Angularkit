@@ -7,6 +7,7 @@ import { DropDownList } from '../../app_entities/generic/dropdownlist';
 import { AbstractControl } from '@angular/forms';
 import { MatDialogConfig } from '@angular/material/dialog';
 import { ClienteFilterData } from 'src/app/app_entities/filter/cliente-filter-data';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Injectable({
     providedIn: 'root'
@@ -14,7 +15,8 @@ import { ClienteFilterData } from 'src/app/app_entities/filter/cliente-filter-da
 
 export class SharedService {
 
-    constructor(protected http: HttpClient, protected route: Router, protected exportadorService: ExportadorService) { }
+    // tslint:disable-next-line: max-line-length
+    constructor(protected http: HttpClient, protected route: Router, protected exportadorService: ExportadorService, protected snackBar: MatSnackBar) { }
 
     public enviarNotificacao(titulo: string, texto: string, tipo: any) {
         Swal.fire({
@@ -382,6 +384,14 @@ export class SharedService {
             });
     }
 
+    enviarNotificacaoSnackBar(message?: string, isError?: boolean) {
+        this.snackBar.open(message, 'X', {
+            duration: 3000,
+            horizontalPosition: 'right',
+            verticalPosition: 'top',
+            panelClass: isError ? ['msg-error'] : ['msg-success']
+        });
+    }
 }
 
 export function ValidarSelect(control: AbstractControl) {

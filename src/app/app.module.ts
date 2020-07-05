@@ -25,6 +25,8 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { LoaderInterceptor } from './app_entities/library/loader.interceptor';
 import { LoaderComponent } from './outros/template-loader/loader.component';
 import { TemplateOutrosModule } from './outros/template-outros.module';
+import { NavComponent } from './nav/nav.component';
+
 registerLocaleData(localePt, 'pt-BR');
 @NgModule({
   declarations: [
@@ -32,7 +34,8 @@ registerLocaleData(localePt, 'pt-BR');
     AppHeaderComponent,
     AppFooterComponent,
     DashboardComponent,
-    LoaderComponent
+    LoaderComponent,
+    NavComponent
   ],
   imports: [
     CommonModule,

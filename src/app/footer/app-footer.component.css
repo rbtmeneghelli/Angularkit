@@ -1,0 +1,12 @@
+.footer{
+    position: fixed;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    max-height: 25px !important;
+}
+
+p{
+    margin-top: 10px;
+    font-size: small;
+}

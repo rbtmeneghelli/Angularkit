@@ -1,0 +1,57 @@
+<!-- <mat-sidenav-container>
+  <mat-sidenav class="sidenav" mode="side" opened="true" fixedInViewport="true" fixedTopGap="64">
+    <mat-nav-list>
+      <ng-container *ngFor="let item of listaMenu">
+        <a mat-list-item routerLink="{{item.link}}">
+          <mat-icon class="nav-caption">{{item.icon}}</mat-icon><span class="nav-caption">{{item.description}}</span>
+        </a>
+      </ng-container>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <app-loading></app-loading>
+    <router-outlet></router-outlet>
+    <br>
+    <app-footer></app-footer>
+  </mat-sidenav-content>
+</mat-sidenav-container> -->
+<mat-sidenav-container>
+  <mat-sidenav #sidenav [mode]="side" opened>
+    <mat-nav-list>
+      <h2 matSubheader>Menu do Sistema</h2>
+      <a mat-list-item routerLink="agenda" (click)="sidenav.close()">
+        <mat-icon>play_arrow</mat-icon><span class="nav-caption">Agenda</span>
+      </a>
+      <a mat-list-item routerLink="auditoria" (click)="sidenav.close()">
+        <mat-icon>play_arrow</mat-icon><span class="nav-caption">Auditoria</span>
+      </a>
+      <a mat-list-item routerLink="banco" (click)="sidenav.close()">
+        <mat-icon>play_arrow</mat-icon><span class="nav-caption">Banco</span>
+      </a>
+      <a mat-list-item routerLink="cliente" (click)="sidenav.close()">
+        <mat-icon>play_arrow</mat-icon><span class="nav-caption">Cliente</span>
+      </a>
+      <a mat-list-item routerLink="conta" (click)="sidenav.close()">
+        <mat-icon>play_arrow</mat-icon><span class="nav-caption">Conta</span>
+      </a>
+      <a mat-list-item routerLink="empresa" (click)="sidenav.close()">
+        <mat-icon>play_arrow</mat-icon><span class="nav-caption">Empresa</span>
+      </a>
+      <a mat-list-item routerLink="funcionalidade" (click)="sidenav.close()">
+        <mat-icon>play_arrow</mat-icon><span class="nav-caption">Funcionalidade</span>
+      </a>
+      <a mat-list-item routerLink="servico" (click)="sidenav.close()">
+        <mat-icon>play_arrow</mat-icon><span class="nav-caption">Serviço</span>
+      </a>
+      <a mat-list-item routerLink="config" (click)="sidenav.close()">
+        <mat-icon>play_arrow</mat-icon><span class="nav-caption">Configuração Sistema</span>
+      </a>
+      <a mat-list-item routerLink="relatorio" (click)="sidenav.close()">
+        <mat-icon>play_arrow</mat-icon><span class="nav-caption">Relatório</span>
+      </a>
+      <a mat-list-item routerLink="perfil" (click)="sidenav.close()">
+        <mat-icon>play_arrow</mat-icon><span class="nav-caption">Perfil Acesso</span>
+      </a>
+    </mat-nav-list>
+  </mat-sidenav>
+</mat-sidenav-container>
