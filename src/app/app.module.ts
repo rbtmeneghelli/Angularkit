@@ -52,7 +52,7 @@ registerLocaleData(localePt, 'pt-BR');
     ServicoModule,
     AgendaModule,
     HttpClientModule,
-    TemplateOutrosModule
+    TemplateOutrosModule,
   ],
   providers: [
     LoaderService,

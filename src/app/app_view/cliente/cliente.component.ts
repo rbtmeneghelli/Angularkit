@@ -21,7 +21,6 @@ export class ClienteComponent implements OnInit {
   public listaStatus: Array<DropDownList>;
   public bloquearCampo: boolean;
   constructor(
-    private authService: AuthService,
     private sharedService: SharedService,
     private formBuilder: FormBuilder,
     public clienteService: ClienteService,

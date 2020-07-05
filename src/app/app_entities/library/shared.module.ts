@@ -11,6 +11,8 @@ import { NgxMaskModule, IConfig } from 'ngx-mask';
 export let options: Partial<IConfig> | (() => Partial<IConfig>);
 import { NgxEditorModule } from 'ngx-editor';
 import { CardDocumentosProcessoComponent } from '../../shared/card-processo/card-processo.component';
+import { CardPdfViewerComponent } from 'src/app/shared/card-pdf-viewer/card-pdf-viewer.component';
+import { PdfViewerModule } from 'ng2-pdf-viewer';
 registerLocaleData(localePt, 'pt-BR');
 @NgModule({
     declarations: [
@@ -18,21 +20,24 @@ registerLocaleData(localePt, 'pt-BR');
         BlockCopyPasteDirective,
         OnlyNumberDirective,
         CardDocumentosProcessoComponent,
-        GenericTableComponent
+        GenericTableComponent,
+        CardPdfViewerComponent
     ],
     imports: [
         NgbModule,
         CommonModule,
         AngularmaterialModule,
         NgxMaskModule.forRoot(options),
-        NgxEditorModule
+        NgxEditorModule,
+        PdfViewerModule
     ],
     exports: [
         CardCabecalhoComponent,
         BlockCopyPasteDirective,
         OnlyNumberDirective,
         CardDocumentosProcessoComponent,
-        GenericTableComponent
+        GenericTableComponent,
+        CardPdfViewerComponent
     ],
     providers: [
         { provide: LOCALE_ID, useValue: 'pt-BR' },

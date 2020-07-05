@@ -1,3 +1,4 @@
+import { CardPdfViewerComponent } from './../../shared/card-pdf-viewer/card-pdf-viewer.component';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
@@ -5,6 +6,7 @@ import { registerLocaleData } from '@angular/common';
 import localePtBr from '@angular/common/locales/pt';
 import { ExportadorService } from '../../app_business/service/exportador.service';
 import { SharedService } from '../../app_business/service/shared.service';
+import { MatDialog } from '@angular/material/dialog';
 
 export interface Food {
   value: string;
@@ -60,7 +62,7 @@ export class TemplateRelatorioComponent implements OnInit {
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
-  constructor(private exportadorService: ExportadorService, private sharedService: SharedService) {
+  constructor(private exportadorService: ExportadorService, private sharedService: SharedService, private dialog: MatDialog) {
     registerLocaleData(localePtBr);
   }
 
@@ -105,5 +107,10 @@ export class TemplateRelatorioComponent implements OnInit {
   //     });
   //     doc.save("dsadsdas" + '_'  + '.pdf');
   //   }
+
+  visualizar() {
+    const dialogConfig = this.sharedService.getDialogConfig();
+    const dialogRef = this.dialog.open(CardPdfViewerComponent, dialogConfig);
+  }
 }
 
