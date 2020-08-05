@@ -20,7 +20,8 @@ const routes: Routes = [
   { path: 'servico', loadChildren: () => import('./app_view/servico/servico.module').then(m => m.ServicoModule) },
   { path: 'empresa', loadChildren: () => import('./app_view/empresa/empresa.module').then(m => m.EmpresaModule) },
   { path: 'config', loadChildren: () => import('./app_view/config/config.module').then(m => m.ConfigModule) },
-  { path: '', loadChildren: () => import('./outros/template-outros.module').then(m => m.TemplateOutrosModule) }
+  { path: '', loadChildren: () => import('./outros/template-outros.module').then(m => m.TemplateOutrosModule) },
+  { path: 'tabela', loadChildren: () => import('./tabela/template-tabela.module').then(m => m.TemplateTabelaModule) }
 ];
 
 @NgModule({

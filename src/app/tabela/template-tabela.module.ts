@@ -5,10 +5,12 @@ import { AngularmaterialModule } from '../app_entities/library/angularmaterial.m
 import { NgxMaskModule, IConfig } from 'ngx-mask';
 import { SharedModule } from '../app_entities/library/shared.module';
 import { TemplateTabelaRoutingModule } from '../tabela/template-tabela.route';
+import { TemplateTabelaBootstrapComponent } from './template-tabela-bootstrap/template-tabela-boostrap.component';
 export let options: Partial<IConfig> | (() => Partial<IConfig>);
 @NgModule({
   declarations: [
     TemplateTabelaComponent,
+    TemplateTabelaBootstrapComponent
   ],
   imports: [
     CommonModule,
