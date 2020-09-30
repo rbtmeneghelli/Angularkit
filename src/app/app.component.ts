@@ -23,6 +23,7 @@ export class AppComponent implements OnInit {
     this.listaMenu.push({ link: 'conta', icon: 'play_arrow', description: 'Conta' });
     this.listaMenu.push({ link: 'empresa', icon: 'play_arrow', description: 'Empresa' });
     this.listaMenu.push({ link: 'funcionalidade', icon: 'play_arrow', description: 'Funcionalidade' });
+    this.listaMenu.push({ link: 'lista', icon: 'play_arrow', description: 'Lista' });
     this.listaMenu.push({ link: 'perfil', icon: 'play_arrow', description: 'Perfil' });
     this.listaMenu.push({ link: 'relatorio', icon: 'play_arrow', description: 'Relatório' });
     this.listaMenu.push({ link: 'servico', icon: 'play_arrow', description: 'Serviço' });

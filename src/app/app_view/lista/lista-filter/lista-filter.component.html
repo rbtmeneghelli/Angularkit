@@ -1,0 +1,32 @@
+<div class="container">
+    <div class="row">
+        <div class="col-lg col-md">
+            <mat-form-field class="w-100">
+                <input matInput placeholder="Cerar" #txtCerar maxlength="20">
+                <mat-hint align="end">{{txtCerar.value?.length || 0}}/20</mat-hint>
+            </mat-form-field>
+        </div>
+    </div>
+    <div class="row pt-1">
+        <div class="col-lg col-md">
+            <mat-form-field class="w-100">
+                <input matInput placeholder="Ordem RW" #txtOrdem maxlength="20">
+                <mat-hint align="end">{{txtOrdem.value?.length || 0}}/20</mat-hint>
+            </mat-form-field>
+        </div>
+    </div>
+    <div class="row pt-1">
+        <div class="col-lg col-md">
+            <mat-form-field class="w-100">
+                <input matInput placeholder="Contrato Jurídico" #txtContrato maxlength="20">
+                <mat-hint align="end">{{txtContrato.value?.length || 0}}/20</mat-hint>
+            </mat-form-field>
+        </div>
+    </div>
+    <div class="row pt-3">
+        <div class="col-lg col-md text-right">
+            <button mat-flat-button color="primary" matTooltip="Filtrar" class="textoGeral mr-1">Filtrar</button>
+            <button mat-flat-button color="primary" matTooltip="Limpar" class="textoGeral mr-1">Limpar</button>
+        </div>
+    </div>
+</div>

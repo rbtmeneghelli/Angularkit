@@ -1,0 +1,36 @@
+<div class="row">
+    <div class="col-lg col-md">
+        <mat-form-field class="w-100">
+            <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filtro de pesquisa geral">
+            <i matSuffix class="fa fa-search"></i>
+        </mat-form-field>
+    </div>
+    <div class="col-lg-3 col-md-3 text-right" style="align-self: center;">
+        <button mat-flat-button color="primary" matTooltip="Exportar Excel" (click)="openDialog()" class="textoGeral mr-1">Exportar
+            excel</button>
+        <button mat-flat-button color="primary" matTooltip="Filtro Detalhado" class="textoGeral" (click)="showFilter()">Filtro Detalhado</button>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg col-md">
+        <div class="table-responsive">
+            <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8 w-100">
+                <ng-container [matColumnDef]="tableData" *ngFor="let tableData of objectKeys(columnHeader)">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header class="teste"> {{columnHeader[tableData]}}
+                    </th>
+                    <td mat-cell *matCellDef="let element" class="teste">
+                        {{ applyPipeline(element[tableData]) === 0 ? element[tableData] : element[tableData] | date: 'dd/MM/yyyy'}}
+                    </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="objectKeys(columnHeader)" class="teste"></tr>
+                <tr mat-row *matRowDef="let row; columns: objectKeys(columnHeader);" class="teste"></tr>
+            </table>
+            <mat-paginator #paginator [pageSizeOptions]="[5,10,25,50,100,500,1000]">
+            </mat-paginator>
+        </div>
+    </div>
+</div>
+
+<app-card-filter>
+    <app-lista-filter></app-lista-filter>
+</app-card-filter>

@@ -1,0 +1,15 @@
+<div class="menu-overlay" [ngClass]="{'active': isMenuActive}" (click)="closeFilter()"></div>
+<div class="filter-menu" [ngClass]="{'active': isMenuActive}" [class.filter-menu-big]="isBigMenu">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg col-md">
+                <h1 class="textoGeral">Filtro Detalhado</h1>
+            </div>
+            <div class="col-lg-2 col-md-2">
+                <i class="fa fa-close fa-2x" (click)="closeFilter()" matTooltip="Fechar"
+                    style="color: RGBA(0,97,127,100); vertical-align: sub;"></i>
+            </div>
+        </div>
+        <ng-content></ng-content>
+    </div>
+</div>

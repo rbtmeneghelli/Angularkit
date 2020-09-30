@@ -1,4 +1,3 @@
-import { LoginComponent } from './login/login.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
@@ -21,7 +20,7 @@ const routes: Routes = [
   { path: 'empresa', loadChildren: () => import('./app_view/empresa/empresa.module').then(m => m.EmpresaModule) },
   { path: 'config', loadChildren: () => import('./app_view/config/config.module').then(m => m.ConfigModule) },
   { path: '', loadChildren: () => import('./outros/template-outros.module').then(m => m.TemplateOutrosModule) },
-  { path: 'tabela', loadChildren: () => import('./tabela/template-tabela.module').then(m => m.TemplateTabelaModule) }
+  { path: 'lista', loadChildren: () => import('./app_view/lista/lista.module').then(m => m.ListaModule) }
 ];
 
 @NgModule({
