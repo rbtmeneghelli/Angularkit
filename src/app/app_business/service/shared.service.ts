@@ -392,6 +392,18 @@ export class SharedService {
             panelClass: isError ? ['msg-error'] : ['msg-success']
         });
     }
+
+    public criarNovoObjeto(target?: any, source?: any, removePropertyId?: boolean): any {
+        // target: Fonte Alvo || source: Fonte de dados
+        // const target = { id: 1, a: 1, b: 2 };
+        // const source = { b: 4, c: 5 };
+        const newObject = Object.assign(target, source);
+        if (removePropertyId && newObject.hasOwnProperty('id')) {
+            delete newObject.id;
+        }
+        return newObject;
+    }
+
 }
 
 export function ValidarSelect(control: AbstractControl) {
