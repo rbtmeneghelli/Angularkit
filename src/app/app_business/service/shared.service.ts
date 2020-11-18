@@ -425,6 +425,25 @@ export class SharedService {
         // Fazendo a chamada do metodo
         // console.log(timeDiffCalc(new Date('2019/10/1 04:10:00'), new Date('2019/10/2 18:20:00')));
     }
+
+    public replaceAll(word?: string, oldletter?: string, newLetter?: string): string {
+        if (!!word) {
+            word = word.replace(new RegExp(oldletter, 'g'), newLetter).trim();
+        }
+        return word;
+    }
+
+    public convertNumberToString(value?: number): string {
+        return value?.toLocaleString('pt-br');
+    }
+
+    public convertStringToNumber(value?: string): number {
+        if (isNaN(Number(value))) {
+            // const stValue: string = value.toString();
+            return Number(value.replace(',', '.'));
+        }
+        return Number(value);
+    }
 }
 
 export function ValidarSelect(control: AbstractControl) {
