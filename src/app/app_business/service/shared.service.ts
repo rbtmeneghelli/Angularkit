@@ -444,6 +444,80 @@ export class SharedService {
         }
         return Number(value);
     }
+
+    public roundValue(value: number): number {
+        return !!value ? Math.round(value * 100) / 100 : 1;
+    }
+
+    public createDateTimeData(date?: string, time?: string): Date {
+        if (date?.length >= 8 && time?.length >= 4) {
+            if (date?.includes('/')) {
+                date = this.replaceAll(date, '/', '');
+            }
+            if (time?.includes(':')) {
+                time = this.replaceAll(time, ':', '');
+            }
+            // tslint:disable-next-line: max-line-length
+            return new Date(Date.UTC(Number(date.substr(date.length - 4, 4)), Number(date.substr(2, 2)) - 1, Number(date.substr(0, 2)), Number(time.substr(0, 2)), Number(time.substr(2, 2)), 0, 0));
+        }
+    }
+
+    public createDateToString(date?: string): string {
+        if (date?.length >= 8) {
+            date = this.replaceAll(date, '/', '');
+            // tslint:disable-next-line: max-line-length
+            return Number(date.substr(date.length - 4, 4)) + '-' + (Number(date.substr(2, 2))) + '-' + Number(date.substr(0, 2));
+        }
+    }
+
+    public createDate(date?: string): Date {
+        if (date?.length >= 8 && !date?.includes('/')) {
+            return new Date(Number(date.substr(date.length - 4, 4)), Number(date.substr(2, 2)) - 1, Number(date.substr(0, 2)));
+        } else if (!!date) {
+            date = this.replaceAll(date, '/', '');
+            return new Date(Number(date.substr(date.length - 4, 4)), Number(date.substr(2, 2)) - 1, Number(date.substr(0, 2)));
+        }
+    }
+
+    public convertStringToDate(date?: string): string {
+        if (!!date && date?.length >= 10) {
+            return new Date(date).toLocaleDateString('pt-br');
+        } else {
+            return '';
+        }
+    }
+
+    public convertStringToDateOrTimeOnly(pDate?: string, isDate?: boolean): string {
+        if (!!pDate && pDate?.length >= 10) {
+            // tslint:disable-next-line: max-line-length
+            return isDate ? new Date(pDate).toLocaleDateString('pt-br') : new Date(pDate).toLocaleTimeString('pt-br').substr(0, 5);
+        } else {
+            return '';
+        }
+    }
+
+    public CalcPorc(pNumber1: number, pNumber2: number): number {
+        return ((pNumber1 / pNumber2) * 100);
+    }
+
+    public CalcLitros(pNumber1: number, pNumber2: number): number {
+        return ((pNumber1 / pNumber2) / 100);
+    }
+
+    public CalcTimeDiffDay(dateFuture, dateNow): number {
+        let diffInMilliSeconds = Math.abs(dateFuture - dateNow) / 1000;
+        return Math.floor(diffInMilliSeconds / 86400);
+    }
+
+    public async getDataFromLocalStorage(fileName?: string): Promise<any> {
+        let path: string = 'data_';
+        path = path.concat(fileName);
+        if (localStorage.hasOwnProperty((path))) {
+            let data = JSON.parse(localStorage.getItem(path));
+            return data;
+        }
+        return [];
+    }
 }
 
 export function ValidarSelect(control: AbstractControl) {
