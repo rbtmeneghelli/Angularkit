@@ -1,0 +1,40 @@
+<h1 mat-dialog-title>Emails de Destinatários a serem enviados</h1>
+
+<form [formGroup]="formulario">
+    <div class="row">
+        <div class="col-lg-10 col-md-10">
+            <mat-form-field class="w-100">
+                <input type="text" matInput placeholder="Digite o seu Email" formControlName="email" class="w-100">
+            </mat-form-field>
+        </div>
+        <div class="col-lg-2 col-md-2" style="align-self: center !important;">
+            <button class="btn btn-success float-right" (click)="add()">Adicionar</button>
+        </div>
+        <br>
+        <div class="col-lg col-md">
+            <div class="card card-margin">
+                <div class="card-body">
+                    <h5 class="card-title">Emails Adicionados</h5>
+                    <ng-container *ngIf="listEmails.length > 0">
+                        <mat-chip-list #chipList>
+                            <mat-chip *ngFor="let item of listEmails" [selectable]="selectable" [removable]="removable"
+                                (removed)="remove(item)">
+                                {{item | uppercase}}
+                                <i matChipRemove class="material-icons chipSize" *ngIf="removable">close</i>
+                            </mat-chip>
+                        </mat-chip-list>
+                    </ng-container>
+                    <ng-container *ngIf="listEmails.length === 0">
+                        <p class="card-text">Nenhum email foi adicionado a lista de emails</p>
+                    </ng-container>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md col-lg text-right">
+            <button class="btn btn-secondary btn-form-actions margin-chip" (click)="cancel()">Cancelar</button>
+            <button class="btn btn-success btn-form-actions margin-chip" (click)="confirm()">Confirmar</button>
+        </div>
+    </div>
+</form>
