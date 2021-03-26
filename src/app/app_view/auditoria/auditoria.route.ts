@@ -7,7 +7,7 @@ import { AuthGuard } from 'src/app/guards/auth.guard';
 const routes: Routes = [
   {
     path: '', component: ListaAuditoriaComponent, canActivate: [AuthGuard], data: {
-      allowedRoles: ['ROLE_LOG']
+      roles: ['ROLE_LOG']
     }
   },
   { path: ':id', component: AuditoriaViewComponent, canActivate: [AuthGuard] },
