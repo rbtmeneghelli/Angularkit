@@ -4,7 +4,7 @@ import Swal from 'sweetalert2';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { DropDownList } from '../../app_entities/generic/dropdownlist';
-import { AbstractControl } from '@angular/forms';
+import { AbstractControl, FormGroup } from '@angular/forms';
 import { MatDialogConfig } from '@angular/material/dialog';
 import { ClienteFilterData } from 'src/app/app_entities/filter/cliente-filter-data';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -291,18 +291,12 @@ export class SharedService {
         return stNumero;
     }
 
-    public verifyfieldIsEmpty(campo: string) {
-        if (campo === null || campo === undefined || campo === '') {
-            return true;
-        }
-        return false;
+    public verifyfieldIsNotEmpty(campo: string): boolean {
+        return !!campo && campo?.length > 0 ? true : false;
     }
 
-    public verifyListIsEmpty(lista: Array<any>): boolean {
-        if (lista === null || lista === undefined) {
-            return true;
-        }
-        return false;
+    public verifyListIsNotEmpty(lista: Array<any>): boolean {
+        return !!lista && lista?.length > 0 ? true : false;
     }
 
     public b64DecodeUnicode(str) {
@@ -357,7 +351,7 @@ export class SharedService {
         // }
     }
 
-    getDialogConfig(): MatDialogConfig {
+    public getDialogConfig(): MatDialogConfig {
         const dialogConfig = new MatDialogConfig();
         dialogConfig.disableClose = true;
         dialogConfig.autoFocus = true;
@@ -393,6 +387,18 @@ export class SharedService {
         });
     }
 
+
+    public convertStringToTimeSpan(value?: string) {
+        if (!!value) {
+            if (value.length === 4) {
+                return value.substring(0, 2) + ':' + value.substring(2, 4);
+            } else if (value.length > 4) {
+                return value.substring(0, 2) + value.substring(5, 2);
+            }
+        }
+        return new Date().getHours() + ':' + new Date().getMinutes();
+    }
+
     public criarNovoObjeto(target?: any, source?: any, removePropertyId?: boolean): any {
         // target: Fonte Alvo || source: Fonte de dados
         // const target = { id: 1, a: 1, b: 2 };
@@ -404,10 +410,10 @@ export class SharedService {
         return newObject;
     }
 
-    public timeDiffCalc(dateFuture, dateNow): string {
+    public timeDiffCalc(dateFuture, dateNow): number {
         let diffInMilliSeconds = Math.abs(dateFuture - dateNow) / 1000;
         // calculate days
-        const days = Math.floor(diffInMilliSeconds / 86400);
+        let days = Math.floor(diffInMilliSeconds / 86400);
         diffInMilliSeconds -= days * 86400;
         // calculate hours
         const hours = Math.floor(diffInMilliSeconds / 3600) % 24;
@@ -415,15 +421,14 @@ export class SharedService {
         // calculate minutes
         const minutes = Math.floor(diffInMilliSeconds / 60) % 60;
         diffInMilliSeconds -= minutes * 60;
-        let difference = '';
+
+        let result = hours + (Number(minutes) / 60);
+
         if (days > 0) {
-            difference += (days === 1) ? `${days} day, ` : `${days} days, `;
+            days = days * 24;
+            result = days + result;
         }
-        difference += (hours === 0 || hours === 1) ? `${hours} hour, ` : `${hours} hours, `;
-        difference += (minutes === 0 || hours === 1) ? `${minutes} minutes` : `${minutes} minutes`;
-        return difference;
-        // Fazendo a chamada do metodo
-        // console.log(timeDiffCalc(new Date('2019/10/1 04:10:00'), new Date('2019/10/2 18:20:00')));
+        return result;
     }
 
     public replaceAll(word?: string, oldletter?: string, newLetter?: string): string {
@@ -517,6 +522,68 @@ export class SharedService {
             return data;
         }
         return [];
+    }
+
+    public getUserOperationSystem(): string {
+        const agent: string = window.navigator.userAgent.toString();
+        switch (true) {
+            case agent.indexOf('Windows NT 10.0') != -1: return 'Windows 10';
+            case agent.indexOf('Windows NT 6.3') != -1: return 'Windows 8.1';
+            case agent.indexOf('Windows NT 6.2') != -1: return 'Windows 8';
+            case agent.indexOf('Windows NT 6.1') != -1: return 'Windows 7';
+            case agent.indexOf('Windows NT 6.0') != -1: return 'Windows Vista';
+            case agent.indexOf('Windows NT 5.1') != -1: return 'Windows XP';
+            case agent.indexOf('Windows NT 5.0') != -1: return 'Windows 2000';
+            case agent.indexOf('Mac') != -1: return 'Mac/iOS';
+            case agent.indexOf('X11') != -1: return 'UNIX';
+            case agent.indexOf('Linux') != -1: return 'Linux';
+            default: return 'Unknown';
+        }
+    }
+
+    public getUserBrowser(): string {
+        const agent: string = window.navigator.userAgent.toString();
+        switch (true) {
+            case agent.indexOf('edge') > -1: return 'edge';
+            case agent.indexOf('edg') > -1: return 'chromium based edge (dev or canary)';
+            case agent.indexOf('opr') > -1 && !!(<any>window).opr: return 'opera';
+            case agent.indexOf('chrome') > -1 && !!(<any>window).chrome: return 'chrome';
+            case agent.indexOf('trident') > -1: return 'ie';
+            case agent.indexOf('firefox') > -1: return 'firefox';
+            case agent.indexOf('safari') > -1: return 'safari';
+            default: return 'other';
+        }
+    }
+
+    public hasErrorFormControl(formControl?: AbstractControl): string {
+        return formControl.hasError('required') ? 'O campo é obrigatório' :
+            formControl.hasError('minlength') ? 'O campo deve ser preenchido corretamente' :
+                formControl.hasError('email') ? 'O campo está com email invalido' :
+                    '';
+    }
+
+    public async validForm(arrForms?: Array<FormGroup>): Promise<string> {
+        for (const form of arrForms) {
+            if (!form.valid) {
+                //this.alertaService.enviarNotificacao('', EnumTypeMessage.FormValid, EnumActionMessage.Info);
+                form.markAllAsTouched();
+                return 'Erro';
+            }
+        }
+        return '';
+    }
+
+    public async cleanForm(arrForms?: Array<FormGroup>): Promise<void> {
+        for (const form of arrForms) {
+            form.reset();
+        }
+    }
+
+    public existLocalStorage(fileName: string): any {
+        if (!!localStorage.getItem(fileName)) {
+            return true;
+        }
+        return false;
     }
 }
 
