@@ -1,0 +1,56 @@
+// Para utilizar essa classe com Angular material em nossos componentes Input, Select, TextArea, Checkbox, Radio e etc..., basta incluir a linha abaixo na declaração HTML do componente:
+// [ngClass]="variavelBooleana ? 'blockMask' : ''"
+
+.blockMask {
+   
+    .mat-input-element:disabled, .mat-form-field-type-mat-native-select.mat-form-field-disabled .mat-form-field-infix::after{
+        color: black !important;
+        font-weight: bold;
+        background-size: 1px 100% !important;
+        background-repeat: repeat-x !important;
+        background-color: #d0c6c6  !important;
+        box-shadow: 0px 0px 0px 13px #d0c6c6  !important;
+    }
+
+    .mat-radio-button.mat-radio-disabled .mat-radio-label-content {
+        color: black !important;
+        font-weight: bold;
+    }  
+   
+    .mat-select-value-text, .mat-select-placeholder {
+        color: black !important;
+        font-weight: bold;
+    }
+
+    .mat-checkbox-disabled, .mat-checkbox-label {
+        color: black !important;
+        font-weight: bold;
+    }
+}
+
+.mat-select-disabled.blockMask {
+    color: black !important;
+    font-weight: bold;
+    background-size: 1px 100% !important;
+    background-repeat: repeat-x !important;
+    background-color: #d0c6c6  !important;
+    box-shadow: 0px 0px 0px 13px #d0c6c6  !important;
+}
+
+input:disabled.blockMask, textarea:disabled.blockMask, select:disabled.blockMask {
+    color: black !important;
+    font-weight: bold;
+    background-size: 1px 100% !important;
+    background-repeat: repeat-x !important;
+    background-color: #d0c6c6  !important;
+    box-shadow: 0px 0px 0px 13px #d0c6c6  !important;
+}
+
+input:disabled.blockMask::-webkit-input-placeholder, textarea:disabled.blockMask::-webkit-input-placeholder, select:disabled.blockMask::-webkit-select-placeholder {
+    color: black !important;
+    font-weight: bold;
+    background-size: 1px 100% !important;
+    background-repeat: repeat-x !important;
+    background-color: #d0c6c6  !important;
+    box-shadow: 0px 0px 0px 13px #d0c6c6  !important;
+}
