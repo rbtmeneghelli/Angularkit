@@ -4,7 +4,7 @@ import Swal from 'sweetalert2';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { DropDownList } from '../../app_entities/generic/dropdownlist';
-import { AbstractControl, FormGroup } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
 import { MatDialogConfig } from '@angular/material/dialog';
 import { ClienteFilterData } from 'src/app/app_entities/filter/cliente-filter-data';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -584,6 +584,27 @@ export class SharedService {
             return true;
         }
         return false;
+    }
+
+    public validateCorporateEmail(email: FormControl): { [key: string]: boolean } | null {
+        if (!/[a-zA-Z0-9][a-zA-Z0-9\._-]+@email.com.br/.test(email.value)) {
+            return { validateCorporateEmail: true };
+        }
+        return null;
+    }
+
+    public validateCompanyFullName(company: FormControl): { [key: string]: boolean } | null {
+        if (!/[a-zA-Z0-9]* [a-zA-Z0-9]*/.test(company.value)) {
+            return { validateCompanyFullName: true };
+        }
+        return null;
+    }
+
+    public validateFullName(name: FormControl): { [key: string]: boolean } | null {
+        if (!/[a-zA-Z0-9]* [a-zA-Z0-9]*/.test(name.value)) {
+            return { validateFullName: true };
+        }
+        return null;
     }
 }
 
