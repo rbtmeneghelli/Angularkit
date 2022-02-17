@@ -9,13 +9,13 @@
               <div class="form-group col-md-11">
                 <label for="qtyRecord" class="mr-sm-2">Quantity of Records from page:</label>
                 <select id="qtyRecord" class="form-control mr-sm-6" (change)="onChangePageSize($event.target.value)"
-                  placement="top" ngbTooltip="Quantity of Records from page" formControlName="QTYFORPAGE">
+                  placement="top" formControlName="QTYFORPAGE">
                   <option value="5" selected>5</option>
                   <option value="10">10</option>
                   <option value="25">25</option>
                 </select>
               </div>
-              <button class="btn btn-success" placement="top" ngbTooltip="New"><i class="fa fa-plus"></i> New</button>
+              <button class="btn btn-success" placement="top"><i class="fa fa-plus"></i> New</button>
             </form>
             <br>
             <div class="table-responsive">

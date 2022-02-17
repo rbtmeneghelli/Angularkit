@@ -1,24 +1,29 @@
 import { Injectable } from '@angular/core';
-import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest } from '@angular/common/http';
-import { catchError } from 'rxjs/operators';
+import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HttpResponse } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators';
 import { Observable, throwError } from 'rxjs';
 import { Router } from '@angular/router';
-import { AuthService } from '../../app/login/login-sistema/auth.service';
 import { SharedService } from '../app_business/service/shared.service';
+import { AuthService } from '../guards/auth.guard.service';
 
 /** Pass untouched request through to the next request handler. */
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
+
+    private spCharactersStringList: any = ['%b%', '%j%', '%u%'];
+    private spCharactersB64List: any = [btoa('%b%'), btoa('%j%'), btoa('%u%')];
+    private responseMethodsList: string[] = ['POST', 'PUT', 'DELETE'];
 
     constructor(private authService: AuthService, private router: Router, private sharedService: SharedService) { }
 
     intercept(req: HttpRequest<any>, next: HttpHandler):
 
         Observable<HttpEvent<any>> {
-        return next.handle(req).pipe(
+        return next.handle(this.interceptorRequest(req)).pipe(
+            map(event => this.interceptorResponse(event)),
             catchError(e => {
                 if (e.status === 401) {
-                    if (this.authService.usuarioEstaAutenticado()) {
+                    if (this.authService.isAuthenticated()) {
                         this.authService.logout();
                     }
                     this.router.navigate(['/login']);
@@ -32,5 +37,35 @@ export class AuthInterceptor implements HttpInterceptor {
                 return throwError(e);
             })
         );
+    }
+
+    private interceptorRequest(request: HttpRequest<any>): HttpRequest<any> {
+        if (this.responseMethodsList.includes(request.method)) {
+            for (var key in request.body) {
+                if (typeof request.body[key] === 'string' && !!request.body[key]) {
+                    this.spCharactersStringList.forEach(spCharacter => {
+                        if (request.body[key]?.indexOf(spCharacter) !== -1) {
+                            request.body[key] = request.body[key].replace(new RegExp(spCharacter, "g"), btoa(spCharacter));
+                        }
+                    });
+                }
+            }
+        }
+        return request;
+    }
+
+    private interceptorResponse(event: HttpEvent<any>): HttpResponse<any> {
+        if (event instanceof HttpResponse) {
+            for (var key in event.body?.data) {
+                if (typeof event.body.data[key] === 'string' && !!event.body.data[key]) {
+                    this.spCharactersB64List.forEach(spCharacter => {
+                        if (event.body.data[key]?.indexOf(spCharacter) !== -1) {
+                            event.body.data[key] = event.body.data[key].replace(new RegExp(spCharacter, "g"), atob(spCharacter));
+                        }
+                    });
+                }
+            }
+            return event;
+        }
     }
 }

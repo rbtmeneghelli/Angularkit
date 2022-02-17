@@ -606,6 +606,11 @@ export class SharedService {
         }
         return null;
     }
+
+    public converttokentostring(token: any) {
+        //Arruma dados com acento dentro do token
+        return JSON.parse(decodeURIComponent(escape(atob(token.split('.')[1]))));
+    }
 }
 
 export function ValidarSelect(control: AbstractControl) {
