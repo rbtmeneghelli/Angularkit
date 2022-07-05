@@ -607,9 +607,30 @@ export class SharedService {
         return null;
     }
 
+    public getTokenData(accessToken: string): any {
+        if (!!accessToken) {
+            return JSON.parse(this.b64DecodeUnicode(accessToken.split('.')[1]));
+        }
+        return null;
+    }
+    
     public converttokentostring(token: any) {
         //Arruma dados com acento dentro do token
         return JSON.parse(decodeURIComponent(escape(atob(token.split('.')[1]))));
+    }
+
+    public convertObjInByte(data: any): string {
+        return btoa(JSON.stringify(data));
+    }
+
+    public refreshPage(): void {
+        setInterval(() => {
+            window.location.reload();
+        }, 6000);
+    }
+
+    private convertPtBrDateStringToEnUsDateString(dateValue: string): string {
+        return dateValue.split("/").reverse().join("-");
     }
 }
 

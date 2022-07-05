@@ -13,6 +13,7 @@ export class AuthInterceptor implements HttpInterceptor {
     private spCharactersStringList: any = ['%b%', '%j%', '%u%'];
     private spCharactersB64List: any = [btoa('%b%'), btoa('%j%'), btoa('%u%')];
     private responseMethodsList: string[] = ['POST', 'PUT', 'DELETE'];
+    private arrKeysToTradeDbQuote: string[] = ['specialField'];
 
     constructor(private authService: AuthService, private router: Router, private sharedService: SharedService) { }
 
@@ -67,5 +68,35 @@ export class AuthInterceptor implements HttpInterceptor {
             }
             return event;
         }
+    }
+
+    private isarrKeysToTradeDbQuote(key: string): boolean {
+        return this.arrKeysToTradeDbQuote.some(x => x?.toUpperCase() === key?.toUpperCase());
+    }
+
+    private replaceDbQuoteBracketBtoa(data: string) {
+        const spCharacterList: any[] = ["“", "”", '(', ')'];
+        spCharacterList.forEach(spCharacter => {
+            if (spCharacter !== spCharacterList[2] && spCharacter !== spCharacterList[3]) {
+                data = data.replace(new RegExp(spCharacter, "g"), btoa(unescape(encodeURIComponent(spCharacter))));
+            }
+            else if (spCharacter === spCharacterList[2]) {
+                data = data.replace(/\(/g, btoa(spCharacter));
+            }
+            else if (spCharacter === spCharacterList[3]) {
+                data = data.replace(/\)/g, btoa(spCharacter));
+            }
+        });
+        return data;
+    }
+
+    private replaceDbQuoteBracketAtob(data: string) {
+        const spCharacterList: any[] = [btoa(unescape(encodeURIComponent("“"))), btoa(unescape(encodeURIComponent("”"))),
+        btoa(unescape(encodeURIComponent("("))), btoa(unescape(encodeURIComponent(")")))];
+        spCharacterList.forEach(spCharacter => {
+            data = data.replace(new RegExp(spCharacter, "g"), decodeURIComponent(escape(atob(spCharacter))));
+        });
+
+        return data;
     }
 }

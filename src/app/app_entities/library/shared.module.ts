@@ -14,6 +14,7 @@ import { CardDocumentosProcessoComponent } from '../../shared/card-processo/card
 import { CardPdfViewerComponent } from '../../shared/card-pdf-viewer/card-pdf-viewer.component';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { CardEmailComponent } from 'src/app/shared/card-email/card-email.component';
+import { PasteDateDirective } from 'src/app/shared/directive/paste-date.directive';
 registerLocaleData(localePt, 'pt-BR');
 @NgModule({
     declarations: [
@@ -23,7 +24,8 @@ registerLocaleData(localePt, 'pt-BR');
         CardDocumentosProcessoComponent,
         GenericTableComponent,
         CardPdfViewerComponent,
-        CardEmailComponent
+        CardEmailComponent,
+        PasteDateDirective
     ],
     imports: [
         NgbModule,
@@ -40,7 +42,8 @@ registerLocaleData(localePt, 'pt-BR');
         CardDocumentosProcessoComponent,
         GenericTableComponent,
         CardPdfViewerComponent,
-        CardEmailComponent
+        CardEmailComponent,
+        PasteDateDirective
     ],
     providers: [
         { provide: LOCALE_ID, useValue: 'pt-BR' },
