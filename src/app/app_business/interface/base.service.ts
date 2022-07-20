@@ -3,8 +3,8 @@ import { EnumTypeAction } from 'src/app/app_entities/enum/EnumTypeAction';
 import { EnumTypeCookie } from 'src/app/app_entities/enum/EnumTypeCookie';
 import { Cookie, CookieItem } from 'src/app/app_entities/model/cookie.model';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { catchError, map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
+import { catchError, map, take, tap } from 'rxjs/operators';
 
 export abstract class BaseService<T> {
 
@@ -21,10 +21,15 @@ export abstract class BaseService<T> {
 
   getById(clienteid: number): Observable<T> {
     return this.http.get<T>(`${this.actionUrl}/GetById/${clienteid}`, { headers: this.getOptions() });
+    // Example using function to convert special Characters in Base64 (Utilizar comando tap or map)
+    //return this.http.get<ResponseResult<T>>(`${this.actionUrl}/${id}`, { headers: this.getOptions() })
+    //.pipe(map(response => ConvertDataBase64ToString(response)));
   }
 
   create(model: T): Observable<T> {
     return this.http.post<T>(this.actionUrl, model, { headers: this.getOptions() });
+    // Example using function to convert special Characters in Base64
+    // return this.http.post<T>(this.actionUrl, ConvertDataStringToBase64(model), { headers: this.getOptions() });
   }
 
   update(id: number, model: T): Observable<T> {
@@ -45,7 +50,7 @@ export abstract class BaseService<T> {
   getList(url: string): Observable<DropDownList[]> {
     return this.http.get<DropDownList[]>(this.actionUrl + url, { headers: this.getOptions() });
   }
-  
+
   getListToCookie(url: string): Observable<DropDownList[]> {
     return this.http.get<DropDownList[]>(this.actionUrl + url, { headers: this.getOptions() }).pipe(tap(response => console.log('retorno do backend: ', response)));
   }
@@ -194,11 +199,127 @@ export abstract class BaseService<T> {
     }
   }
 }
-function tap(arg0: (response: any) => void): any {
-  throw new Error('Function not implemented.');
+
+//Use this function when request to Server are blocked by firewall, because of special Characters
+function ConvertDataStringToBase64(obj): any {
+
+  try {
+
+    //var spCharactersStringList: any = ['%', "'", '#', '“', '”', '"', '`', '(', ')'];
+    var spCharacters: any = ['(', ')'];
+
+    Object.keys(obj).forEach(function (chave) {
+
+      var prop = obj[chave];
+
+      if (typeof prop === 'object' && !!prop) {
+        ConvertDataStringToBase64(prop);
+      }
+
+      else {
+
+        if (typeof prop === 'string' && !!prop) {
+
+          if (isStringHasNonAsciiCharacters(prop)) {
+
+            var spCharactersStringList = getSpecialCharactersFromString(prop);
+
+            spCharactersStringList.forEach(spCharacter => {
+
+              if (prop?.indexOf(spCharacter) !== -1 && spCharacters.includes(spCharacter) === false) {
+                prop = makeReplaceSpecialCharactersInRequest(prop, spCharacter);
+              }
+
+              else if (prop?.indexOf(spCharacter) !== -1 && spCharacters[0] === spCharacter) {
+                prop = makeReplaceLeftBracket(prop, spCharacter);
+              }
+
+              else if (prop?.indexOf(spCharacter) !== -1 && spCharacters[1] === spCharacter) {
+                prop = makeReplaceRightBracket(prop, spCharacter);
+              }
+
+              obj[chave] = prop;
+            });
+          }
+        }
+      }
+    });
+    return obj;
+  }
+
+  catch (e) {
+    alert(e);
+  }
 }
 
-function take(arg0: number): any {
-  throw new Error('Function not implemented.');
+function ConvertDataBase64ToString(obj): any {
+
+  try {
+
+    var spCharactersStringList: any = ['%', "'", '#', '“', '”', '"', '`', '(', ')'];
+
+    Object.keys(obj).forEach(function (chave) {
+
+      var prop = obj[chave];
+      if (typeof prop === 'object') {
+        ConvertDataBase64ToString(prop);
+      }
+
+      else {
+        if (typeof prop === 'string') {
+          spCharactersStringList.forEach(spCharacter => {
+            if (prop?.indexOf(convertStringToBase64(spCharacter)) !== -1) {
+              prop = makeReplaceSpecialCharactersInResponse(prop, convertStringToBase64(spCharacter));
+            }
+            obj[chave] = prop;
+          });
+        }
+      }
+    });
+    return obj;
+  }
+  catch (e) {
+    alert(e);
+  }
 }
 
+function makeReplaceSpecialCharactersInRequest(prop: string, spCharacter: string): string {
+  return prop.replace(new RegExp(spCharacter, "g"), convertStringToBase64(spCharacter));
+}
+
+function makeReplaceLeftBracket(prop: string, spCharacter: string): string {
+  return prop.replace(/\(/g, convertStringToBase64(spCharacter));
+}
+
+function makeReplaceRightBracket(prop: string, spCharacter: string): string {
+  return prop.replace(/\)/g, convertStringToBase64(spCharacter));
+}
+
+function convertStringToBase64(char: string): string {
+  return btoa(unescape(encodeURIComponent(char)));
+}
+
+function convertBase64ToString(char: string): string {
+  return decodeURIComponent(escape(atob(char)))
+}
+
+function makeReplaceSpecialCharactersInResponse(prop: string, spCharacter: string): string {
+  return prop.replace(new RegExp(spCharacter, "g"), convertBase64ToString(spCharacter));
+}
+
+function isStringHasNonAsciiCharacters(text: string): boolean {
+  return /[\w\s\u00C0-\u017F]/gi.test(text);
+}
+
+function getSpecialCharactersFromString(text: string): any {
+  var spCharactersStringList: any[] = [];
+  var exceptionCharactersList: any[] = ['/', ':', '-', '+', '*', ',', '.']
+  var specialCharactersFromText = text.replace(/[\w\s\u00C0-\u017F]/gi, '').trim();
+  for (var i = 0; i <= specialCharactersFromText.length; i++) {
+    var character = specialCharactersFromText.substr(i, 1);
+    if (exceptionCharactersList.includes(character) === false && !!character) {
+      spCharactersStringList.push(character);
+    }
+  }
+  return spCharactersStringList;
+}
