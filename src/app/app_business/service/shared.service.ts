@@ -4,7 +4,7 @@ import Swal from 'sweetalert2';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { DropDownList } from '../../app_entities/generic/dropdownlist';
-import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup, ValidationErrors } from '@angular/forms';
 import { MatDialogConfig } from '@angular/material/dialog';
 import { ClienteFilterData } from 'src/app/app_entities/filter/cliente-filter-data';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -613,7 +613,7 @@ export class SharedService {
         }
         return null;
     }
-    
+
     public converttokentostring(token: any) {
         //Arruma dados com acento dentro do token
         return JSON.parse(decodeURIComponent(escape(atob(token.split('.')[1]))));
@@ -631,6 +631,94 @@ export class SharedService {
 
     private convertPtBrDateStringToEnUsDateString(dateValue: string): string {
         return dateValue.split("/").reverse().join("-");
+    }
+
+    public passwordMatchValidator(Senha: string): ValidationErrors | null {
+        return (control: FormControl) => {
+            if (!control || !control.parent) {
+                return null;
+            }
+            return control.parent.get(Senha).value === control.value ? null : { mismatch: true };
+        };
+    }
+
+    public validateCpf(control: AbstractControl): ValidationErrors | null {
+        if (control.value && !this.validarCpf(control.value)) {
+            return { cpf: true };
+        }
+        return null;
+    }
+
+    public validateCnpj(control: AbstractControl): ValidationErrors | null {
+        if (control.value && !this.validarCNPJ(control.value)) {
+            return { cnpj: true };
+        }
+        return null;
+    }
+
+    public passwordDefinition(control: AbstractControl): ValidationErrors | null {
+
+        if (!!control.value && control.value?.length === 0) {
+            return null;
+        }
+
+        // Pelo menos um caractere especial    
+        if (/(?=.*?[#?!@$%^&*-])/.test(control.value)) {
+            return { hasSpecialCharacters: true };
+        }
+
+        // Pelo menos uma letra maiúscula    
+        if (/(?=.*?[A-Z])/.test(control.value)) {
+            return { hasUperCase: true };
+        }
+
+        // Pelo menos uma letra minuscula    
+        if (/(?=.*?[a-z])/.test(control.value)) {
+            return { hasLowerCase: true };
+        }
+
+        // Pelo menos um dígito    
+        if (/(?=.*?[0-9])/.test(control.value)) {
+            return { hasDigit: true };
+        }
+
+        return null;
+    }
+
+    public sortDropDownList(lista: Array<DropDownList>): Array<DropDownList> {
+        // tslint:disable-next-line: only-arrow-functions
+        return lista.sort(function (a, b) {
+            if (a.viewValue > b.viewValue) {
+                return 1;
+            }
+            if (a.viewValue < b.viewValue) {
+                return -1;
+            }
+            return 0;
+        });
+    }
+
+    public numericOnly(event: any): boolean {
+        const pattern = /^[0-9]*$/g;
+        const result = pattern.test(event.key);
+        return result;
+    }
+
+    public convertStringToBinaryString(text: string) {
+        var result = '';
+        if (!!text) {
+            for (var i = 0; i < text.length; i++) {
+                result += text[i].charCodeAt(0).toString(2) + " ";
+            }
+        } else {
+            result = text;
+        }
+        return result;
+    }
+
+    public freezeObject(object: any): any{
+        Object.freeze(object);
+        return object;
     }
 }
 
