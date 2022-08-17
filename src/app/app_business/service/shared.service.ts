@@ -720,6 +720,12 @@ export class SharedService {
         Object.freeze(object);
         return object;
     }
+
+    public existItemInList(list: any[]): boolean {
+        //Funciona semelhante ao includes, porem e mais eficiente com uma lista muito extensa de dados
+        const listSet = new Set(list);
+        return listSet.has('item');
+    }
 }
 
 export function ValidarSelect(control: AbstractControl) {
