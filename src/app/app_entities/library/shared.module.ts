@@ -15,6 +15,7 @@ import { CardPdfViewerComponent } from '../../shared/card-pdf-viewer/card-pdf-vi
 import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { CardEmailComponent } from 'src/app/shared/card-email/card-email.component';
 import { PasteDateDirective } from 'src/app/shared/directive/paste-date.directive';
+import { AutoFocusDirective } from 'src/app/shared/directive/autofocus.directive';
 registerLocaleData(localePt, 'pt-BR');
 @NgModule({
     declarations: [
@@ -25,7 +26,8 @@ registerLocaleData(localePt, 'pt-BR');
         GenericTableComponent,
         CardPdfViewerComponent,
         CardEmailComponent,
-        PasteDateDirective
+        PasteDateDirective,
+        AutoFocusDirective
     ],
     imports: [
         NgbModule,
@@ -43,7 +45,8 @@ registerLocaleData(localePt, 'pt-BR');
         GenericTableComponent,
         CardPdfViewerComponent,
         CardEmailComponent,
-        PasteDateDirective
+        PasteDateDirective,
+        AutoFocusDirective
     ],
     providers: [
         { provide: LOCALE_ID, useValue: 'pt-BR' },
