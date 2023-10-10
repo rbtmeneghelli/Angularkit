@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from './guards/auth.guard.service';
 import { MenuDTO } from './app_entities/dto/menu.dto';
+import { Observable, Observer, fromEvent, merge } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
@@ -28,6 +30,12 @@ export class AppComponent implements OnInit {
     this.listaMenu.push({ link: 'relatorio', icon: 'play_arrow', description: 'Relatório' });
     this.listaMenu.push({ link: 'servico', icon: 'play_arrow', description: 'Serviço' });
     this.listaMenu.push({ link: 'config', icon: 'play_arrow', description: 'Configuração Sistema' });
+
+    this.createOnline().subscribe((isOnline: any) => {
+      if (isOnline === false) {
+        alert("Não foi possível prosseguir, por favor, verifique sua conexão à internet.");
+      }
+    });
   }
 
   Logout() {
@@ -40,5 +48,15 @@ export class AppComponent implements OnInit {
 
   isAuthenticated() {
     return this.authService.isAuthenticated();
+  }
+
+  createOnline() {
+    return merge(
+      fromEvent(window, 'offline').pipe(map(() => false)),
+      fromEvent(window, 'online').pipe(map(() => true)),
+      new Observable((sub: Observer<boolean>) => {
+        sub.next(navigator.onLine);
+        sub.complete();
+      }));
   }
 }
