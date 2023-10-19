@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 
 @Component({
     selector: 'app-lista-filter',
@@ -6,8 +6,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ListaFilterComponent implements OnInit {
 
+    @Output() filter = new EventEmitter();
+    
     constructor() { }
 
     ngOnInit(): void {
+    }
+
+    async sendFilter(): Promise<void> {
+        this.filter.emit();
+    }
+
+    async clearFilter(): Promise<void> {
     }
 }

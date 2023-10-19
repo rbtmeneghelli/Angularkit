@@ -1,13 +1,12 @@
+import { SharedMessages } from 'src/app/app_business/constants/shared-constants';
 import { ExportadorService } from 'src/app/app_business/service/exportador.service';
 import { Injectable } from '@angular/core';
-import Swal from 'sweetalert2';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Router } from '@angular/router';
 import { DropDownList } from '../../app_entities/generic/dropdownlist';
 import { AbstractControl, FormControl, FormGroup, ValidationErrors } from '@angular/forms';
 import { MatDialogConfig } from '@angular/material/dialog';
 import { ClienteFilterData } from 'src/app/app_entities/filter/cliente-filter-data';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
     providedIn: 'root'
@@ -15,68 +14,29 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 
 export class SharedService {
 
+    private currentPage?: BehaviorSubject<string>;
+
     // tslint:disable-next-line: max-line-length
-    constructor(protected http: HttpClient, protected route: Router, protected exportadorService: ExportadorService, protected snackBar: MatSnackBar) { }
-
-    public enviarNotificacao(titulo: string, texto: string, tipo: any) {
-        Swal.fire({
-            title: titulo,
-            text: texto,
-            icon: tipo,
-            confirmButtonText: 'Ok'
-        });
+    constructor(
+        protected http: HttpClient,
+        protected exportadorService: ExportadorService,
+    ) {
+        this.currentPage = new BehaviorSubject<string>('');
     }
 
-    public enviarNotificaçãoConfirmar(titulo: string, texto: string, tipo: any, objeto: any) {
-        Swal.fire({
-            title: titulo,
-            text: texto,
-            icon: tipo,
-            showCancelButton: true,
-            cancelButtonText: 'Cancelar',
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Confirmar'
-        }).then((result) => {
-            if (result.value) {
-                this.enviarNotificacao('', '', 'success');
-            }
-        });
+    public getCurrentPageValue(): Observable<string> {
+        return this.currentPage.asObservable();
     }
 
-    public enviarNotificaçãoConfirmarVoltar(titulo: string, texto: string, tipo: any, objeto: any, rota: string) {
-        Swal.fire({
-            title: titulo,
-            text: texto,
-            icon: tipo,
-            showCancelButton: true,
-            cancelButtonText: 'Cancelar',
-            confirmButtonColor: '#c3c3c3',
-            cancelButtonColor: '#c3c3c3',
-            confirmButtonText: 'Confirmar'
-        })
-            .then(result => {
-                if (result.value) {
-                    this.route.navigate([`/${rota}`]);
-                }
-            })
-            .catch(err => { });
+    public setCurrentPageValue(newValue: string): void {
+        this.currentPage.next(newValue);
     }
 
-    public enviarNotificacaoToRoute(titulo: string, texto: string, tipo: any, rota: string) {
-        Swal.fire({
-            title: titulo,
-            text: texto,
-            icon: tipo,
-            confirmButtonColor: '#c3c3c3',
-            confirmButtonText: 'OK'
-        })
-            .then(result => {
-                if (result.value) {
-                    this.route.navigate([`${rota}`]);
-                }
-            })
-            .catch(err => { });
+    public getOptionsHeader(): HttpHeaders {
+        const headers = new HttpHeaders()
+            .set('content-type', 'application/x-www-form-urlencoded')
+            .set('Access-Control-Allow-Origin', '*');
+        return headers;
     }
 
     public removerAcento(provinciaEstadoTexto: string): string {
@@ -378,16 +338,6 @@ export class SharedService {
             });
     }
 
-    enviarNotificacaoSnackBar(message?: string, isError?: boolean) {
-        this.snackBar.open(message, 'X', {
-            duration: 3000,
-            horizontalPosition: 'right',
-            verticalPosition: 'top',
-            panelClass: isError ? ['msg-error'] : ['msg-success']
-        });
-    }
-
-
     public convertStringToTimeSpan(value?: string) {
         if (!!value) {
             if (value.length === 4) {
@@ -486,7 +436,7 @@ export class SharedService {
 
     public convertStringToDate(date?: string): string {
         if (!!date && date?.length >= 10) {
-            return new Date(date).toLocaleDateString('pt-br');
+            return new Date(date).toLocaleDateString('pt-br', { timeZone: 'UTC' });
         } else {
             return '';
         }
@@ -495,7 +445,7 @@ export class SharedService {
     public convertStringToDateOrTimeOnly(pDate?: string, isDate?: boolean): string {
         if (!!pDate && pDate?.length >= 10) {
             // tslint:disable-next-line: max-line-length
-            return isDate ? new Date(pDate).toLocaleDateString('pt-br') : new Date(pDate).toLocaleTimeString('pt-br').substr(0, 5);
+            return isDate ? new Date(pDate).toLocaleDateString('pt-br', { timeZone: 'UTC' }) : new Date(pDate).toLocaleTimeString('pt-br', { timeZone: 'UTC' }).substr(0, 5);
         } else {
             return '';
         }
@@ -556,10 +506,12 @@ export class SharedService {
     }
 
     public hasErrorFormControl(formControl?: AbstractControl): string {
-        return formControl.hasError('required') ? 'O campo é obrigatório' :
-            formControl.hasError('minlength') ? 'O campo deve ser preenchido corretamente' :
-                formControl.hasError('email') ? 'O campo está com email invalido' :
-                    '';
+        return formControl.hasError('required') ? SharedMessages.FORM_REQUIRED :
+            formControl.hasError('minlength') ? SharedMessages.FORM_MINLENGTH :
+                formControl.hasError('maxlength') ? SharedMessages.FORM_MAXLENGTH :
+                    formControl.hasError('pattern') ? SharedMessages.FORM_PATTERN :
+                        formControl.hasError('email') ? SharedMessages.FORM_EMAIL :
+                            '';
     }
 
     public async validForm(arrForms?: Array<FormGroup>): Promise<string> {
@@ -685,7 +637,7 @@ export class SharedService {
         return null;
     }
 
-    public sortDropDownList(lista: Array<DropDownList>): Array<DropDownList> {
+    public orderByDropDownList(lista: Array<DropDownList>): Array<DropDownList> {
         // tslint:disable-next-line: only-arrow-functions
         return lista.sort(function (a, b) {
             if (a.viewValue > b.viewValue) {
@@ -716,7 +668,7 @@ export class SharedService {
         return result;
     }
 
-    public freezeObject(object: any): any{
+    public freezeObject(object: any): any {
         Object.freeze(object);
         return object;
     }
@@ -725,6 +677,26 @@ export class SharedService {
         //Funciona semelhante ao includes, porem e mais eficiente com uma lista muito extensa de dados
         const listSet = new Set(list);
         return listSet.has('item');
+    }
+
+    public _filterDropDownList(list?: any[], value?: string): DropDownList[] {
+        if (!!list && list?.length > 0) {
+            if (value?.length > 0 && !!value) {
+                list = list.filter(option => option.name?.toLowerCase()?.includes(value?.toLowerCase()));
+            }
+            return this.orderByDropDownList(list);
+        } else {
+            return new Array<DropDownList>();
+        }
+    }
+
+    public isValidDate(valueDate: string, valueHour: string): boolean {
+        if (!!valueDate && !!valueHour) {
+            if (valueDate.length >= 8) {
+                return true;
+            }
+        }
+        return false;
     }
 }
 

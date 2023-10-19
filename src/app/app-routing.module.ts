@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { AuthGuard } from './guards/auth.guard';
+import { CardErrorComponent } from './shared/card-error/card-error.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -20,11 +21,13 @@ const routes: Routes = [
   { path: 'empresa', loadChildren: () => import('./app_view/empresa/empresa.module').then(m => m.EmpresaModule) },
   { path: 'config', loadChildren: () => import('./app_view/config/config.module').then(m => m.ConfigModule) },
   { path: '', loadChildren: () => import('./outros/template-outros.module').then(m => m.TemplateOutrosModule) },
-  { path: 'lista', loadChildren: () => import('./app_view/lista/lista.module').then(m => m.ListaModule) }
+  { path: 'lista', loadChildren: () => import('./app_view/lista/lista.module').then(m => m.ListaModule) },
+  { path: '**', component: CardErrorComponent },
+  // { path: '**', redirectTo: 'dashboard', pathMatch: 'full' },
 ];
 
 @NgModule({
-  imports: [HttpClientModule, RouterModule.forRoot(routes, { scrollPositionRestoration: 'enabled' })],
+  imports: [HttpClientModule, RouterModule.forRoot(routes, { scrollPositionRestoration: 'enabled', useHash: false })],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

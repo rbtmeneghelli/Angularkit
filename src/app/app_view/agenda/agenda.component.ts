@@ -7,6 +7,7 @@ import { CardCabecalhoDTO } from '../../app_entities/dto/cardCabecalho.dto';
 import { DropDownList } from '../../app_entities/generic/dropdownlist';
 import { take } from 'rxjs/operators';
 import { Agenda } from 'src/app/app_entities/model/agenda.model';
+import { SharedNotificationService } from 'src/app/app_business/service/shared-notification.service';
 
 @Component({
   selector: 'app-agenda',
@@ -23,7 +24,8 @@ export class AgendaComponent implements OnInit {
     private sharedService: SharedService,
     private formBuilder: FormBuilder,
     public agendaService: AgendaService,
-    private activatedRoute: ActivatedRoute) {
+    private activatedRoute: ActivatedRoute,
+    private sharedNotificationService: SharedNotificationService) {
     this.formulario = this.formBuilder.group({
       ID: [''],
       DESCRICAO: ['', Validators.required],
@@ -83,12 +85,12 @@ export class AgendaComponent implements OnInit {
   salvar() {
     if (this.registroNovo) {
       this.agendaService.create(this.buildEntity()).pipe(take(1)).toPromise().then(response => {
-        this.sharedService.enviarNotificacaoToRoute('', 'agenda cadastrado com sucesso', 'success', '/agenda');
-      }).catch(error => this.sharedService.enviarNotificacao('', 'Erro ao cadastrar o novo agenda', 'error'));
+        this.sharedNotificationService.enviarNotificacaoToRoute('', 'agenda cadastrado com sucesso', 'success', '/agenda');
+      }).catch(error => this.sharedNotificationService.enviarNotificacao('', 'Erro ao cadastrar o novo agenda', 'error'));
     } else {
       this.agendaService.update(this.formulario.get('ID').value, this.buildEntity()).pipe(take(1)).toPromise().then(response => {
-        this.sharedService.enviarNotificacaoToRoute('', 'agenda atualizado com sucesso', 'success', '/agenda');
-      }).catch(error => this.sharedService.enviarNotificacao('', 'Erro ao atualizar os dados do agenda', 'error'));
+        this.sharedNotificationService.enviarNotificacaoToRoute('', 'agenda atualizado com sucesso', 'success', '/agenda');
+      }).catch(error => this.sharedNotificationService.enviarNotificacao('', 'Erro ao atualizar os dados do agenda', 'error'));
     }
   }
 

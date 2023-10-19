@@ -1,4 +1,3 @@
-import { TemplateLoadingComponent } from './../shared/template-loading/template-loading.component';
 import { TemplatePerfilAcessoComponent } from '../outros/template-perfil-acesso/template-perfil-acesso.component';
 import { TemplateUploadComponent } from '../outros/template-upload/template-upload.component';
 import { TemplateErroComponent } from '../outros/template-erro/template-erro.component';
@@ -17,7 +16,6 @@ export let options: Partial<IConfig> | (() => Partial<IConfig>);
     TemplatePerfilAcessoComponent,
     TemplateUploadComponent,
     TemplateErroComponent,
-    TemplateLoadingComponent,
     UploadComponent,
     TemplateRelatorioComponent
   ],
@@ -29,7 +27,6 @@ export let options: Partial<IConfig> | (() => Partial<IConfig>);
     NgxMaskModule.forRoot(options)
   ],
   exports: [
-    TemplateLoadingComponent
   ],
   entryComponents: [
   ],

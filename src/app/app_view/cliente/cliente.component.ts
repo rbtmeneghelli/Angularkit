@@ -8,6 +8,7 @@ import { CardCabecalhoDTO } from '../../app_entities/dto/cardCabecalho.dto';
 import { DropDownList } from '../../app_entities/generic/dropdownlist';
 import { Cliente } from '../../app_entities/model/cliente.model';
 import { take } from 'rxjs/operators';
+import { SharedNotificationService } from 'src/app/app_business/service/shared-notification.service';
 
 @Component({
   selector: 'app-cliente',
@@ -21,10 +22,11 @@ export class ClienteComponent implements OnInit {
   public listaStatus: Array<DropDownList>;
   public bloquearCampo: boolean;
   constructor(
-    private sharedService: SharedService,
+    private sharedNotificationService: SharedNotificationService,
     private formBuilder: FormBuilder,
     public clienteService: ClienteService,
-    private activatedRoute: ActivatedRoute) {
+    private activatedRoute: ActivatedRoute,
+    private sharedService: SharedService) {
     this.formulario = this.formBuilder.group({
       ID: [''],
       CPF: ['', [Validators.required, this.validarCpf]],
@@ -84,15 +86,15 @@ export class ClienteComponent implements OnInit {
   salvar() {
     if (this.registroNovo) {
       this.clienteService.create(this.buildEntity()).pipe(take(1)).subscribe(response => {
-        this.sharedService.enviarNotificacaoToRoute('', 'cliente cadastrado com sucesso', 'success', '/cliente');
+        this.sharedNotificationService.enviarNotificacaoToRoute('', 'cliente cadastrado com sucesso', 'success', '/cliente');
       }, error => {
-        this.sharedService.enviarNotificacao('', 'Erro ao cadastrar o novo cliente', 'error');
+        this.sharedNotificationService.enviarNotificacao('', 'Erro ao cadastrar o novo cliente', 'error');
       });
     } else {
       this.clienteService.update(this.formulario.get('ID').value, this.buildEntity()).pipe(take(1)).subscribe(response => {
-        this.sharedService.enviarNotificacaoToRoute('', 'cliente atualizado com sucesso', 'success', '/cliente');
+        this.sharedNotificationService.enviarNotificacaoToRoute('', 'cliente atualizado com sucesso', 'success', '/cliente');
       }, error => {
-        this.sharedService.enviarNotificacao('', 'Erro ao atualizar os dados do cliente', 'error');
+        this.sharedNotificationService.enviarNotificacao('', 'Erro ao atualizar os dados do cliente', 'error');
       });
     }
   }

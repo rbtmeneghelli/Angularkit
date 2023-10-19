@@ -5,6 +5,7 @@ import { Component, OnInit } from '@angular/core';
     templateUrl: './card-filter.component.html',
     styleUrls: ['./card-filter.component.scss']
 })
+
 export class CardFilterComponent implements OnInit {
 
     public isMenuActive = false;

@@ -15,6 +15,7 @@ import { CardCabecalhoDTO } from '../../app_entities/dto/cardCabecalho.dto';
 // Service
 import { AgendaService } from './../../app_business/service/agenda.service';
 import Swal from 'sweetalert2';
+import { SharedNotificationService } from 'src/app/app_business/service/shared-notification.service';
 
 @Component({
   selector: 'app-lista-agenda',
@@ -33,7 +34,7 @@ export class ListaAgendaComponent implements OnInit {
 
   constructor(
     private agendaService: AgendaService,
-    private sharedService: SharedService) { }
+    private sharedNotificationService: SharedNotificationService) { }
 
   ngOnInit() {
     this.cardCabecalhoDTO.tituloCard = 'Lista de Agenda';
@@ -82,7 +83,7 @@ export class ListaAgendaComponent implements OnInit {
     }).then((result) => {
       if (result.value) {
         this.agendaService.deleteById(id).toPromise().then(response => {
-          this.sharedService.enviarNotificacao('', 'o registro foi excluido com sucesso', 'success');
+          this.sharedNotificationService.enviarNotificacao('', 'o registro foi excluido com sucesso', 'success');
           this.loadAll();
         }).catch(error => alert('erro'));
       }

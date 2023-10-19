@@ -3,7 +3,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { SharedService } from 'src/app/app_business/service/shared.service';
-import { MatChipList } from '@angular/material/chips';
+import { SharedNotificationService } from 'src/app/app_business/service/shared-notification.service';
 
 @Component({
     selector: 'app-card-email',
@@ -25,7 +25,8 @@ export class CardEmailComponent {
         public dialogRef: MatDialogRef<CardEmailComponent>,
         @Inject(MAT_DIALOG_DATA) public emails: any,
         protected formBuilder: FormBuilder,
-        protected sharedService: SharedService) {
+        protected sharedService: SharedService,
+        protected sharedNotificationService: SharedNotificationService) {
         this.formulario = this.formBuilder.group({
             email: ['', [Validators.required, Validators.email]],
         });
@@ -38,7 +39,7 @@ export class CardEmailComponent {
             this.listEmails.push(email.trim());
             this.formulario.get('email').setValue('');
         } else {
-            this.sharedService.enviarNotificacao('', 'O email fornecido é invalido, digite um email valido para que ele seja inserido na lista de emails abaixo', 'info');
+            this.sharedNotificationService.enviarNotificacao('', 'O email fornecido é invalido, digite um email valido para que ele seja inserido na lista de emails abaixo', 'info');
         }
     }
 

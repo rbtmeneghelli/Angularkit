@@ -4,6 +4,7 @@ import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { SharedService } from '../../app_business/service/shared.service';
+import { SharedNotificationService } from 'src/app/app_business/service/shared-notification.service';
 
 @Component({
     selector: 'app-modal-cliente',
@@ -16,7 +17,7 @@ export class ModalClienteComponent implements OnInit {
     @Input() closeModal: any;
     @Output() statusModal: EventEmitter<boolean> = new EventEmitter();
     constructor(
-        private sharedService: SharedService,
+        private sharedNotificationService: SharedNotificationService,
         private clienteService: ClienteService
     ) { }
 
@@ -35,12 +36,12 @@ export class ModalClienteComponent implements OnInit {
 
     onSaveSuccess() {
         this.sendStatusModal(true);
-        this.sharedService.enviarNotificacaoToRoute('', this.message, 'success', 'cliente');
+        this.sharedNotificationService.enviarNotificacaoToRoute('', this.message, 'success', 'cliente');
     }
 
     onSaveError() {
         this.sendStatusModal(false);
-        this.sharedService.enviarNotificacao('', this.errorMessage, 'error');
+        this.sharedNotificationService.enviarNotificacao('', this.errorMessage, 'error');
     }
 
     sendStatusModal(status: boolean) {

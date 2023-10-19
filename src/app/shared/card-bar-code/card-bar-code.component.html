@@ -1,0 +1,16 @@
+<div class="row">
+    <div class="col-md col-lg">
+        <mat-card>
+            <mat-card-title class="text-center">Leitura do código de barra para o campo {{field}} </mat-card-title>
+            <mat-divider></mat-divider>
+            <br>
+            <div id="interactive" class="viewport"></div>
+            <!-- <br>
+            <p [hidden]="true">O Codigo de Barra lido é {{scannerCode}}</p> -->
+            <mat-card-actions class="text-right">
+                <button mat-button mat-flat-button color="accent" matTooltip="Fechar" (click)="closeModal()"><i
+                        class="fa fa-close" aria-hidden="true"></i> Fechar</button>
+            </mat-card-actions>
+        </mat-card>
+    </div>
+</div>

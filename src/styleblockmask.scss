@@ -4,56 +4,58 @@
 // [ngClass]="{'blockMask': campoFormularioReativo.disabled === true }"
 // [ngClass="'blockMask'"
 
+@import 'style-variables';
+
 .blockMask {
    
     .mat-input-element:disabled, .mat-form-field-type-mat-native-select.mat-form-field-disabled .mat-form-field-infix::after{
-        color: black !important;
-        font-weight: bold;
+        color: $color-black !important;
+        font-weight: $font-bold;
         background-size: 1px 100% !important;
         background-repeat: repeat-x !important;
-        background-color: #e8e2e2  !important;
-        box-shadow: 0px 0px 0px 13px #e8e2e2  !important;
+        background-color: $color-gray  !important;
+        box-shadow: 0px 0px 0px 13px $color-gray  !important;
     }
 
     .mat-radio-button.mat-radio-disabled .mat-radio-label-content {
-        color: black !important;
-        font-weight: bold;
+        color: $color-black !important;
+        font-weight: $font-bold;
     }  
    
     .mat-select-value-text, .mat-select-placeholder {
-        color: black !important;
-        font-weight: bold;
+        color: $color-black !important;
+        font-weight: $font-bold;
     }
 
     .mat-checkbox-disabled, .mat-checkbox-label {
-        color: black !important;
-        font-weight: bold;
+        color: $color-black !important;
+        font-weight: $font-bold;
     }
 }
 
 .mat-select-disabled.blockMask {
-    color: black !important;
-    font-weight: bold;
+    color: $color-black !important;
+    font-weight: $font-bold;
     background-size: 1px 100% !important;
     background-repeat: repeat-x !important;
-    background-color: #e8e2e2  !important;
-    box-shadow: 0px 0px 0px 13px #e8e2e2  !important;
+    background-color: $color-gray  !important;
+    box-shadow: 0px 0px 0px 13px $color-gray  !important;
 }
 
 input:disabled.blockMask, textarea:disabled.blockMask, select:disabled.blockMask {
-    color: black !important;
-    font-weight: bold;
+    color: $color-black !important;
+    font-weight: $font-bold;
     background-size: 1px 100% !important;
     background-repeat: repeat-x !important;
-    background-color: #e8e2e2  !important;
-    box-shadow: 0px 0px 0px 13px #e8e2e2  !important;
+    background-color: $color-gray  !important;
+    box-shadow: 0px 0px 0px 13px $color-gray  !important;
 }
 
 input:disabled.blockMask::-webkit-input-placeholder, textarea:disabled.blockMask::-webkit-input-placeholder, select:disabled.blockMask::-webkit-select-placeholder {
-    color: black !important;
-    font-weight: bold;
+    color: $color-black !important;
+    font-weight: $font-bold;
     background-size: 1px 100% !important;
     background-repeat: repeat-x !important;
-    background-color: #e8e2e2  !important;
-    box-shadow: 0px 0px 0px 13px #e8e2e2  !important;
+    background-color: $color-gray  !important;
+    box-shadow: 0px 0px 0px 13px $color-gray  !important;
 }

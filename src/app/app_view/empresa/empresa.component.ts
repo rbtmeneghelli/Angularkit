@@ -7,6 +7,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { CardCabecalhoDTO } from '../../app_entities/dto/cardCabecalho.dto';
 import { DropDownList } from '../../app_entities/generic/dropdownlist';
 import { take } from 'rxjs/operators';
+import { SharedNotificationService } from 'src/app/app_business/service/shared-notification.service';
 
 @Component({
     selector: 'app-empresa',
@@ -23,7 +24,8 @@ export class EmpresaComponent implements OnInit {
         private sharedService: SharedService,
         private formBuilder: FormBuilder,
         public empresaService: EmpresaService,
-        private activatedRoute: ActivatedRoute) {
+        private activatedRoute: ActivatedRoute,
+        private sharedNotificationService: SharedNotificationService) {
         this.formulario = this.formBuilder.group({
             ID: [''],
             CNPJ: ['', [Validators.required, this.ValidarCnpj]],
@@ -94,15 +96,15 @@ export class EmpresaComponent implements OnInit {
     salvar() {
         if (this.registroNovo) {
             this.empresaService.create(this.buildEntity()).pipe(take(1)).toPromise().then(response => {
-                this.sharedService.enviarNotificacaoToRoute('', 'empresa cadastrado com sucesso', 'success', '/empresa');
+                this.sharedNotificationService.enviarNotificacaoToRoute('', 'empresa cadastrado com sucesso', 'success', '/empresa');
             }, error => {
-                this.sharedService.enviarNotificacao('', 'Erro ao cadastrar o novo empresa', 'error');
+                this.sharedNotificationService.enviarNotificacao('', 'Erro ao cadastrar o novo empresa', 'error');
             });
         } else {
             this.empresaService.update(this.formulario.get('ID').value, this.buildEntity()).pipe(take(1)).toPromise().then(response => {
-                this.sharedService.enviarNotificacaoToRoute('', 'empresa atualizado com sucesso', 'success', '/empresa');
+                this.sharedNotificationService.enviarNotificacaoToRoute('', 'empresa atualizado com sucesso', 'success', '/empresa');
             }, error => {
-                this.sharedService.enviarNotificacao('', 'Erro ao atualizar os dados do empresa', 'error');
+                this.sharedNotificationService.enviarNotificacao('', 'Erro ao atualizar os dados do empresa', 'error');
             });
         }
     }

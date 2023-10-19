@@ -1,10 +1,8 @@
 import { DropDownList } from 'src/app/app_entities/generic/dropdownlist';
 import { EnumTypeAction } from 'src/app/app_entities/enum/EnumTypeAction';
-import { EnumTypeCookie } from 'src/app/app_entities/enum/EnumTypeCookie';
-import { Cookie, CookieItem } from 'src/app/app_entities/model/cookie.model';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { catchError, map, take, tap } from 'rxjs/operators';
+import { catchError, map, tap } from 'rxjs/operators';
 
 export abstract class BaseService<T> {
 
@@ -55,86 +53,24 @@ export abstract class BaseService<T> {
     return this.http.get<DropDownList[]>(this.actionUrl + url, { headers: this.getOptions() }).pipe(tap(response => console.log('retorno do backend: ', response)));
   }
 
+  exportExcel(sheet?: string, data?: string[], dataFilters?: string[]): Observable<any> {
+    const objectJSON = { columns: data, filters: dataFilters };
+    const columns = { columns: data };
+    // tslint:disable-next-line: max-line-length
+    return this.http.post<any>(`${this.actionUrl}v1/sheet/${sheet}/download`, columns, { headers: this.getOptions(), responseType: 'blob' as 'json' });
+  }
+
   protected getOptions(): HttpHeaders {
-    // const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
     let httpOptions: HttpHeaders = new HttpHeaders();
     httpOptions = httpOptions.set('Content-Type', 'application/json');
     httpOptions = httpOptions.set('Access-Control-Allow-Origin', '*');
     httpOptions = httpOptions.set('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
     // tslint:disable-next-line: max-line-length
     httpOptions = httpOptions.set('Access-Control-Allow-Headers', 'Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers');
-    // if (!!sessionStorage.getItem('usuarioLogado')) {
-    //   httpOptions = httpOptions.append('Authorization', `Bearer ${'TOKEN'}`);
-    // }
-    return httpOptions;
-  }
-
-  // Configuração para gravar request/response dos passos do usuario pelo sistema
-  // Para capturar o resultado do response (retorno do backend apos request do front), utilizar o comando tap dentro do comando pipe
-
-  protected addCookieMenu(funcionalidade: string, tipoAcao: EnumTypeAction) {
-    let cookie: Cookie;
-    this.getIpAddress().toPromise().then(ipMachine => {
-      cookie = new Cookie(
-        this.getMapActions(tipoAcao),
-        funcionalidade,
-        this.getUrl(),
-        ipMachine,
-        this.getUserBrowser(),
-        this.getUserOperationSystem(),
-        new Array<CookieItem>());
-      this.saveAuditoriaMenu(cookie);
-    });
-  }
-
-  public addCookieFuncionalidade(tipoFuncionalidade: EnumTypeCookie, tipoAcao: EnumTypeAction) {
-    let cookie: Cookie;
-    this.getIpAddress().toPromise().then(ipMachine => {
-      cookie = new Cookie(
-        this.getMapActions(tipoAcao),
-        this.getMapFunctionality(tipoFuncionalidade),
-        this.getUrl(),
-        ipMachine,
-        this.getUserBrowser(),
-        this.getUserOperationSystem(),
-        new Array<CookieItem>());
-      localStorage.setItem(this.getCookieFunctionality(tipoFuncionalidade), JSON.stringify(cookie));
-    });
-  }
-
-  protected addCookieItemFromFuncionalidade(tipoFuncionalidade: EnumTypeCookie, urlChamada: string, tipoAcao: EnumTypeAction, nivel: string, request: any, response: any): void {
-    const cookieName = this.getCookieFunctionality(tipoFuncionalidade);
-    if (localStorage.getItem(cookieName) === null || localStorage.getItem(cookieName) === undefined) {
-      this.addCookieFuncionalidade(tipoFuncionalidade, tipoAcao);
-    } else {
-      const cookie: Cookie = JSON.parse(localStorage.getItem(cookieName));
-      if (!!cookie) {
-        cookie.items.push(new CookieItem(urlChamada, this.getMapFunctionality(tipoFuncionalidade), this.getMapActions(tipoAcao), cookie.iP, cookie.navegador, cookie.sistemaOperacional, nivel, request, response));
-      }
-      localStorage.setItem(cookieName, JSON.stringify(cookie));
+    if (!!sessionStorage.getItem('usuarioLogado')) {
+      httpOptions = httpOptions.set('Authorization', `Bearer ${'TOKEN'}`);
     }
-  }
-
-  protected removeCookie(tipoFuncionalidade: EnumTypeCookie) {
-    localStorage.removeItem(this.getCookieFunctionality(tipoFuncionalidade));
-  }
-
-  protected saveAuditoria(tipoFuncionalidade: EnumTypeCookie) {
-    const cookie: Cookie[] = [];
-    cookie.push(JSON.parse(localStorage.getItem(this.getCookieFunctionality(tipoFuncionalidade))));
-    return this.http.post<any>(`${this.actionUrl}/Audit/SaveAuditoriaData`, cookie);
-  }
-
-  protected saveAuditoriaMenu(cookie: Cookie) {
-    this.http.post<any>(`${this.actionUrl}/Audit/SaveAuditoriaMenu`, cookie).pipe(take(1)).toPromise().then(response => { });
-  }
-
-  private getMapFunctionality(key: EnumTypeCookie): string {
-    const map: Map<EnumTypeCookie, string> = new Map<EnumTypeCookie, string>();
-    map.set(EnumTypeCookie.Menu, 'Menu');
-    map.set(EnumTypeCookie.Login, 'Login');
-    map.set(EnumTypeCookie.Home, 'Home');
-    return map.get(key);
+    return httpOptions;
   }
 
   private getIpAddress(): Observable<string> {
@@ -157,14 +93,6 @@ export abstract class BaseService<T> {
     map.set(EnumTypeAction.Authenticate, 'Autenticar');
     map.set(EnumTypeAction.View, 'Visualizar');
     map.set(EnumTypeAction.Disable, 'Desativar');
-    return map.get(key);
-  }
-
-  private getCookieFunctionality(key: EnumTypeCookie): string {
-    const map: Map<EnumTypeCookie, string> = new Map<EnumTypeCookie, string>();
-    map.set(EnumTypeCookie.Menu, 'CookieMenu');
-    map.set(EnumTypeCookie.Login, 'CookieLogin');
-    map.set(EnumTypeCookie.Home, 'CookieHome');
     return map.get(key);
   }
 

@@ -7,6 +7,7 @@ import localePtBr from '@angular/common/locales/pt';
 import { ExportadorService } from '../../app_business/service/exportador.service';
 import { SharedService } from '../../app_business/service/shared.service';
 import { MatDialog } from '@angular/material/dialog';
+import { SharedNotificationService } from 'src/app/app_business/service/shared-notification.service';
 
 export interface Food {
   value: string;
@@ -62,7 +63,11 @@ export class TemplateRelatorioComponent implements OnInit {
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
-  constructor(private exportadorService: ExportadorService, private sharedService: SharedService, private dialog: MatDialog) {
+  constructor(
+    private exportadorService: ExportadorService, 
+    private sharedNotificationService: SharedNotificationService, 
+    private dialog: MatDialog,
+    private sharedService: SharedService) {
     registerLocaleData(localePtBr);
   }
 
@@ -72,7 +77,7 @@ export class TemplateRelatorioComponent implements OnInit {
 
   exportar(tipoArquivo: string) {
     // this.exportarPdf(ELEMENT_DATA);
-    this.sharedService.enviarNotificacao('teste', 'ola', 'success');
+    this.sharedNotificationService.enviarNotificacao('teste', 'ola', 'success');
   }
   //   exportarPdf(){
   //     const doc = new jsPDF('p', 'pt', 'a4', true);

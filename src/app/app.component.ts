@@ -60,3 +60,21 @@ export class AppComponent implements OnInit {
       }));
   }
 }
+
+
+// async ngOnInit(): Promise<void> {
+//   await this.formularioService.getUser().pipe(take(1)).toPromise().then(response => {
+//     this.generalService.setUserNameValue(response['user-profile']?.displayName);
+//   }).catch(error => {
+//   });
+//   this.title = 'product-supply-data-pipeline-form';
+//   setInterval(async () => await this.checkConnection(), 5000);
+// }
+
+// async checkConnection(): Promise<void> {
+//   fetch('/').then(response => {
+//     this.generalService.setConnectionStatusNetwork(true);
+//   }).catch(error => {
+//     this.generalService.setConnectionStatusNetwork(false);
+//   });
+// }

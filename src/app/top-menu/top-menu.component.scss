@@ -1,0 +1,11 @@
+.header-toolbar{
+    display: flex;
+    justify-content: space-between;
+    /* Styling only */
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.cursorHand{
+    cursor: pointer !important;
+}

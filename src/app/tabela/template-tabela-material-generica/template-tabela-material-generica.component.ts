@@ -1,4 +1,4 @@
-import { Component, Input, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, Input, ViewChild, AfterViewInit, SimpleChanges } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -9,16 +9,21 @@ import { CardFilterComponent } from '../../shared/card-filter/card-filter.compon
 @Component({
     selector: 'app-template-tabela-material-generica',
     templateUrl: './template-tabela-material-generica.component.html',
-    styleUrls: ['./template-tabela-material-generica.component.css']
+    styleUrls: ['./template-tabela-material-generica.component.scss']
 })
 
 export class TemplateTabelaMaterialGenericaComponent implements AfterViewInit {
     @Input() tableData;
     @Input() columnHeader;
     @Input() pageSize;
+
+    public pageSizeOptions?: number[] = [];
     public objectKeys = Object.keys;
     public dataSource?: any = new MatTableDataSource();
     public arrHeaders: any[] = [];
+    public dataFilters?: Array<any> = new Array<any>();
+    public totalRecords?: number;
+    public pageSizeOption?: number[] = [25, 50, 100, 500, 1000, 2000];
 
     @ViewChild(MatPaginator) paginator: MatPaginator;
     @ViewChild(MatSort) sort: MatSort;
@@ -28,8 +33,14 @@ export class TemplateTabelaMaterialGenericaComponent implements AfterViewInit {
     constructor(public dialog: MatDialog) { }
 
     ngAfterViewInit(): void {
-        this.configDataTable(this.tableData);
+        this.configDataTable([]);
     }
+
+    ngOnChanges(changes: SimpleChanges): void {
+        if (!!this.tableData && this.tableData?.length > 0) {
+            this.configDataTable(this.tableData);
+        }
+      }
 
     applyFilter(filterValue: string): void {
         this.dataSource.filter = filterValue.trim().toLowerCase();
@@ -61,7 +72,8 @@ export class TemplateTabelaMaterialGenericaComponent implements AfterViewInit {
             width: 'auto',
             height: '700px',
             data: {
-                columnHeader: this.arrHeaders
+                columnHeader: this.arrHeaders,
+                dataFilters: this.dataFilters
             }
         });
         dialogRef.afterClosed().subscribe(result => {
@@ -103,4 +115,22 @@ export class TemplateTabelaMaterialGenericaComponent implements AfterViewInit {
     showFilter(): void {
         this.cardFilterComponent.showMenu(true);
     }
+
+    async getFilter(filter): Promise<void> {
+        // Exemplo de codigo para atualizar a lista
+
+        // let lista: Array<any> = new Array<any>();
+        // // tslint:disable-next-line: max-line-length
+        // await this.formularioService.getAllFilter(this.generalService.getMapEnumForm(this.formulario), { filters: filter }).pipe(take(1)).toPromise().then(response => {
+        //   lista = response?.data as Array<any>;
+        //   this.dataFilters = filter;
+        //   this.configDataTable(lista);
+        // }).catch((error: HttpErrorResponse) => {
+        //   if (error.status === 401) {
+        //     this.notificationService.sendNotification('', TypeMessage.TokenExpired, ActionMessage.Warning);
+        //   } else {
+        //     this.notificationService.sendNotification('', TypeMessage.Personalized, ActionMessage.Error);
+        //   }
+        // });
+      }
 }

@@ -4,7 +4,7 @@ import { LoaderService } from '../../app_business/service/loader.service';
 @Component({
     selector: 'app-loading',
     templateUrl: './loader.component.html',
-    styleUrls: ['./loader.component.css']
+    styleUrls: ['./loader.component.scss']
 })
 export class LoaderComponent implements OnInit {
     public color = 'primary';

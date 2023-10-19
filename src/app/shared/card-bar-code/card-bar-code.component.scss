@@ -1,0 +1,20 @@
+.viewport::ng-deep video {
+    width: 100% !important;
+    height: 480px !important;
+    object-fit: cover;
+  }
+  
+  #interactive.viewport {
+    position: relative !important;
+  }
+  
+  #interactive.viewport > canvas, #interactive.viewport > video {
+    max-width: 100% !important;
+    width: 100% !important;
+  }
+
+  #interactive canvas {
+    position: absolute !important;
+    left: 0 !important;
+    top: 0 !important;
+}

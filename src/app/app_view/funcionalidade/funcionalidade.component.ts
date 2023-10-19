@@ -7,6 +7,7 @@ import { ActivatedRoute } from '@angular/router';
 import { CardCabecalhoDTO } from '../../app_entities/dto/cardCabecalho.dto';
 import { DropDownList } from '../../app_entities/generic/dropdownlist';
 import { take } from 'rxjs/operators';
+import { SharedNotificationService } from 'src/app/app_business/service/shared-notification.service';
 
 @Component({
   selector: 'app-funcionalidade',
@@ -23,7 +24,8 @@ export class FuncionalidadeComponent implements OnInit {
     private sharedService: SharedService,
     private formBuilder: FormBuilder,
     public funcionalidadeService: FuncionalidadeService,
-    private activatedRoute: ActivatedRoute) {
+    private activatedRoute: ActivatedRoute,
+    private sharedNotificationService: SharedNotificationService) {
     this.formulario = this.formBuilder.group({
       ID: [''],
       DESCRICAO: ['', Validators.required],
@@ -73,12 +75,12 @@ export class FuncionalidadeComponent implements OnInit {
   salvar() {
     if (this.registroNovo) {
       this.funcionalidadeService.create(this.buildEntity()).pipe(take(1)).toPromise().then(response => {
-        this.sharedService.enviarNotificacaoToRoute('', 'funcionalidade cadastrado com sucesso', 'success', '/funcionalidade');
-      }).catch(error => this.sharedService.enviarNotificacao('', 'Erro ao cadastrar a nova funcionalidade', 'error'));
+        this.sharedNotificationService.enviarNotificacaoToRoute('', 'funcionalidade cadastrado com sucesso', 'success', '/funcionalidade');
+      }).catch(error => this.sharedNotificationService.enviarNotificacao('', 'Erro ao cadastrar a nova funcionalidade', 'error'));
     } else {
       this.funcionalidadeService.update(this.formulario.get('ID').value, this.buildEntity()).pipe(take(1)).toPromise().then(response => {
-        this.sharedService.enviarNotificacaoToRoute('', 'funcionalidade atualizado com sucesso', 'success', '/funcionalidade');
-      }).catch(error => this.sharedService.enviarNotificacao('', 'Erro ao cadastrar a nova funcionalidade', 'error'));
+        this.sharedNotificationService.enviarNotificacaoToRoute('', 'funcionalidade atualizado com sucesso', 'success', '/funcionalidade');
+      }).catch(error => this.sharedNotificationService.enviarNotificacao('', 'Erro ao cadastrar a nova funcionalidade', 'error'));
     }
   }
 

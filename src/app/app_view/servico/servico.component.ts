@@ -8,6 +8,7 @@ import { CardCabecalhoDTO } from '../../app_entities/dto/cardCabecalho.dto';
 import { DropDownList } from '../../app_entities/generic/dropdownlist';
 import { take } from 'rxjs/operators';
 import { ServicoService } from '../../app_business/service/servico.service';
+import { SharedNotificationService } from 'src/app/app_business/service/shared-notification.service';
 
 @Component({
   selector: 'app-servico',
@@ -26,7 +27,8 @@ export class ServicoComponent implements OnInit {
     private sharedService: SharedService,
     private formBuilder: FormBuilder,
     public servicoService: ServicoService,
-    private activatedRoute: ActivatedRoute) {
+    private activatedRoute: ActivatedRoute,
+    private sharedNotificationService: SharedNotificationService) {
     this.keys = Object.keys(this.eTipoServico).filter(k => !isNaN(Number(k)));
     this.formulario = this.formBuilder.group({
       ID: [''],
@@ -66,7 +68,7 @@ export class ServicoComponent implements OnInit {
     const servico: Servico = new Servico();
     servico.descricao = this.formulario.get('DESCRICAO').value;
     servico.tipoServico = this.formulario.get('TIPOSERVICO').value;
-    servico.status = (this.formulario.get('STATUS').value === '1' ? true : false) ;
+    servico.status = (this.formulario.get('STATUS').value === '1' ? true : false);
     if (this.registroNovo) {
       servico.dataCriacao = new Date();
     } else {
@@ -78,12 +80,12 @@ export class ServicoComponent implements OnInit {
   salvar() {
     if (this.registroNovo) {
       this.servicoService.create(this.buildEntity()).pipe(take(1)).toPromise().then(response => {
-        this.sharedService.enviarNotificacaoToRoute('', 'serviço cadastrado com sucesso', 'success', '/servico');
-      }).catch(error => this.sharedService.enviarNotificacao('', 'Erro ao cadastrar a nova serviço', 'error'));
+        this.sharedNotificationService.enviarNotificacaoToRoute('', 'serviço cadastrado com sucesso', 'success', '/servico');
+      }).catch(error => this.sharedNotificationService.enviarNotificacao('', 'Erro ao cadastrar a nova serviço', 'error'));
     } else {
       this.servicoService.update(this.formulario.get('ID').value, this.buildEntity()).pipe(take(1)).toPromise().then(response => {
-        this.sharedService.enviarNotificacaoToRoute('', 'serviço atualizado com sucesso', 'success', '/servico');
-      }).catch(error => this.sharedService.enviarNotificacao('', 'Erro ao cadastrar a nova serviço', 'error'));
+        this.sharedNotificationService.enviarNotificacaoToRoute('', 'serviço atualizado com sucesso', 'success', '/servico');
+      }).catch(error => this.sharedNotificationService.enviarNotificacao('', 'Erro ao cadastrar a nova serviço', 'error'));
     }
   }
 

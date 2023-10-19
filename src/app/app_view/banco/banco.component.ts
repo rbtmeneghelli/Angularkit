@@ -3,11 +3,11 @@ import { BancoService } from '../../app_business/service/banco.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { SharedService } from '../../app_business/service/shared.service';
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../../guards/auth.guard.service';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { CardCabecalhoDTO } from '../../app_entities/dto/cardCabecalho.dto';
 import { DropDownList } from '../../app_entities/generic/dropdownlist';
 import { take } from 'rxjs/operators';
+import { SharedNotificationService } from 'src/app/app_business/service/shared-notification.service';
 
 @Component({
   selector: 'app-banco',
@@ -24,7 +24,8 @@ export class BancoComponent implements OnInit {
     private sharedService: SharedService,
     private formBuilder: FormBuilder,
     public bancoService: BancoService,
-    private activatedRoute: ActivatedRoute) {
+    private activatedRoute: ActivatedRoute,
+    private sharedNotificationService: SharedNotificationService) {
     this.formulario = this.formBuilder.group({
       ID: [''],
       NOMEBANCO: ['', Validators.required],
@@ -96,12 +97,12 @@ export class BancoComponent implements OnInit {
   salvar() {
     if (this.registroNovo) {
       this.bancoService.create(this.buildEntity()).pipe(take(1)).toPromise().then(response => {
-        this.sharedService.enviarNotificacaoToRoute('', 'banco cadastrado com sucesso', 'success', '/banco');
-      }).catch(error => this.sharedService.enviarNotificacao('', 'Erro ao cadastrar o novo banco', 'error'));
+        this.sharedNotificationService.enviarNotificacaoToRoute('', 'banco cadastrado com sucesso', 'success', '/banco');
+      }).catch(error => this.sharedNotificationService.enviarNotificacao('', 'Erro ao cadastrar o novo banco', 'error'));
     } else {
       this.bancoService.update(this.formulario.get('ID').value, this.buildEntity()).pipe(take(1)).toPromise().then(response => {
-        this.sharedService.enviarNotificacaoToRoute('', 'banco atualizado com sucesso', 'success', '/banco');
-      }).catch(error => this.sharedService.enviarNotificacao('', 'Erro ao atualizar os dados do banco', 'error'));
+        this.sharedNotificationService.enviarNotificacaoToRoute('', 'banco atualizado com sucesso', 'success', '/banco');
+      }).catch(error => this.sharedNotificationService.enviarNotificacao('', 'Erro ao atualizar os dados do banco', 'error'));
     }
   }
 }

@@ -1,0 +1,19 @@
+<mat-toolbar color="primary" class="header-toolbar">
+    <div style="text-align: left;">
+        <small class="mr-1"><img src="../../../assets/logo.png" width="48" height="48"></small>
+    </div>
+    <div style="text-align: center;">
+        <small class="mr-1 textoGeral"> {{currentPage}} </small>
+    </div>
+    <div style="text-align: end;">
+        <i class="fa fa-bars cursorHand" aria-hidden="true" [matMenuTriggerFor]="menu"></i>
+        <mat-menu #menu="matMenu">
+            <small mat-menu-item class="textoGeral" *ngIf="connectionStatus"> <i class="fa fa-circle" aria-hidden="true"
+                    style="color: green" matToolTip="Online"></i> Status Online</small>
+            <small mat-menu-item class="textoGeral" *ngIf="!connectionStatus"> <i class="fa fa-circle"
+                    aria-hidden="true" style="color: red" matToolTip="Offline"></i> Status Offline</small>
+            <small mat-menu-item class="mr-1"><i class="fa fa-user iconMenu" aria-hidden="true"></i> Usuário
+                {{userName}}</small>
+        </mat-menu>
+    </div>
+</mat-toolbar>

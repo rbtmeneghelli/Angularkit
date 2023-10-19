@@ -13,6 +13,7 @@ import { CardCabecalhoDTO } from '../../app_entities/dto/cardCabecalho.dto';
 // Service
 import { SharedService } from './../../app_business/service/shared.service';
 import { BancoService } from '../../app_business/service/banco.service';
+import { SharedNotificationService } from 'src/app/app_business/service/shared-notification.service';
 
 @Component({
   selector: 'app-lista-banco',
@@ -33,7 +34,8 @@ export class ListaBancoComponent implements OnInit {
 
   constructor(
     private sharedService: SharedService,
-    private bancoService: BancoService) { }
+    private bancoService: BancoService,
+    private sharedNotificationService: SharedNotificationService) { }
 
   ngOnInit() {
     this.cardCabecalhoDTO.tituloCard = 'Lista de Bancos';
@@ -76,7 +78,7 @@ export class ListaBancoComponent implements OnInit {
     }).then((result) => {
       if (result.value) {
         this.bancoService.deleteById(id).toPromise().then(response => {
-          this.sharedService.enviarNotificacao('', 'o registro foi excluido com sucesso', 'success');
+          this.sharedNotificationService.enviarNotificacao('', 'o registro foi excluido com sucesso', 'success');
           this.loadAll();
         }).catch(error => alert('erro'));
       }

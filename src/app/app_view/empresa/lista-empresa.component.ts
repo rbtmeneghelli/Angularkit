@@ -13,6 +13,7 @@ import { SharedService } from 'src/app/app_business/service/shared.service';
 import { EmpresaService } from 'src/app/app_business/service/empresa.service';
 import Swal from 'sweetalert2';
 import { Empresa } from 'src/app/app_entities/model/empresa.model';
+import { SharedNotificationService } from 'src/app/app_business/service/shared-notification.service';
 
 
 @Component({
@@ -32,7 +33,8 @@ export class ListaEmpresaComponent implements OnInit {
 
     constructor(
         private sharedService: SharedService,
-        private empresaService: EmpresaService) { }
+        private empresaService: EmpresaService,
+        private sharedNotificationService: SharedNotificationService) { }
 
     ngOnInit() {
         this.cardCabecalhoDTO.tituloCard = 'Lista de Empresas';
@@ -81,7 +83,7 @@ export class ListaEmpresaComponent implements OnInit {
         }).then((result) => {
             if (result.value) {
                 this.empresaService.updateStatus(id).toPromise().then(response => {
-                    this.sharedService.enviarNotificacao('', 'o registro foi excluido com sucesso', 'success');
+                    this.sharedNotificationService.enviarNotificacao('', 'o registro foi excluido com sucesso', 'success');
                     this.loadAll();
                 }).catch(error => alert('erro'));
             }
