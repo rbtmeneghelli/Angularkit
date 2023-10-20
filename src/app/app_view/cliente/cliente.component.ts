@@ -1,7 +1,7 @@
 import { ClienteService } from '../../app_business/service/cliente.service';
 import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { SharedService } from '../../app_business/service/shared.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { AuthService } from '../../guards/auth.guard.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { CardCabecalhoDTO } from '../../app_entities/dto/cardCabecalho.dto';
@@ -15,7 +15,7 @@ import { SharedNotificationService } from 'src/app/app_business/service/shared-n
   templateUrl: './cliente.component.html'
 })
 
-export class ClienteComponent implements OnInit {
+export class ClienteComponent implements OnInit, AfterViewInit {
   public cardCabecalhoDTO: CardCabecalhoDTO = new CardCabecalhoDTO();
   public registroNovo: boolean;
   public formulario: FormGroup;
@@ -26,12 +26,21 @@ export class ClienteComponent implements OnInit {
     private formBuilder: FormBuilder,
     public clienteService: ClienteService,
     private activatedRoute: ActivatedRoute,
-    private sharedService: SharedService) {
+    private sharedService: SharedService,
+    private route: ActivatedRoute) {
     this.formulario = this.formBuilder.group({
       ID: [''],
       CPF: ['', [Validators.required, this.validarCpf]],
       NOME: ['', Validators.required],
       STATUS: ['', Validators.required],
+    });
+  }
+
+  ngAfterViewInit(): void {
+    this.route.data.subscribe(async (data: any) => {
+      if (!!data) {
+        //Faz alguma ação
+      }
     });
   }
 
@@ -63,7 +72,7 @@ export class ClienteComponent implements OnInit {
 
   getCpf() {
     return this.formulario.get('CPF').hasError('required') ? 'O campo cpf é obrigatório' :
-    this.formulario.get('CPF').hasError('cpfInvalido') ? 'O cpf digitado é invalido' : '';
+      this.formulario.get('CPF').hasError('cpfInvalido') ? 'O cpf digitado é invalido' : '';
   }
 
   getNome() {
@@ -105,15 +114,15 @@ export class ClienteComponent implements OnInit {
     let cpf = controle.value;
 
     if (cpf === undefined) {
-      return {cpfInvalido: true};
+      return { cpfInvalido: true };
     } else if (cpf === '' || cpf === null) {
-      return {cpfInvalido: true};
+      return { cpfInvalido: true };
     }
 
     cpf = cpf.replace(/[^\d]+/g, '');
 
     if (cpf.length !== 11) {
-      return {cpfInvalido: true};
+      return { cpfInvalido: true };
     }
 
     soma = 0;
@@ -132,7 +141,7 @@ export class ClienteComponent implements OnInit {
       cpf === '99999999999' ||
       !regex.test(cpf)
     ) {
-      return {cpfInvalido: true};
+      return { cpfInvalido: true };
     } else {
       for (let i = 1; i <= 9; i++) {
         // tslint:disable-next-line: radix
@@ -145,7 +154,7 @@ export class ClienteComponent implements OnInit {
       }
       // tslint:disable-next-line: radix
       if (resto !== parseInt(cpf.substring(9, 10))) {
-        return {cpfInvalido: true};
+        return { cpfInvalido: true };
       }
 
       soma = 0;
@@ -160,7 +169,7 @@ export class ClienteComponent implements OnInit {
       }
       // tslint:disable-next-line: radix
       if (resto !== parseInt(cpf.substring(10, 11))) {
-        return {cpfInvalido: true};
+        return { cpfInvalido: true };
       }
       return null;
     }
