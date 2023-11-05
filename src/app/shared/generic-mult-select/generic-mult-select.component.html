@@ -1,15 +1,16 @@
 <form role="form" [formGroup]="controlForm">
     <div class="multSelect-dropdown">
         <span class="top-label" for="control" labelError
-            [hasError]="controlForm.controls['segmento'].invalid && controlForm.controls['segmento'].touched">     
+            [hasError]="controlForm.controls['teste'].invalid && controlForm.controls['teste'].touched">
             <span class="required-field" *ngIf="!disabled && isRequired">*</span>{{nomeLabel}}</span><i
-            class="aviva-icon-chevrondown"></i><select (click)="ocultarDropDown()" [disabled]="mostrarDropDown"
-            formControlName="segmento">
-            <option value="0">{{ retornarSegmentosSelecionadosPorNome() }}</option>
+            class="aviva-icon-chevrondown"></i>
+            <select (click)="ocultarDropDown()" [disabled]="mostrarDropDown"
+            formControlName="teste">
+            <option [value]="opcaoPadrao">{{ opcaoEscolhida }}</option>
         </select><span
-            *ngIf="controlForm.controls['segmento'].invalid && controlForm.controls['segmento'].touched && !mostrarDropDown"
+            *ngIf="controlForm.controls['teste'].invalid && controlForm.controls['teste'].touched && !mostrarDropDown"
             class="bottom-label-error"> {{campoObrigatorio}}</span>
-        <div (mouseleave)="ocultarDropDown()">
+        <div (mouseleave)="ocultarDropDown()" touchLeave (touchLeave)="ocultarDropDown()">
             <div class="drop-show" *ngIf="mostrarDropDown"><label *ngFor="let item of list" class="aviva-checkbox">
                     <div class="aviva-checkbox-value">
                         <span class="text"> {{item.viewValue}}</span>&nbsp;<input type="checkbox" [checked]="item.marcado"

@@ -1,7 +1,8 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges, OnChanges } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { MultSelectList } from 'src/app/app_entities/generic/multselectlist';
 import { DadosConstant } from 'src/app/app_entities/constants/dados.constant';
+import { isArray } from 'util';
 
 @Component({
     selector: 'app-dropdown-multi-select',
@@ -9,7 +10,7 @@ import { DadosConstant } from 'src/app/app_entities/constants/dados.constant';
     styleUrls: ['./segmento-dropdown-multi-select.component.scss']
 })
 
-export class SegmentoDropDownMultiSelectComponent implements OnInit {
+export class SegmentoDropDownMultiSelectComponent implements OnInit, OnChanges {
 
     @Input() nomeLabel: string = 'Segmento';
     @Input() list: MultSelectList[] = DadosConstant;
@@ -21,51 +22,116 @@ export class SegmentoDropDownMultiSelectComponent implements OnInit {
 
     public mostrarDropDown: boolean = false;
     public campoObrigatorio: string = 'Campo obrigatório não preenchido';
-    public segmentoList: MultSelectList[] = [];
-    public optionDefault: string = '';
+    public itensList: MultSelectList[] = [];
+    public opcaoPadrao: number[] = [];
+    public tempo: any;
+    public opcaoEscolhida!: string;
 
     constructor() {
     }
 
-    ngOnInit(): void {
+    setValues(value: string) {
+        if (isArray(value) && !!this.list) {
+            this.preencherDropDown();
+        }
     }
 
-    public retornarSegmentosSelecionadosPorNome(): string {
-        return this.segmentoList.length > 0 ? this.segmentoList.map(param => param.viewValue).join(', ') : '';
+    ngOnInit() {
+        if (this.disabled) {
+            this.controlForm.disable();
+        }
+
+        let handleFormChanges = this.controlForm.controls['teste'
+        ].valueChanges.subscribe((value) => {
+            this.setValues(value);
+            handleFormChanges.unsubscribe();
+        });
     }
 
-    public retornarSegmentosSelecionadosPorId(): string {
-        return this.segmentoList.length > 0 ? this.segmentoList.map(param => param.value).join(', ') : '';
+    ngOnChanges(changes: SimpleChanges): void {
+        this.setValues(this.controlForm.controls['teste'].value);
+    }
+
+    public retornarSelecionadosPorNome(): string {
+        return this.itensList.length > 0 ? this.itensList.map(param => param.viewValue).join(', ') : '';
+    }
+
+    public retornarSelecionadosPorId(): number[] {
+        const arrItens: number[] = [];
+
+        if (this.itensList.length > 0) {
+          this.itensList.map((param) => {
+            arrItens.push(param.value as unknown as number);
+          });
+        }
+    
+        return arrItens;
     }
 
     public getItensSelecionados(item: MultSelectList): void {
 
         if (item?.marcado) {
-            var index = this.segmentoList.findIndex(param => param.value === item.value);
-            this.segmentoList.splice(index, 1);
+            var index = this.itensList.findIndex(param => param.value === item.value);
+            this.itensList.splice(index, 1);
             const itemSelecionado = this.list.findIndex(x => x.value == item.value);
             this.list[itemSelecionado].marcado = false;
         } else {
-            this.segmentoList.push(item);
+            this.itensList.push(item);
             const itemSelecionado = this.list.findIndex(x => x.value == item.value);
             this.list[itemSelecionado].marcado = true;
         }
 
+        this.opcaoEscolhida = this.retornarSelecionadosPorNome();
         this.compartilharSegmentosSelecionados();
     }
 
     public ocultarDropDown(): void {
-        this.mostrarDropDown = !this.mostrarDropDown;
         if (this.mostrarDropDown) {
-            this.controlForm.controls['segmento'].disable();
+            this.controlForm.controls['teste'].enable();
+            this.mostrarDropDown = !this.mostrarDropDown;
+            // } else if (this._app.isMobile()) {
+            //     this.ocultarDropDownMobile();
+            // }
         } else {
-            this.controlForm.controls['segmento'].enable();
+            this.controlForm.controls['teste'].disable();
+            this.mostrarDropDown = !this.mostrarDropDown;
         }
     }
 
+    private preencherDropDown(): void {
+        if (this.list.length > 0) {
+            for (const item of this.controlForm.controls['teste'].value) {
+                const itemSelecionado = this.list.findIndex((x) => x.value == item);
+                this.list[itemSelecionado].marcado = true;
+                this.itensList.push(this.list[itemSelecionado]);
+            }
+            this.opcaoPadrao = this.retornarSelecionadosPorId();
+            this.opcaoEscolhida = this.retornarSelecionadosPorNome();
+        }
+    }
+
+    private ocultarDropDownMobile(): void {
+        this.controlForm.controls['teste'].disable();
+        this.mostrarDropDown = !this.mostrarDropDown;
+        clearTimeout(this.tempo);
+        setTimeout(() => {
+            if (this.controlForm.controls['teste'].disabled) {
+                this.controlForm.controls['teste'].enable();
+                this.mostrarDropDown = false;
+            }
+        }, 10000);
+    }
+
     private compartilharSegmentosSelecionados(): void {
-        this.optionDefault = this.retornarSegmentosSelecionadosPorId();
-        this.controlForm.controls['segmento'].setValue(!!this.optionDefault ? this.optionDefault : null);
-        this.compartilharItensSelecionados.emit(this.controlForm.controls['segmento'].value);
+        this.opcaoPadrao = this.retornarSelecionadosPorId();
+        this.controlForm.controls['teste'].setValue(this.opcaoPadrao);
+        this.compartilharItensSelecionados.emit(this.controlForm.controls['teste'].value);
+    }
+
+    public limparDropDown(): void {
+        this.itensList = []
+        for (const item of this.list) {
+            item.marcado = false
+        }
     }
 }
