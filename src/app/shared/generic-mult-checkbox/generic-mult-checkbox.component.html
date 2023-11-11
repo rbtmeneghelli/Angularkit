@@ -1,0 +1,12 @@
+<label>
+    <div>
+        <span>{{ titulo }}</span>
+        <div>
+            <ng-container *ngFor="let option of checkboxOptions; let i = index">
+                <input type="checkbox" (change)="toggleCheckbox(i)" [value]="control.value[i]" [disabled]="disabled"
+                    [checked]="control.value[i] === true" />
+                <span>{{ option }} &nbsp;&nbsp;</span>
+            </ng-container>
+        </div>
+    </div>
+</label>
