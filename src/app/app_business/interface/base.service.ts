@@ -17,8 +17,8 @@ export abstract class BaseService<T> {
     return this.http.post<any>(`${this.actionUrl}/getall`, filter, { headers: this.getOptions() });
   }
 
-  getById(clienteid: number): Observable<T> {
-    return this.http.get<T>(`${this.actionUrl}/GetById/${clienteid}`, { headers: this.getOptions() });
+  getById(id?: number): Observable<T> {
+    return this.http.get<T>(`${this.actionUrl}/GetById/${id}`, { headers: this.getOptions() });
     // Example using function to convert special Characters in Base64 (Utilizar comando tap or map)
     //return this.http.get<ResponseResult<T>>(`${this.actionUrl}/${id}`, { headers: this.getOptions() })
     //.pipe(map(response => ConvertDataBase64ToString(response)));
