@@ -698,6 +698,16 @@ export class SharedService {
         }
         return false;
     }
+
+    public getDateFormat(value: Date) {
+        return value.toLocaleDateString().split('/').reverse().join('-');
+    }
+
+    public validDate(paramIni: string = '2024-01-15', paramFinal: string = '2024-01-15'){
+        let initialDate = new Date(paramIni).setHours(0,0,0,0);
+        let finalDate = new Date(paramFinal).setHours(0,0,0,0);
+        return initialDate.valueOf() < finalDate.valueOf() ? false : true;        
+    }
 }
 
 export function ValidarSelect(control: AbstractControl) {
