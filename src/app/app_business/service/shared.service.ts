@@ -8,6 +8,11 @@ import { MatDialogConfig } from '@angular/material/dialog';
 import { ClienteFilterData } from 'src/app/app_entities/filter/cliente-filter-data';
 import { BehaviorSubject, Observable } from 'rxjs';
 
+const regexOnlyNumber: RegExp = new RegExp(/[^0-9]+/g);
+const regexOnlyAlphanumeric: RegExp = new RegExp(/[^a-zA-Z0-9]+/g);
+const notRepeatedSpace: RegExp = new RegExp(/\s+/g);
+const regexNotSpecialCharacter: RegExp = new RegExp(/[^a-zA-Záàãâäéèêëíìîïóòõôöúùûü0-9-çÇ\p{P}\s]+/g);
+
 @Injectable({
     providedIn: 'root'
 })
@@ -24,6 +29,43 @@ export class SharedService {
         this.currentPage = new BehaviorSubject<string>('');
     }
 
+    static somenteNumerosValidos(value: any): string {
+        value = value.toString().replace(regexOnlyNumber, '');
+        return !!value ? (value !== '0' ? parseInt(value).toString() : '') : '';
+    }
+
+    static getOnlyNumbers(value: any): string { 
+        return (value ?? '').toString().replace(regexOnlyNumber, ''); 
+    } 
+    
+    static getOnlyAlphaNumeric(value: any): string { 
+        return (value ?? '').toString().replace(regexOnlyAlphanumeric, ''); 
+    }
+
+    static toBrazilDateFormat(value: Date): string { 
+        if (value === null) { 
+            return null; 
+        } 
+        //return moment(value).format('DD/MM/YYYY'); 
+    }
+
+    static truncate(source: string, size: number, concat: string) { 
+        return source.length > size ? source.slice(0, size - 1) + concat : source; 
+    }
+
+    static toBrazilFormat(value: any, minimumFractionDigits: number = 8, maximumFractionDigits: number = 8): string {
+        if (value == null) return null;
+        let newValue = parseFloat(value.toString());
+        const numberFomat = Intl.NumberFormat('pt-BR', { minimumFractionDigits: minimumFractionDigits, maximumFractionDigits: maximumFractionDigits, }); 
+        return numberFomat.format(newValue);
+    }
+
+    static getNoRepeatedSpaceAlphanumeric(value: any): string { 
+        return (value ?? '').toString()
+        .replace(notRepeatedSpace, ' ')
+        .replace(regexNotSpecialCharacter, ''); 
+    }
+    
     public getCurrentPageValue(): Observable<string> {
         return this.currentPage.asObservable();
     }
