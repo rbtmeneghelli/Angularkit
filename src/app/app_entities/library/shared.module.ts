@@ -17,6 +17,7 @@ import { CardEmailComponent } from 'src/app/shared/card-email/card-email.compone
 import { PasteDateDirective } from 'src/app/shared/directive/paste-date.directive';
 import { AutoFocusDirective } from 'src/app/shared/directive/autofocus.directive';
 import { CardErrorComponent } from 'src/app/shared/card-error/card-error.component';
+import { OnlyNumbersValidDirective } from 'src/app/shared/directive/only-numbers-valid.directive';
 registerLocaleData(localePt, 'pt-BR');
 
 @NgModule({
@@ -30,7 +31,8 @@ registerLocaleData(localePt, 'pt-BR');
         CardEmailComponent,
         PasteDateDirective,
         AutoFocusDirective,
-        CardErrorComponent
+        CardErrorComponent,
+        OnlyNumbersValidDirective
     ],
     imports: [
         NgbModule,
@@ -50,7 +52,8 @@ registerLocaleData(localePt, 'pt-BR');
         CardEmailComponent,
         PasteDateDirective,
         AutoFocusDirective,
-        CardErrorComponent
+        CardErrorComponent,
+        OnlyNumbersValidDirective
     ],
     providers: [
         { provide: LOCALE_ID, useValue: 'pt-BR' },
