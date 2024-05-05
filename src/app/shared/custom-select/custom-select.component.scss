@@ -1,0 +1,76 @@
+.custom-select-244 {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    height: calc(1.5em + 0.75rem + 2px);
+    padding: 0.375rem 1.75rem 0.375rem 0.75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #495057;
+    vertical-align: middle;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+
+    .select-selected {
+        border: 1px solid #ccc;
+        padding: 5px 30px 5px 10px;
+        cursor: pointer;
+        background-color: #f4f4f4;
+        display: contents;
+    }
+
+    .select-items {
+        display: none;
+        position: absolute;
+        background-color: #fff;
+        border: 1px solid #ccc;
+        border-top: none;
+        width: 100%;
+        z-index: 1;
+    }
+
+    .select-items div {
+        padding: 10px;
+        cursor: pointer;
+    }
+
+    .select-items div:hover {
+        background-color: #f2f2f2;
+    }
+
+    .custom-select-244.open .select-items {
+        display: block;
+    }
+
+    .hidden {
+        display: none;
+    }
+
+    .select-arrow {
+        position: absolute;
+        top: 50%;
+        right: 10px;
+        transform: translateY(-50%);
+        pointer-events: none; /* Para permitir clicar no texto selecionado */
+        font-size: x-large;
+    }
+
+    .select-items {
+        max-height: 90px; /* Ajuste conforme necessário */
+        overflow-y: auto; /* Adicione uma barra de rolagem vertical */
+    }
+
+    /* Estilo do efeito hover */
+    .option:hover {
+        background-color: #6667db !important;
+    }
+
+    .option-item{
+        padding: 10px 20px; 
+        cursor: pointer;
+    }
+}
