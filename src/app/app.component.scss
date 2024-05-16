@@ -41,3 +41,39 @@ main {
   margin-left: 25px !important; 
   margin-right: 25px !important;
 }
+
+/* Exemplo de codigo Css para ajustar componentes de forma responsiva
+
+.ajustar-bloco {
+  display: flex;
+  @media only screen and (max-width: $mobile-break-point) {
+    flex-direction: column;
+  }
+  app-radio {
+    width: 350px;
+    margin-right: 10px;
+    @media only screen and (max-width: $mobile-break-point) {
+      width: 100%;
+    }
+  }
+  autocomplete {
+    width: 33%;
+    margin-right: 25px;
+    @media only screen and (max-width: $mobile-break-point) {
+      width: 100%;
+    }
+  }
+  .input-oferta {
+    width: 33%;
+    margin-right: 25px;
+    @media only screen and (max-width: $mobile-break-point) {
+      width: 100%;
+    }
+  }
+}
+
+Exemplo:
+
+<div class="col-12 ajustar-bloco">
+// Aqui dentro vai os componentes de Input, Select e etc...
+</div>
