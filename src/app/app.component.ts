@@ -1,3 +1,4 @@
+import { SharedService } from './app_business/service/shared.service';
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from './guards/auth.guard.service';
 import { MenuDTO } from './app_entities/dto/menu.dto';
@@ -14,8 +15,13 @@ export class AppComponent implements OnInit {
   public title: string;
   public listaMenu: Array<MenuDTO> = new Array<MenuDTO>();
 
-  constructor(private authService: AuthService) { }
+  constructor(private _sharedService: SharedService, private _authService: AuthService) { }
 
+  ngAfterViewInit(): void {
+    if (this._authService.isAuthenticated()) {
+      this._sharedService.setarCoresCliente();
+    }
+  }
   ngOnInit(): void {
     this.title = 'Templates';
     this.listaMenu.push({ link: 'agenda', icon: 'play_arrow', description: 'Agenda' });
@@ -39,15 +45,15 @@ export class AppComponent implements OnInit {
   }
 
   Logout() {
-    this.authService.logout();
+    this._authService.logout();
   }
 
   hasRole(role: string): boolean {
-    return this.authService.hasRole(role);
+    return this._authService.hasRole(role);
   }
 
   isAuthenticated() {
-    return this.authService.isAuthenticated();
+    return this._authService.isAuthenticated();
   }
 
   createOnline() {

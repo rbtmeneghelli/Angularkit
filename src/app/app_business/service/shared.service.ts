@@ -750,6 +750,40 @@ export class SharedService {
         let finalDate = new Date(paramFinal).setHours(0,0,0,0);
         return initialDate.valueOf() < finalDate.valueOf() ? false : true;        
     }
+
+    public setarCoresCliente(): void {
+        const corPrimaria = '#982424';
+        const corSecundaria = '#FFFFFF';
+        const arrVarPrimaria: string[] = [
+            '--corPrincipal-100',
+            '--corPrincipal-200',
+            '--corPrincipal-300',
+            '--corPrincipal-400',
+        ];
+        const arrVarSecundario: string[] = [
+            '--corSecundaria-100',
+            '--corSecundaria-200',
+            '--corSecundaria-300',
+            '--corSecundaria-400',
+        ];
+
+        this.AplicarCoresCliente(arrVarPrimaria, corPrimaria);
+        this.AplicarCoresCliente(arrVarSecundario, corSecundaria);
+    }
+
+    private AplicarCoresCliente(
+        arrVariaveisCor: string[],
+        corEscolhidaCliente: string
+    ) {
+        if (corEscolhidaCliente) {
+            for (let count = 0; count <= arrVariaveisCor.length - 1; count++) {
+                document.documentElement.style.setProperty(
+                    arrVariaveisCor[count],
+                    corEscolhidaCliente.replace(/"/g, '')
+                );
+            }
+        }
+    }
 }
 
 export function ValidarSelect(control: AbstractControl) {

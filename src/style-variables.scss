@@ -16,3 +16,15 @@ $vertical-align-bottom: bottom;
 $center: center;
 $font-bold: bold;
 $twenty-px: 20px;
+
+/* Variaveis que podem ser manipuladas dentro do codigo do typescript */
+:root {
+    --corPrincipal-100: #7a7afc;
+    --corPrincipal-200: #2323eb;
+    --corPrincipal-300: #1919a7;
+    --corPrincipal-400: #0a0a4f;
+    --corSecundaria-100: #48f89a;
+    --corSecundaria-200: #00cd60;
+    --corSecundaria-300: #10a154;
+    --corSecundaria-400: #1f5639;
+}
