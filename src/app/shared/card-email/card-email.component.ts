@@ -4,7 +4,7 @@ import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { SharedService } from 'src/app/app_business/service/shared.service';
 import { SharedNotificationService } from 'src/app/app_business/service/shared-notification.service';
-import { arrNumber } from 'src/app/app_business/shared/shared-types';
+import { arrNumber } from 'src/app/app_entities/shared/shared-types';
 
 @Component({
     selector: 'app-card-email',

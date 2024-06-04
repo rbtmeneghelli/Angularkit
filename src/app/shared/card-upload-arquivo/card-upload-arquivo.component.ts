@@ -1,4 +1,3 @@
-import { SharedService } from './../../app_business/service/shared.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import Swal from 'sweetalert2';
@@ -6,6 +5,7 @@ import { take } from 'rxjs/operators';
 import { ArquivoDTO } from '../../app_entities/dto/arquivo.dto';
 import { EnumTipoDocumento } from '../../app_entities/enum/EnumTipoDocumento';
 import { ArquivoService } from '../../app_business/service/arquivo.service';
+import { SharedNotificationService } from 'src/app/app_business/service/shared-notification.service';
 
 @Component({
     selector: 'app-upload-arquivo',
@@ -19,7 +19,7 @@ export class UploadArquivoModalComponent implements OnInit {
   @Output() statusUpload: EventEmitter<boolean> = new EventEmitter();
   constructor(
     protected formBuilder: FormBuilder,
-    protected sharedService: SharedService,
+    protected sharedNotificationService: SharedNotificationService,
     protected arquivoService: ArquivoService
   ) {
     this.formulario = this.formBuilder.group({
@@ -50,7 +50,7 @@ export class UploadArquivoModalComponent implements OnInit {
     if (FileSize < 10) {
       return true;
     } else {
-      this.sharedService.enviarNotificacao('', 'O arquivo excede o tamanho máximo de 10MB', 'error');
+      this.sharedNotificationService.enviarNotificacao('', 'O arquivo excede o tamanho máximo de 10MB', 'error');
     }
     return false;
   }
@@ -74,11 +74,11 @@ export class UploadArquivoModalComponent implements OnInit {
             .subscribe(
               response => {
                 this.sendStatusUpload(true);
-                this.sharedService.enviarNotificacao('', 'Upload do arquivo efetuado com sucesso', 'success');
+                this.sharedNotificationService.enviarNotificacao('', 'Upload do arquivo efetuado com sucesso', 'success');
               },
               error => {
                 this.sendStatusUpload(false);
-                this.sharedService.enviarNotificacao('', 'Erro para efetuar o upload do arquivo', 'error');
+                this.sharedNotificationService.enviarNotificacao('', 'Erro para efetuar o upload do arquivo', 'error');
               }
             );
         }

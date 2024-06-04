@@ -12,18 +12,14 @@ import { arrDropDownList } from 'src/app/app_entities/shared/shared-types';
 import { getHeaderSettings } from 'src/app/app_business/shared/shared-functions';
 import { SharedVariables } from 'src/app/app_entities/shared/shared-variables';
 import { hasErrorFormControl } from 'src/app/app_business/shared/shared-functions-string';
+import { BaseFormComponent } from 'src/app/shared/base-form/base-form.component';
 
 @Component({
   selector: 'app-funcionalidade',
   templateUrl: './funcionalidade.component.html'
 })
 
-export class FuncionalidadeComponent implements OnInit {
-  public cardCabecalhoDTO: CardCabecalhoDTO = getHeaderSettings('Formulario Funcionalidade', 'Cadastro', 'Funcionalidade');
-  public registroNovo: boolean;
-  public formulario: FormGroup;
-  public listaStatus: arrDropDownList = statusList;
-  public bloquearCampo: boolean;
+export class FuncionalidadeComponent extends BaseFormComponent implements OnInit {
   constructor(
     private readonly sharedService: SharedService,
     private formBuilder: FormBuilder,
@@ -31,6 +27,7 @@ export class FuncionalidadeComponent implements OnInit {
     private readonly activatedRoute: ActivatedRoute,
     private readonly sharedNotificationService: SharedNotificationService
   ) {
+    super('Formulario Funcionalidade', 'Cadastro', 'Funcionalidade');
     this.formulario = this.formBuilder.group({
       ID: [''],
       DESCRICAO: ['', Validators.required],

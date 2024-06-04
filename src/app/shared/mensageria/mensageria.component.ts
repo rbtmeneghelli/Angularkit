@@ -3,7 +3,7 @@ import { OnInit, Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
-import { SharedVariables } from 'src/app/app_business/shared/shared-variables';
+import { SharedVariables } from 'src/app/app_entities/shared/shared-variables';
 
 export class Mensageria {
   nome: string;
@@ -43,7 +43,7 @@ export class MensageriaComponent implements OnInit {
     for (let i = 0; i <= 3; i++) {
       const mensageria = new Mensageria();
       mensageria.nome = 'teste' + i;
-      mensageria.orgao = i % 2 === 0 ? 'PERMISSIONÁRIA' : 'CET';
+      mensageria.orgao = i % 2 === 0 ? 'XPTO' : 'YXZ';
       mensageria.data = SharedVariables.CURRENT_DATE;
       mensageria.mensagem = i % 2 === 0 ? 'OLA MUNDO ' + i : 'TCHAU' + i;
       this.listaMensagem.push(mensageria);

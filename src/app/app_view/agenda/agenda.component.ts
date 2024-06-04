@@ -1,35 +1,27 @@
 import { hasErrorFormControl } from './../../app_business/shared/shared-functions-string';
-import { AgendaService } from './../../app_business/service/agenda.service';
-import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
-import { SharedService } from '../../app_business/service/shared.service';
+import { FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { CardCabecalhoDTO } from '../../app_entities/dto/cardCabecalho.dto';
 import { take } from 'rxjs/operators';
 import { Agenda } from 'src/app/app_entities/model/agenda.model';
 import { SharedNotificationService } from 'src/app/app_business/service/shared-notification.service';
-import { getHeaderSettings } from 'src/app/app_business/shared/shared-functions';
-import { statusList } from 'src/app/app_entities/shared/shared-lists';
-import { arrDropDownList } from 'src/app/app_entities/shared/shared-types';
 import { SharedVariables } from 'src/app/app_entities/shared/shared-variables';
+import { BaseFormComponent } from 'src/app/shared/base-form/base-form.component';
+import { AgendaService } from 'src/app/app_business/service/agenda.service';
 
 @Component({
   selector: 'app-agenda',
   templateUrl: './agenda.component.html'
 })
 
-export class AgendaComponent implements OnInit {
-  public cardCabecalhoDTO: CardCabecalhoDTO = getHeaderSettings('Formulario Agenda','Cadastro','Agenda');
-  public registroNovo: boolean;
-  public formulario: FormGroup;
-  public listaStatus: arrDropDownList = statusList;
-  public bloquearCampo: boolean;
+export class AgendaComponent extends BaseFormComponent implements OnInit {
   constructor(
+    private readonly agendaService: AgendaService,
     private formBuilder: FormBuilder,
-    public readonly agendaService: AgendaService,
     private readonly activatedRoute: ActivatedRoute,
     private readonly sharedNotificationService: SharedNotificationService
   ) {
+    super('Formulario Agenda','Cadastro','Agenda');
     this.formulario = this.formBuilder.group({
       ID: [''],
       DESCRICAO: ['', [Validators.required]],

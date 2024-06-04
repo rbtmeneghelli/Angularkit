@@ -12,18 +12,14 @@ import { arrDropDownList } from 'src/app/app_entities/shared/shared-types';
 import { getHeaderSettings } from 'src/app/app_business/shared/shared-functions';
 import { SharedVariables } from 'src/app/app_entities/shared/shared-variables';
 import { hasErrorFormControl } from 'src/app/app_business/shared/shared-functions-string';
+import { BaseFormComponent } from 'src/app/shared/base-form/base-form.component';
 
 @Component({
   selector: 'app-cliente',
   templateUrl: './cliente.component.html'
 })
 
-export class ClienteComponent implements OnInit, AfterViewInit {
-  public cardCabecalhoDTO: CardCabecalhoDTO = getHeaderSettings('Formulario Cliente','Cadastro','Cliente');
-  public registroNovo: boolean;
-  public formulario: FormGroup;
-  public listaStatus: arrDropDownList = statusList;
-  public bloquearCampo: boolean;
+export class ClienteComponent extends BaseFormComponent implements OnInit, AfterViewInit {
   constructor(
     private readonly sharedNotificationService: SharedNotificationService,
     private formBuilder: FormBuilder,
@@ -31,6 +27,7 @@ export class ClienteComponent implements OnInit, AfterViewInit {
     private readonly activatedRoute: ActivatedRoute,
     private readonly sharedService: SharedService,
     private readonly route: ActivatedRoute) {
+    super('Formulario Cliente','Cadastro','Cliente');
     this.formulario = this.formBuilder.group({
       ID: [''],
       CPF: ['', [Validators.required, this.validarCpf]],

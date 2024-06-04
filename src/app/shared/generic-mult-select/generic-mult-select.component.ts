@@ -1,20 +1,19 @@
 import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges, OnChanges } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { MultSelectList } from 'src/app/app_entities/generic/multselectlist';
-import { DadosConstant } from 'src/app/app_entities/constants/dados.constant';
+import { MultSelectList } from 'src/app/app_entities/generic/multselectlist.model';
+import { arrMultSelect, arrNumber } from 'src/app/app_entities/shared/shared-types';
 import { isArray } from 'util';
-import { arrNumber } from 'src/app/app_business/shared/shared-types';
 
 @Component({
     selector: 'app-dropdown-multi-select',
-    templateUrl: './segmento-dropdown-multi-select.component.html',
-    styleUrls: ['./segmento-dropdown-multi-select.component.scss']
+    templateUrl: './generic-mult-select.component.html',
+    styleUrls: ['./generic-mult-select.component.scss']
 })
 
 export class SegmentoDropDownMultiSelectComponent implements OnInit, OnChanges {
 
     @Input() nomeLabel: string = 'Segmento';
-    @Input() list: MultSelectList[] = DadosConstant;
+    @Input() list: arrMultSelect = [];
     @Input() isRequired: boolean = false;
     @Input() disabled: boolean = false;
     @Input() controlForm!: FormGroup;
@@ -23,7 +22,7 @@ export class SegmentoDropDownMultiSelectComponent implements OnInit, OnChanges {
 
     public mostrarDropDown: boolean = false;
     public campoObrigatorio: string = 'Campo obrigatório não preenchido';
-    public itensList: MultSelectList[] = [];
+    public itensList: arrMultSelect = [];
     public opcaoPadrao: arrNumber = [];
     public tempo: any;
     public opcaoEscolhida!: string;

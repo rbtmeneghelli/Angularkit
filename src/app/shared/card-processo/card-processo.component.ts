@@ -55,11 +55,11 @@ export class CardDocumentosProcessoComponent implements OnInit {
     if (!!url && url !== '-') {
       this.sharedService.download(url).subscribe(res => {
         const blob = new Blob([res], { type: 'application/pdf' });
-        if (window.navigator && window.navigator.msSaveOrOpenBlob) {
-          window.navigator.msSaveOrOpenBlob(blob, nome + this.sharedService.getArquivoExtensao(url));
-        } else {
-          // saveAs(blob, nome);
-        }
+        // if (window.navigator && window.navigator.msSaveOrOpenBlob) {
+        //   window.navigator.msSaveOrOpenBlob(blob, nome + this.sharedService.getArquivoExtensao(url));
+        // } else {
+        //   // saveAs(blob, nome);
+        // }
       });
     }
   }

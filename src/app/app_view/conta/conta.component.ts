@@ -1,31 +1,24 @@
 import { ClienteService } from '../../app_business/service/cliente.service';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, Validators } from '@angular/forms';
 import { SharedService } from '../../app_business/service/shared.service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { CardCabecalhoDTO } from '../../app_entities/dto/cardCabecalho.dto';
 import { take } from 'rxjs/operators';
-import { statusList } from 'src/app/app_entities/shared/shared-lists';
-import { getHeaderSettings } from 'src/app/app_business/shared/shared-functions';
-import { arrDropDownList } from 'src/app/app_entities/shared/shared-types';
+import { BaseFormComponent } from 'src/app/shared/base-form/base-form.component';
 
 @Component({
   selector: 'app-conta',
   templateUrl: './conta.component.html'
 })
 
-export class ContaComponent implements OnInit {
-  public cardCabecalhoDTO: CardCabecalhoDTO = getHeaderSettings('Formulario Conta','Cadastro','Conta');
-  public registroNovo: boolean;
-  public formulario: FormGroup;
-  public listaStatus: arrDropDownList = statusList;
-  public bloquearCampo: boolean;
+export class ContaComponent extends BaseFormComponent implements OnInit {
   constructor(
     private readonly sharedService: SharedService,
     private readonly formBuilder: FormBuilder,
     public readonly clienteService: ClienteService,
     private readonly activatedRoute: ActivatedRoute
   ) {
+    super('Formulario Conta','Cadastro','Conta');
     this.formulario = this.formBuilder.group({
       ID: [''],
       CPF: ['', Validators.required],
@@ -54,5 +47,13 @@ export class ContaComponent implements OnInit {
       this.registroNovo = false;
       this.bloquearCampo = true;
     });
+  }
+
+  salvar() {
+    throw new Error('Method not implemented.');
+  }
+
+  hasErrorFormControl(formControl: AbstractControl): string {
+    throw new Error('Method not implemented.');
   }
 }

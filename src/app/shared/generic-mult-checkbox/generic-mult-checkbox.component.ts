@@ -1,11 +1,10 @@
 import { Component, Input } from '@angular/core';
 import { AbstractControl, FormArray, FormControl } from '@angular/forms';
-import { arrString } from 'src/app/app_business/shared/shared-types';
+import { arrString } from 'src/app/app_entities/shared/shared-types';
 
 @Component({
     selector: 'generic-mult-checkbox',
     templateUrl: './generic-mult-checkbox.component.html',
-    styleUrls: ['./generic-mult-checkbox.component.scss'],
 })
 
 export class GenericMultCheckboxComponent {

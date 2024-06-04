@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, ElementRef, Renderer2, ViewChild } from '@angular/core';
-import { arrString } from 'src/app/app_business/shared/shared-types';
+import { arrString } from 'src/app/app_entities/shared/shared-types';
 
 @Component({
     selector: 'app-custom-select',

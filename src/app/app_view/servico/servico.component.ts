@@ -1,30 +1,22 @@
 import { EnumTipoServico } from './../../app_entities/enum/EnumTipoServico';
 import { Servico } from './../../app_entities/model/servico.model';
-import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
+import { FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { SharedService } from '../../app_business/service/shared.service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { CardCabecalhoDTO } from '../../app_entities/dto/cardCabecalho.dto';
 import { take } from 'rxjs/operators';
 import { ServicoService } from '../../app_business/service/servico.service';
 import { SharedNotificationService } from 'src/app/app_business/service/shared-notification.service';
-import { statusList } from 'src/app/app_entities/shared/shared-lists';
-import { getHeaderSettings } from 'src/app/app_business/shared/shared-functions';
-import { arrDropDownList } from 'src/app/app_entities/shared/shared-types';
 import { SharedVariables } from 'src/app/app_entities/shared/shared-variables';
 import { hasErrorFormControl } from 'src/app/app_business/shared/shared-functions-string';
+import { BaseFormComponent } from 'src/app/shared/base-form/base-form.component';
 
 @Component({
   selector: 'app-servico',
   templateUrl: './servico.component.html'
 })
 
-export class ServicoComponent implements OnInit {
-  public cardCabecalhoDTO: CardCabecalhoDTO = getHeaderSettings('Formulario Serviço','Cadastro','Serviço');
-  public registroNovo: boolean;
-  public formulario: FormGroup;
-  public listaStatus: arrDropDownList = statusList;
-  public bloquearCampo: boolean;
+export class ServicoComponent extends BaseFormComponent implements OnInit {
   public eTipoServico = EnumTipoServico;
   public keys: any[];
   constructor(
@@ -34,6 +26,7 @@ export class ServicoComponent implements OnInit {
     private readonly activatedRoute: ActivatedRoute,
     private readonly sharedNotificationService: SharedNotificationService
   ) {
+    super('Formulario Serviço','Cadastro','Serviço');
     this.keys = Object.keys(this.eTipoServico).filter(k => !isNaN(Number(k)));
     this.formulario = this.formBuilder.group({
       ID: [''],

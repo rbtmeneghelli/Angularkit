@@ -1,28 +1,25 @@
-import { OnInit } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { AbstractControl, FormGroup } from '@angular/forms';
+import { getHeaderSettings } from 'src/app/app_business/shared/shared-functions';
+import { CardCabecalhoDTO } from 'src/app/app_entities/dto/cardCabecalho.dto';
+import { statusList } from 'src/app/app_entities/shared/shared-lists';
+import { arrDropDownList } from 'src/app/app_entities/shared/shared-types';
 
-export abstract class BaseFormComponent<TService> implements OnInit {
+export abstract class BaseFormComponent {
 
-    protected formulario: FormGroup;
+    public cardCabecalhoDTO: CardCabecalhoDTO;
+    public registroNovo: boolean;
+    public formulario: FormGroup;
+    public listaStatus: arrDropDownList = statusList;
+    public bloquearCampo: boolean;
 
-    constructor(
-        protected _service: TService
-    )
-    {
+    constructor(tituloCard: string, tituloModulo: string, nomeTela: string) {
+        this.cardCabecalhoDTO = getHeaderSettings(tituloCard, tituloModulo, nomeTela);
     }
 
-    ngOnInit() {
-    }
+    protected abstract salvar();
+    protected abstract hasErrorFormControl(formControl: AbstractControl): string;
 
-    abstract submit();
-
-    OnSubmit() {
-        if (this.formulario.valid) {
-            this.submit();
-        }
-    }
-
-    OnReset() {
+    protected limparFormulario() {
         this.formulario.reset();
     }
 }

@@ -12,18 +12,14 @@ import { arrDropDownList } from 'src/app/app_entities/shared/shared-types';
 import { getHeaderSettings } from 'src/app/app_business/shared/shared-functions';
 import { SharedVariables } from 'src/app/app_entities/shared/shared-variables';
 import { hasErrorFormControl } from 'src/app/app_business/shared/shared-functions-string';
+import { BaseFormComponent } from 'src/app/shared/base-form/base-form.component';
 
 @Component({
     selector: 'app-empresa',
     templateUrl: './empresa.component.html'
 })
 
-export class EmpresaComponent implements OnInit {
-    public cardCabecalhoDTO: CardCabecalhoDTO = getHeaderSettings('Formulario Empresa', 'Cadastro', 'Empresa');
-    public registroNovo: boolean;
-    public formulario: FormGroup;
-    public listaStatus: arrDropDownList = statusList;
-    public bloquearCampo: boolean;
+export class EmpresaComponent extends BaseFormComponent implements OnInit {
     constructor(
         private readonly sharedService: SharedService,
         private readonly formBuilder: FormBuilder,
@@ -31,6 +27,7 @@ export class EmpresaComponent implements OnInit {
         private readonly activatedRoute: ActivatedRoute,
         private readonly sharedNotificationService: SharedNotificationService
     ) {
+        super('Formulario Empresa', 'Cadastro', 'Empresa');
         this.formulario = this.formBuilder.group({
             ID: [''],
             CNPJ: ['', [Validators.required, this.ValidarCnpj]],
