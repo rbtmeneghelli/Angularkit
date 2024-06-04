@@ -6,7 +6,7 @@ import { Directive, ElementRef, HostListener } from '@angular/core';
 
 export class AgenciaMaskDirective {
 
-    constructor(private el: ElementRef) { }
+    constructor(private readonly el: ElementRef) { }
 
     @HostListener('input', ['$event']) onInput(event: Event): void {
         const input = event.target as HTMLInputElement;

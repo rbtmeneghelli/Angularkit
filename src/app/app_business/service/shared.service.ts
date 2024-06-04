@@ -1,4 +1,4 @@
-import { SharedMessages } from 'src/app/app_business/constants/shared-constants';
+import { SharedMessages } from 'src/app/app_business/shared/shared-constants';
 import { ExportadorService } from 'src/app/app_business/service/exportador.service';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
@@ -7,6 +7,8 @@ import { AbstractControl, FormControl, FormGroup, ValidationErrors } from '@angu
 import { MatDialogConfig } from '@angular/material/dialog';
 import { ClienteFilterData } from 'src/app/app_entities/filter/cliente-filter-data';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { arrDropDownList, arrString } from '../shared/shared-types';
+import { SharedVariables } from '../shared/shared-variables';
 
 const regexOnlyNumber: RegExp = new RegExp(/[^0-9]+/g);
 const regexOnlyAlphanumeric: RegExp = new RegExp(/[^a-zA-Z0-9]+/g);
@@ -308,13 +310,6 @@ export class SharedService {
         }).join(''));
     }
 
-    public getListaStatus(): Array<DropDownList> {
-        const lista: Array<DropDownList> = new Array<DropDownList>();
-        lista.push({ value: '0', viewValue: 'Inativo' });
-        lista.push({ value: '1', viewValue: 'Ativo' });
-        return lista;
-    }
-
     public applyFontFamilyOnText(texto: string) {
         if (!!texto) {
             if (texto.includes('<span style="font-family: sans serif; font-size: 9px;">')) {
@@ -388,7 +383,7 @@ export class SharedService {
                 return value.substring(0, 2) + value.substring(5, 2);
             }
         }
-        return new Date().getHours() + ':' + new Date().getMinutes();
+        return SharedVariables.CURRENT_DATE.getHours() + ':' + SharedVariables.CURRENT_DATE.getMinutes();
     }
 
     public criarNovoObjeto(target?: any, source?: any, removePropertyId?: boolean): any {
@@ -721,7 +716,7 @@ export class SharedService {
         return listSet.has('item');
     }
 
-    public _filterDropDownList(list?: any[], value?: string): DropDownList[] {
+    public _filterDropDownList(list?: any[], value?: string): arrDropDownList {
         if (!!list && list?.length > 0) {
             if (value?.length > 0 && !!value) {
                 list = list.filter(option => option.name?.toLowerCase()?.includes(value?.toLowerCase()));
@@ -754,13 +749,13 @@ export class SharedService {
     public setarCoresCliente(): void {
         const corPrimaria = '#982424';
         const corSecundaria = '#FFFFFF';
-        const arrVarPrimaria: string[] = [
+        const arrVarPrimaria: arrString = [
             '--corPrincipal-100',
             '--corPrincipal-200',
             '--corPrincipal-300',
             '--corPrincipal-400',
         ];
-        const arrVarSecundario: string[] = [
+        const arrVarSecundario: arrString = [
             '--corSecundaria-100',
             '--corSecundaria-200',
             '--corSecundaria-300',
@@ -772,7 +767,7 @@ export class SharedService {
     }
 
     private AplicarCoresCliente(
-        arrVariaveisCor: string[],
+        arrVariaveisCor: arrString,
         corEscolhidaCliente: string
     ) {
         if (corEscolhidaCliente) {

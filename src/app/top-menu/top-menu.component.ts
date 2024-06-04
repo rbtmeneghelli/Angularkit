@@ -16,7 +16,11 @@ export class TopMenuComponent implements OnInit, OnChanges {
     public connectionStatus: boolean;
 
     // tslint:disable-next-line: max-line-length
-    constructor(protected route: Router, protected generalService: SharedService, protected sharedNotificationService: SharedNotificationService) {
+    constructor(
+        private readonly route: Router, 
+        private readonly generalService: SharedService, 
+        private readonly sharedNotificationService: SharedNotificationService
+    ) {
         this.changeArrow = false;
     }
 

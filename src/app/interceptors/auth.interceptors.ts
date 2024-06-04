@@ -1,18 +1,23 @@
 import { Injectable } from '@angular/core';
-import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HttpResponse } from '@angular/common/http';
+import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
 import { Observable, throwError } from 'rxjs';
 import { Router } from '@angular/router';
 import { SharedService } from '../app_business/service/shared.service';
 import { AuthService } from '../guards/auth.guard.service';
+import { arrString } from '../app_business/shared/shared-types';
 
 /** Pass untouched request through to the next request handler. */
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
 
-    private responseMethodsList: string[] = ['POST', 'PUT', 'DELETE'];
+    private responseMethodsList: arrString = ['POST', 'PUT', 'DELETE'];
 
-    constructor(private authService: AuthService, private router: Router, private sharedService: SharedService) { }
+    constructor(
+        private readonly authService: AuthService, 
+        private readonly router: Router, 
+        private readonly sharedService: SharedService
+    ) { }
 
     intercept(req: HttpRequest<any>, next: HttpHandler):
 

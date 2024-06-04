@@ -5,10 +5,12 @@ import { SharedService } from '../../app_business/service/shared.service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CardCabecalhoDTO } from '../../app_entities/dto/cardCabecalho.dto';
-import { DropDownList } from '../../app_entities/generic/dropdownlist';
 import { take } from 'rxjs/operators';
 import { ServicoService } from '../../app_business/service/servico.service';
 import { SharedNotificationService } from 'src/app/app_business/service/shared-notification.service';
+import { arrDropDownList } from 'src/app/app_business/shared/shared-types';
+import { statusList } from 'src/app/app_business/shared/shared-lists';
+import { SharedVariables } from 'src/app/app_business/shared/shared-variables';
 
 @Component({
   selector: 'app-servico',
@@ -19,16 +21,16 @@ export class ServicoComponent implements OnInit {
   public cardCabecalhoDTO: CardCabecalhoDTO = new CardCabecalhoDTO();
   public registroNovo: boolean;
   public formulario: FormGroup;
-  public listaStatus: Array<DropDownList>;
+  public listaStatus: arrDropDownList = statusList;
   public bloquearCampo: boolean;
   public eTipoServico = EnumTipoServico;
   public keys: any[];
   constructor(
-    private sharedService: SharedService,
-    private formBuilder: FormBuilder,
-    public servicoService: ServicoService,
-    private activatedRoute: ActivatedRoute,
-    private sharedNotificationService: SharedNotificationService) {
+    private readonly sharedService: SharedService,
+    private readonly formBuilder: FormBuilder,
+    public readonly servicoService: ServicoService,
+    private readonly activatedRoute: ActivatedRoute,
+    private readonly sharedNotificationService: SharedNotificationService) {
     this.keys = Object.keys(this.eTipoServico).filter(k => !isNaN(Number(k)));
     this.formulario = this.formBuilder.group({
       ID: [''],
@@ -42,7 +44,6 @@ export class ServicoComponent implements OnInit {
     this.cardCabecalhoDTO.tituloCard = 'Formulario Serviço';
     this.cardCabecalhoDTO.tituloModulo = 'Cadastro';
     this.cardCabecalhoDTO.nomeTela = 'Serviço';
-    this.listaStatus = this.sharedService.getListaStatus();
     this.activatedRoute.params.subscribe(params => {
       if (params.id !== undefined && params.id !== null) {
         this.updateForm(params.id);
@@ -70,9 +71,9 @@ export class ServicoComponent implements OnInit {
     servico.tipoServico = this.formulario.get('TIPOSERVICO').value;
     servico.status = (this.formulario.get('STATUS').value === '1' ? true : false);
     if (this.registroNovo) {
-      servico.dataCriacao = new Date();
+      servico.dataCriacao = SharedVariables.CURRENT_DATE;
     } else {
-      servico.dataAtualizacao = new Date();
+      servico.dataAtualizacao = SharedVariables.CURRENT_DATE;
     }
     return servico;
   }

@@ -8,7 +8,7 @@ export class AutoFocusDirective implements AfterContentInit {
 
     @Input() public autoFocus: boolean;
 
-    constructor(private el: ElementRef) {
+    constructor(private readonly el: ElementRef) {
 
     }
 

@@ -13,7 +13,10 @@ type EntityResponseType = HttpResponse<ArquivoDTO>;
 })
 export class ArquivoService {
     private API: string;
-    constructor(private http: HttpClient, private sharedService: SharedService) {
+    constructor(
+        private readonly http: HttpClient, 
+        private readonly sharedService: SharedService
+    ) {
         this.API = '/api/arquivo';
     }
 

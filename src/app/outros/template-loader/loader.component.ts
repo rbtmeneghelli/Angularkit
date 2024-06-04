@@ -11,7 +11,7 @@ export class LoaderComponent implements OnInit {
     public mode = 'indeterminate';
     public value = '50';
     public loading: boolean;
-    constructor(private loaderService: LoaderService) {
+    constructor(private readonly loaderService: LoaderService) {
         this.loaderService.isLoading.subscribe((v) => {
             this.loading = v;
         });

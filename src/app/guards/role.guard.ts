@@ -9,7 +9,11 @@ import { SharedService } from '../app_business/service/shared.service';
 })
 export class RoleGuard implements CanActivate {
 
-    constructor(private authService: AuthService, private router: Router, private sharedService: SharedService) { }
+    constructor(
+        private readonly authService: AuthService, 
+        private readonly router: Router, 
+        private readonly sharedService: SharedService
+    ) { }
 
     canActivate(
         next: ActivatedRouteSnapshot,

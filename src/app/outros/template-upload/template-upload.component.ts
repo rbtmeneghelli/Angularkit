@@ -4,6 +4,8 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Arquivo } from '../../app_entities/model/arquivo.model';
 import { SharedService } from '../../app_business/service/shared.service';
+import { arrString } from 'src/app/app_business/shared/shared-types';
+import { SharedVariables } from 'src/app/app_business/shared/shared-variables';
 // import { saveAs } from 'file-saver';
 
 @Component({
@@ -14,18 +16,18 @@ import { SharedService } from '../../app_business/service/shared.service';
 
 export class TemplateUploadComponent implements OnInit {
 
-  displayedColumns: string[] = ['nome', 'tamanho', 'Download', 'Excluir'];
+  displayedColumns: arrString = ['nome', 'tamanho', 'Download', 'Excluir'];
   dataSource = new MatTableDataSource();
   listaArquivo: Array<Arquivo> = new Array<Arquivo>();
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
-  constructor(private sharedService: SharedService) { }
+  constructor(private readonly sharedService: SharedService) { }
 
   ngOnInit() {
     // tslint:disable-next-line: max-line-length
-    this.listaArquivo.push({ id: 1, nomeArquivo: 'Arquivo', tamanhoArquivo: '10kb', dataCriacao: new Date(), dataAtualizacao: new Date(), acoes: '#' });
+    this.listaArquivo.push({ id: 1, nomeArquivo: 'Arquivo', tamanhoArquivo: '10kb', dataCriacao: SharedVariables.CURRENT_DATE, dataAtualizacao: SharedVariables.CURRENT_DATE, acoes: '#' });
     this.dataSource = new MatTableDataSource(this.listaArquivo);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;

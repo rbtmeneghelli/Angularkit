@@ -15,7 +15,10 @@ export class AppComponent implements OnInit {
   public title: string;
   public listaMenu: Array<MenuDTO> = new Array<MenuDTO>();
 
-  constructor(private _sharedService: SharedService, private _authService: AuthService) { }
+  constructor(
+    private readonly _sharedService: SharedService,
+    private readonly _authService: AuthService
+  ) { }
 
   ngAfterViewInit(): void {
     if (this._authService.isAuthenticated()) {

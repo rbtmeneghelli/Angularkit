@@ -1,5 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { arrString } from 'src/app/app_business/shared/shared-types';
 
 @Component({
     selector: 'app-template-tabela-material-generica-filter',
@@ -40,7 +41,7 @@ export class TemplateTabelaMaterialGenericaFilterComponent implements OnInit {
     }
 
     exportExcel(): void {
-        const arrItemSelected: string[] = [];
+        const arrItemSelected: arrString = [];
         for (const item of this.arrHeaders) {
             if (item.status) {
                 arrItemSelected.push(item.campo);

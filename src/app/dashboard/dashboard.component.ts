@@ -9,7 +9,10 @@ import { Router } from '@angular/router';
 })
 export class DashboardComponent implements OnInit {
 
-  constructor(private authService: AuthService, private router: Router) { }
+  constructor(
+    private readonly authService: AuthService, 
+    private readonly router: Router
+  ) { }
 
   ngOnInit() {
     if (this.authService.isAuthenticated()) {

@@ -11,6 +11,7 @@ import { Auditoria } from '../../app_entities/model/auditoria.model';
 // Service
 import { take } from 'rxjs/operators';
 import { AuditoriaService } from './../../app_business/service/auditoria.service';
+import { arrString } from 'src/app/app_business/shared/shared-types';
 
 
 @Component({
@@ -21,7 +22,7 @@ import { AuditoriaService } from './../../app_business/service/auditoria.service
 export class ListaAuditoriaComponent implements OnInit {
 
     public cardCabecalhoDTO: CardCabecalhoDTO = new CardCabecalhoDTO();
-    public displayedColumns: string[] = ['dataCriacao', 'tela', 'classe', 'metodo', 'idUsuario', '#'];
+    public displayedColumns: arrString = ['dataCriacao', 'tela', 'classe', 'metodo', 'idUsuario', '#'];
     public dataSource: MatTableDataSource<Auditoria>;
     public closeModal: string;
     public auditoria: Auditoria;

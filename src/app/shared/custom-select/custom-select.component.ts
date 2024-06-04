@@ -1,4 +1,5 @@
 import { AfterViewInit, Component, ElementRef, Renderer2, ViewChild } from '@angular/core';
+import { arrString } from 'src/app/app_business/shared/shared-types';
 
 @Component({
     selector: 'app-custom-select',
@@ -11,13 +12,13 @@ export class CustomSelectComponent implements AfterViewInit {
     public isBigMenu = false;
     isOpen: boolean = false;
     selectedOption: string | null = null;
-    options: string[] = ["Opção 1", "Opção 2", "Opção 3", "Opção 4"];
+    options: arrString = ["Opção 1", "Opção 2", "Opção 3", "Opção 4"];
     showList: boolean = false;
     selectedOptionIndex: number = -1;
 
     @ViewChild('selectItems') selectItemsRef!: ElementRef;
 
-    constructor(private renderer: Renderer2) { }
+    constructor(private readonly renderer: Renderer2) { }
 
     ngAfterViewInit(): void {
         this.renderer.setStyle(this.selectItemsRef.nativeElement, 'display', 'none');

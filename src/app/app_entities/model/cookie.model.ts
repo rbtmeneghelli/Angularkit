@@ -1,3 +1,5 @@
+import { SharedVariables } from "src/app/app_business/shared/shared-variables";
+
 export interface ICookie {
     tipoacao: string;
     funcionalidade: string;
@@ -54,7 +56,7 @@ export class CookieItem implements ICookieItem {
     public response: string;
 
     constructor(urlChamada: string, funcionalidade: string, tipoAcao: string, iP: string, navegador: string, sistemaOperacional: string, nivel: string, request: any, response: any) {
-        this.dataHora = new Date();
+        this.dataHora = SharedVariables.CURRENT_DATE;
         this.urlChamada = urlChamada;
         this.funcionalidade = funcionalidade;
         this.tipoAcao = tipoAcao;

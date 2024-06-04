@@ -17,7 +17,7 @@ export class CardDocumentosProcessoComponent implements OnInit {
 
   @Input() arquivos: Array<ArquivoDTO>;
 
-  constructor(protected sharedService: SharedService) {}
+  constructor(private readonly sharedService: SharedService) {}
 
   ngOnInit() {
     this.tituloCard = 'Documentos do Processo';

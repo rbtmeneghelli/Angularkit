@@ -6,6 +6,8 @@ import { ActivatedRoute } from '@angular/router';
 import { CardCabecalhoDTO } from '../../app_entities/dto/cardCabecalho.dto';
 import { DropDownList } from '../../app_entities/generic/dropdownlist';
 import { take } from 'rxjs/operators';
+import { arrDropDownList } from 'src/app/app_business/shared/shared-types';
+import { statusList } from 'src/app/app_business/shared/shared-lists';
 
 @Component({
   selector: 'app-conta',
@@ -16,13 +18,13 @@ export class ContaComponent implements OnInit {
   public cardCabecalhoDTO: CardCabecalhoDTO = new CardCabecalhoDTO();
   public registroNovo: boolean;
   public formulario: FormGroup;
-  public listaStatus: Array<DropDownList>;
+  public listaStatus: arrDropDownList = statusList;
   public bloquearCampo: boolean;
   constructor(
-    private sharedService: SharedService,
-    private formBuilder: FormBuilder,
-    public clienteService: ClienteService,
-    private activatedRoute: ActivatedRoute) {
+    private readonly sharedService: SharedService,
+    private readonly formBuilder: FormBuilder,
+    public readonly clienteService: ClienteService,
+    private readonly activatedRoute: ActivatedRoute) {
     this.formulario = this.formBuilder.group({
       ID: [''],
       CPF: ['', Validators.required],
@@ -35,7 +37,6 @@ export class ContaComponent implements OnInit {
     this.cardCabecalhoDTO.tituloCard = 'Formulario Conta';
     this.cardCabecalhoDTO.tituloModulo = 'Cadastro';
     this.cardCabecalhoDTO.nomeTela = 'Conta';
-    this.listaStatus = this.sharedService.getListaStatus();
     this.activatedRoute.params.subscribe(params => {
       if (params.id !== undefined && params.id !== null) {
         this.updateForm(params.id);

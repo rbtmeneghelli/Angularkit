@@ -1,8 +1,7 @@
-import { saveAs } from 'file-saver';
 import { FiltroArquivo } from './../../app_entities/generic/filtro-arquivo';
 import { DownloadService } from './../../app_business/service/download.service';
 import { Component, OnInit } from '@angular/core';
-import { delay, take } from 'rxjs/operators';
+import { arrString } from 'src/app/app_business/shared/shared-types';
 // import JSZip from 'jszip';
 
 @Component({
@@ -12,8 +11,7 @@ import { delay, take } from 'rxjs/operators';
 
 export class RelatorioComponent implements OnInit {
 
-    constructor(protected downloadService: DownloadService) {
-
+    constructor(private readonly downloadService: DownloadService) {
     }
 
     ngOnInit() {
@@ -21,7 +19,7 @@ export class RelatorioComponent implements OnInit {
         // Bibliotecas usadas: JsZip e File Saver
     }
 
-    getAttachment(diretorios: string[]) {
+    getAttachment(diretorios: arrString) {
         // let zip: JSZip = new JSZip();
         // let countArquivo = 0;
         // // tslint:disable-next-line: deprecation
@@ -62,7 +60,7 @@ export class RelatorioComponent implements OnInit {
         return bytes.buffer;
     }
 
-    setFiltro(diretorios: string[]): FiltroArquivo {
+    setFiltro(diretorios: arrString): FiltroArquivo {
         const filtroArquivo: FiltroArquivo = new FiltroArquivo();
         filtroArquivo.Diretorios = diretorios;
         return filtroArquivo;

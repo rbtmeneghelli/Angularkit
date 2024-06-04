@@ -9,7 +9,7 @@ import { AuthService } from '../guards/auth.guard.service';
 
 export class AppHeaderComponent implements OnInit {
 
-    constructor(private authService: AuthService) { }
+    constructor(private readonly authService: AuthService) { }
 
     ngOnInit() {
     }

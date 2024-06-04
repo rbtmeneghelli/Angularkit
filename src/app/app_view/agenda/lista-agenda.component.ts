@@ -16,6 +16,7 @@ import { CardCabecalhoDTO } from '../../app_entities/dto/cardCabecalho.dto';
 import { AgendaService } from './../../app_business/service/agenda.service';
 import Swal from 'sweetalert2';
 import { SharedNotificationService } from 'src/app/app_business/service/shared-notification.service';
+import { arrString } from 'src/app/app_business/shared/shared-types';
 
 @Component({
   selector: 'app-lista-agenda',
@@ -25,7 +26,7 @@ import { SharedNotificationService } from 'src/app/app_business/service/shared-n
 export class ListaAgendaComponent implements OnInit {
 
   public cardCabecalhoDTO: CardCabecalhoDTO = new CardCabecalhoDTO();
-  public displayedColumns: string[] = ['data', 'local', 'hora', '#'];
+  public displayedColumns: arrString = ['data', 'local', 'hora', '#'];
   public dataSource: MatTableDataSource<Agenda>;
   public agenda: Agenda;
 

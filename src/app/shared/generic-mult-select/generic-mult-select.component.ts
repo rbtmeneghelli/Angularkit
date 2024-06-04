@@ -3,6 +3,7 @@ import { FormGroup } from '@angular/forms';
 import { MultSelectList } from 'src/app/app_entities/generic/multselectlist';
 import { DadosConstant } from 'src/app/app_entities/constants/dados.constant';
 import { isArray } from 'util';
+import { arrNumber } from 'src/app/app_business/shared/shared-types';
 
 @Component({
     selector: 'app-dropdown-multi-select',
@@ -23,7 +24,7 @@ export class SegmentoDropDownMultiSelectComponent implements OnInit, OnChanges {
     public mostrarDropDown: boolean = false;
     public campoObrigatorio: string = 'Campo obrigatório não preenchido';
     public itensList: MultSelectList[] = [];
-    public opcaoPadrao: number[] = [];
+    public opcaoPadrao: arrNumber = [];
     public tempo: any;
     public opcaoEscolhida!: string;
 
@@ -56,9 +57,8 @@ export class SegmentoDropDownMultiSelectComponent implements OnInit, OnChanges {
         return this.itensList.length > 0 ? this.itensList.map(param => param.viewValue).join(', ') : '';
     }
 
-    public retornarSelecionadosPorId(): number[] {
-        const arrItens: number[] = [];
-
+    public retornarSelecionadosPorId(): arrNumber {
+        const arrItens: arrNumber = [];
         if (this.itensList.length > 0) {
           this.itensList.map((param) => {
             arrItens.push(param.value as unknown as number);

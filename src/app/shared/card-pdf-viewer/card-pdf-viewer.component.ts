@@ -11,7 +11,10 @@ export class CardPdfViewerComponent implements OnInit {
 
   public pdfSrc: string;
 
-  constructor(private route: Router, public dialogRef: MatDialogRef<CardPdfViewerComponent>) { }
+  constructor(
+    private readonly route: Router, 
+    public dialogRef: MatDialogRef<CardPdfViewerComponent>
+  ) { }
 
   ngOnInit() {
     this.pdfSrc = 'https://vadimdez.github.io/ng2-pdf-viewer/assets/pdf-test.pdf';

@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { AbstractControl, FormArray, FormControl } from '@angular/forms';
+import { arrString } from 'src/app/app_business/shared/shared-types';
 
 @Component({
     selector: 'generic-mult-checkbox',
@@ -14,7 +15,7 @@ export class GenericMultCheckboxComponent {
     // o control e um formControl do FormGroup com valor passado como Array Booleano
     // [false,true] >> Isso dentro do value do formControl
     
-    @Input() checkboxOptions: string[] = [];
+    @Input() checkboxOptions: arrString = [];
     @Input() titulo: string = '';
     @Input() disabled: boolean = false;
     @Input() control: AbstractControl = new FormControl([]);

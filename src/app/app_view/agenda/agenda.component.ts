@@ -4,10 +4,13 @@ import { SharedService } from '../../app_business/service/shared.service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CardCabecalhoDTO } from '../../app_entities/dto/cardCabecalho.dto';
-import { DropDownList } from '../../app_entities/generic/dropdownlist';
 import { take } from 'rxjs/operators';
 import { Agenda } from 'src/app/app_entities/model/agenda.model';
 import { SharedNotificationService } from 'src/app/app_business/service/shared-notification.service';
+import { arrDropDownList } from 'src/app/app_business/shared/shared-types';
+import { getHeaderSettings } from 'src/app/app_business/shared/shared-functions';
+import { statusList } from 'src/app/app_business/shared/shared-lists';
+import { SharedValidators, SharedVariables } from 'src/app/app_business/shared/shared-variables';
 
 @Component({
   selector: 'app-agenda',
@@ -15,35 +18,32 @@ import { SharedNotificationService } from 'src/app/app_business/service/shared-n
 })
 
 export class AgendaComponent implements OnInit {
-  public cardCabecalhoDTO: CardCabecalhoDTO = new CardCabecalhoDTO();
+  public cardCabecalhoDTO: CardCabecalhoDTO = getHeaderSettings('Formulario Agenda','Cadastro','Agenda');
   public registroNovo: boolean;
   public formulario: FormGroup;
-  public listaStatus: Array<DropDownList>;
+  public listaStatus: arrDropDownList = statusList;
   public bloquearCampo: boolean;
   constructor(
-    private sharedService: SharedService,
+    private readonly sharedService: SharedService,
     private formBuilder: FormBuilder,
-    public agendaService: AgendaService,
-    private activatedRoute: ActivatedRoute,
-    private sharedNotificationService: SharedNotificationService) {
+    public readonly agendaService: AgendaService,
+    private readonly activatedRoute: ActivatedRoute,
+    private readonly sharedNotificationService: SharedNotificationService
+  ) {
     this.formulario = this.formBuilder.group({
       ID: [''],
-      DESCRICAO: ['', Validators.required],
-      LOCAL: ['', Validators.required],
-      DATA: ['', Validators.required],
-      HORA: ['', Validators.required],
+      DESCRICAO: ['', [SharedValidators.FRM_REQUIRED]],
+      LOCAL: ['', SharedValidators.FRM_REQUIRED],
+      DATA: ['', SharedValidators.FRM_REQUIRED],
+      HORA: ['', SharedValidators.FRM_REQUIRED],
       ALERTA: [''],
-      STATUS: ['', Validators.required]
+      STATUS: ['', SharedValidators.FRM_REQUIRED]
     });
   }
 
   ngOnInit() {
-    this.cardCabecalhoDTO.tituloCard = 'Formulario Agenda';
-    this.cardCabecalhoDTO.tituloModulo = 'Cadastro';
-    this.cardCabecalhoDTO.nomeTela = 'Agenda';
-    this.listaStatus = this.sharedService.getListaStatus();
     this.activatedRoute.params.subscribe(params => {
-      if (params.id !== undefined && params.id !== null) {
+      if (!!params.id) {
         this.updateForm(params.id);
       } else {
         this.registroNovo = true;
@@ -70,14 +70,14 @@ export class AgendaComponent implements OnInit {
     const agenda: Agenda = new Agenda();
     agenda.descricao = this.formulario.get('DESCRICAO').value;
     agenda.local = this.formulario.get('LOCAL').value;
-    agenda.data = new Date();
+    agenda.data = SharedVariables.CURRENT_DATE;
     agenda.hora = this.formulario.get('HORA').value;
     agenda.alert = Boolean(this.formulario.get('ALERTA').value);
     agenda.status = this.formulario.get('STATUS').value === '0' ? false : true;
     if (this.registroNovo) {
-      agenda.dataCriacao = new Date();
+      agenda.dataCriacao = SharedVariables.CURRENT_DATE;
     } else {
-      agenda.dataAtualizacao = new Date();
+      agenda.dataAtualizacao = SharedVariables.CURRENT_DATE;
     }
     return agenda;
   }

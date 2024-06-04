@@ -12,6 +12,7 @@ import { Column } from '../../app_entities/generic/column';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { map } from 'rxjs/operators';
+import { SharedVariables } from '../shared/shared-variables';
 
 @Injectable({
   providedIn: 'root'
@@ -19,10 +20,10 @@ import { map } from 'rxjs/operators';
 
 export class ExportadorService {
 
-  public date: Date = new Date();
+  public date: Date = SharedVariables.CURRENT_DATE;
   public listColumns: Array<Column> = new Array<Column>();
 
-  constructor(protected http: HttpClient) {
+  constructor(private readonly http: HttpClient) {
     registerLocaleData(localePtBr);
   }
 

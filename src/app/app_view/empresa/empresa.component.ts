@@ -8,6 +8,9 @@ import { CardCabecalhoDTO } from '../../app_entities/dto/cardCabecalho.dto';
 import { DropDownList } from '../../app_entities/generic/dropdownlist';
 import { take } from 'rxjs/operators';
 import { SharedNotificationService } from 'src/app/app_business/service/shared-notification.service';
+import { arrDropDownList } from 'src/app/app_business/shared/shared-types';
+import { statusList } from 'src/app/app_business/shared/shared-lists';
+import { SharedVariables } from 'src/app/app_business/shared/shared-variables';
 
 @Component({
     selector: 'app-empresa',
@@ -18,14 +21,15 @@ export class EmpresaComponent implements OnInit {
     public cardCabecalhoDTO: CardCabecalhoDTO = new CardCabecalhoDTO();
     public registroNovo: boolean;
     public formulario: FormGroup;
-    public listaStatus: Array<DropDownList>;
+    public listaStatus: arrDropDownList = statusList;
     public bloquearCampo: boolean;
     constructor(
-        private sharedService: SharedService,
-        private formBuilder: FormBuilder,
-        public empresaService: EmpresaService,
-        private activatedRoute: ActivatedRoute,
-        private sharedNotificationService: SharedNotificationService) {
+        private readonly sharedService: SharedService,
+        private readonly formBuilder: FormBuilder,
+        public readonly empresaService: EmpresaService,
+        private readonly activatedRoute: ActivatedRoute,
+        private readonly sharedNotificationService: SharedNotificationService
+    ) {
         this.formulario = this.formBuilder.group({
             ID: [''],
             CNPJ: ['', [Validators.required, this.ValidarCnpj]],
@@ -39,9 +43,8 @@ export class EmpresaComponent implements OnInit {
         this.cardCabecalhoDTO.tituloCard = 'Formulario Empresa';
         this.cardCabecalhoDTO.tituloModulo = 'Cadastro';
         this.cardCabecalhoDTO.nomeTela = 'Empresa';
-        this.listaStatus = this.sharedService.getListaStatus();
         this.activatedRoute.params.subscribe(params => {
-            if (params.id !== undefined && params.id !== null) {
+            if (!!params.id) {
                 this.updateForm(params.id);
             } else {
                 this.registroNovo = true;
@@ -56,7 +59,7 @@ export class EmpresaComponent implements OnInit {
             this.formulario.get('CNPJ').setValue(response.cnpj);
             this.formulario.get('NOMEEMPRESA').setValue(response.nomeEmpresa);
             this.formulario.get('NOMEFANTASIA').setValue(response.nomeFantasia);
-            this.formulario.get('STATUS').setValue(response.status  ? '1' : '0');
+            this.formulario.get('STATUS').setValue(response.status ? '1' : '0');
             this.registroNovo = false;
             this.bloquearCampo = true;
         }).catch(error => alert('erro'));
@@ -86,9 +89,9 @@ export class EmpresaComponent implements OnInit {
         empresa.nomeFantasia = this.formulario.get('NOMEFANTASIA').value;
         empresa.status = this.formulario.get('STATUS').value === '0' ? false : true;
         if (this.registroNovo) {
-            empresa.dataCriacao = new Date();
+            empresa.dataCriacao = SharedVariables.CURRENT_DATE;
         } else {
-            empresa.dataAtualizacao = new Date();
+            empresa.dataAtualizacao = SharedVariables.CURRENT_DATE;
         }
         return empresa;
     }

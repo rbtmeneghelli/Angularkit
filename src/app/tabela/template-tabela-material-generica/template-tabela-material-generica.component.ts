@@ -6,6 +6,8 @@ import { MatTableDataSource } from '@angular/material/table';
 // tslint:disable-next-line: max-line-length
 import { TemplateTabelaMaterialGenericaFilterComponent } from './template-tabela-material-generica-filter/template-tabela-material-generica-filter.component';
 import { CardFilterComponent } from '../../shared/card-filter/card-filter.component';
+import { arrNumber } from 'src/app/app_business/shared/shared-types';
+import { SharedVarTable } from 'src/app/app_business/shared/shared-constants';
 @Component({
     selector: 'app-template-tabela-material-generica',
     templateUrl: './template-tabela-material-generica.component.html',
@@ -17,13 +19,12 @@ export class TemplateTabelaMaterialGenericaComponent implements AfterViewInit {
     @Input() columnHeader;
     @Input() pageSize;
 
-    public pageSizeOptions?: number[] = [];
+    public pageSizeOptions?: arrNumber = SharedVarTable.PAGE_SIZE_OPTION;
     public objectKeys = Object.keys;
     public dataSource?: any = new MatTableDataSource();
     public arrHeaders: any[] = [];
     public dataFilters?: Array<any> = new Array<any>();
     public totalRecords?: number;
-    public pageSizeOption?: number[] = [25, 50, 100, 500, 1000, 2000];
 
     @ViewChild(MatPaginator) paginator: MatPaginator;
     @ViewChild(MatSort) sort: MatSort;

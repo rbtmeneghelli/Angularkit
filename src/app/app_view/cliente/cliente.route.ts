@@ -13,7 +13,7 @@ import { ClienteService } from "src/app/app_business/service/cliente.service";
 
 export class ClientResolveService implements Resolve<any> {
 
-  constructor(private _clienteService: ClienteService) {
+  constructor(private readonly _clienteService: ClienteService) {
   }
 
   async resolve(route: ActivatedRouteSnapshot): Promise<any> {

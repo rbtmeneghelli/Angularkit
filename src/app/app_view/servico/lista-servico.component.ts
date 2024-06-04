@@ -15,6 +15,7 @@ import { ServicoService } from './../../app_business/service/servico.service';
 import { SharedService } from '../../app_business/service/shared.service';
 import Swal from 'sweetalert2';
 import { SharedNotificationService } from 'src/app/app_business/service/shared-notification.service';
+import { arrString } from 'src/app/app_business/shared/shared-types';
 
 @Component({
   selector: 'app-lista-servico',
@@ -24,7 +25,7 @@ import { SharedNotificationService } from 'src/app/app_business/service/shared-n
 export class ListaServicoComponent implements OnInit {
 
   public cardCabecalhoDTO: CardCabecalhoDTO = new CardCabecalhoDTO();
-  public displayedColumns: string[] = ['descricao', 'tipoServico', 'dataCriacao', '#'];
+  public displayedColumns: arrString = ['descricao', 'tipoServico', 'dataCriacao', '#'];
   public dataSource: MatTableDataSource<Servico>;
   public servico: Servico;
   public enumTipoServico: EnumTipoServico;

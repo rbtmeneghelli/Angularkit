@@ -3,6 +3,7 @@ import { OnInit, Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
+import { SharedVariables } from 'src/app/app_business/shared/shared-variables';
 
 export class Mensageria {
   nome: string;
@@ -15,15 +16,20 @@ export class Mensageria {
   selector: 'app-mensageria',
   templateUrl: './mensageria.component.html'
 })
+
 export class MensageriaComponent implements OnInit {
   public listaMensagem: Array<Mensageria> = new Array<Mensageria>();
   public formulario: FormGroup;
   public account: any;
-  public currentDate: Date = new Date();
+  public currentDate: Date = SharedVariables.CURRENT_DATE;
   public dados: any;
   public closeResult: string;
 
-  constructor(private formBuilder: FormBuilder, private route: Router, private modalService: NgbModal) {
+  constructor(
+    private readonly formBuilder: FormBuilder, 
+    private readonly route: Router, 
+    private readonly modalService: NgbModal
+  ) {
     this.formulario = formBuilder.group({
       MENSAGEM: ['', [Validators.required]]
     });
@@ -38,7 +44,7 @@ export class MensageriaComponent implements OnInit {
       const mensageria = new Mensageria();
       mensageria.nome = 'teste' + i;
       mensageria.orgao = i % 2 === 0 ? 'PERMISSIONÁRIA' : 'CET';
-      mensageria.data = new Date();
+      mensageria.data = SharedVariables.CURRENT_DATE;
       mensageria.mensagem = i % 2 === 0 ? 'OLA MUNDO ' + i : 'TCHAU' + i;
       this.listaMensagem.push(mensageria);
     }

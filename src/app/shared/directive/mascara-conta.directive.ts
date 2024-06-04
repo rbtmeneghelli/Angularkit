@@ -6,7 +6,7 @@ import { Directive, ElementRef, HostListener } from '@angular/core';
 
 export class ContaMaskDirective {
 
-    constructor(private el: ElementRef) { }
+    constructor(private readonly el: ElementRef) { }
 
     @HostListener('keyup', ['$event'])
     onkeyup(event: KeyboardEvent): void {

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { AuthService } from './auth.guard.service';
+import { SharedVariables } from '../app_business/shared/shared-variables';
 
 @Injectable({
     providedIn: 'root'
@@ -9,7 +10,10 @@ import { AuthService } from './auth.guard.service';
 
 export class AuthGuard implements CanActivate {
 
-    constructor(private authService: AuthService, private router: Router) { }
+    constructor(
+        private readonly authService: AuthService, 
+        private readonly router: Router
+    ) { }
 
     canActivate(
         next: ActivatedRouteSnapshot,
@@ -26,11 +30,10 @@ export class AuthGuard implements CanActivate {
     private isTokenExpired(): boolean {
         const token = this.authService.credencial.token;
         const payload = this.authService.getTokenData(token);
-        const now = new Date().getTime() / 1000;
+        const now = SharedVariables.CURRENT_DATE.getTime() / 1000;
         if (payload.exp < now) {
             return true;
         }
         return false;
     }
-
 }

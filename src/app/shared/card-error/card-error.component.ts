@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
 
 export class CardErrorComponent implements OnInit {
 
-    constructor(private route: Router) { }
+    constructor(private readonly route: Router) { }
 
     ngOnInit(): void {
     }

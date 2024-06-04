@@ -4,6 +4,7 @@ import { EstadosFilterData } from '../../app_entities/model/estados-filter-data'
 import { CardCabecalhoDTO } from '../../app_entities/dto/cardCabecalho.dto';
 import { EstadosService } from 'src/app/app_business/service/estados.service';
 import { Estados } from 'src/app/app_entities/model/estados.model';
+import { arrNumber } from 'src/app/app_business/shared/shared-types';
 
 @Component({
   selector: 'app-template-tabela-boostrap',
@@ -25,7 +26,10 @@ export class TemplateTabelaBootstrapComponent implements OnInit {
   public formulario: FormGroup;
   public cardCabecalhoDTO: CardCabecalhoDTO = new CardCabecalhoDTO();
 
-  constructor(protected estadosService: EstadosService, protected formBuilder: FormBuilder) {
+  constructor(
+    private readonly estadosService: EstadosService, 
+    private readonly formBuilder: FormBuilder
+  ) {
     this.formulario = this.formBuilder.group({
       QTYFORPAGE: [5, []]
     });
@@ -87,8 +91,8 @@ export class TemplateTabelaBootstrapComponent implements OnInit {
     });
   }
 
-  calculateTotalPages(pageSize?: number, total?: number): number[] {
-    const totalPages: number[] = [];
+  calculateTotalPages(pageSize?: number, total?: number): arrNumber {
+    const totalPages: arrNumber = [];
     let pageIndex: number = this.lista.pageIndex;
     if (!!total) {
       const qtyPage = total >= this.lista.pageSize ? total / pageSize : 1;

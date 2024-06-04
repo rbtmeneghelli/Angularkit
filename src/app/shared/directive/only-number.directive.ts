@@ -5,7 +5,7 @@ import { Directive, ElementRef, HostListener } from '@angular/core';
 })
 export class OnlyNumberDirective {
 
-  constructor(private el: ElementRef) { }
+  constructor(private readonly el: ElementRef) { }
 
   @HostListener('input', ['$event']) onInputChange(event) {
     const initalValue = this.el.nativeElement.value;

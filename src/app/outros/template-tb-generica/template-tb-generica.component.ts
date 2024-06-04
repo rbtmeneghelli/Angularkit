@@ -3,6 +3,7 @@ import { MatPaginator, MatTableDataSource, MatSort } from '@angular/material';
 import { Column } from '../../app_entities/generic/column';
 import { Service } from '../../app_entities/generic/service';
 import { ExportadorService } from 'src/app/app_business/service/exportador.service';
+import { arrString } from 'src/app/app_business/shared/shared-types';
 
 @Component({
   selector: 'app-template-tb-generica',
@@ -27,12 +28,12 @@ export class TemplateTbGenericaComponent implements OnInit {
     { id: '5', name: 'Cape starling', lat: '16.0213558', Acoes: '#' }
   ];
 
-  displayedColumns: string[] = [];
+  displayedColumns: arrString = [];
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
-  constructor(private exportadorService: ExportadorService) { }
+  constructor(private readonly exportadorService: ExportadorService) { }
 
   ngOnInit(): void {
 

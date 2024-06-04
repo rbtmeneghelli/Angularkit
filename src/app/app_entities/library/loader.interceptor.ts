@@ -1,7 +1,6 @@
 // loader.interceptors.ts
 import { Injectable } from '@angular/core';
 import {
-    HttpErrorResponse,
     HttpResponse,
     HttpRequest,
     HttpHandler,
@@ -15,7 +14,9 @@ import { LoaderService } from '../../app_business/service/loader.service';
 export class LoaderInterceptor implements HttpInterceptor {
     private requests: HttpRequest<any>[] = [];
 
-    constructor(private loaderService: LoaderService) { }
+    constructor(
+        private readonly loaderService: LoaderService
+    ) { }
 
     removeRequest(req: HttpRequest<any>) {
         const i = this.requests.indexOf(req);

@@ -11,6 +11,7 @@ import { CardCabecalhoDTO } from '../../app_entities/dto/cardCabecalho.dto';
 
 // Service
 import { FuncionalidadeService } from './../../app_business/service/funcionalidade.service';
+import { arrString } from 'src/app/app_business/shared/shared-types';
 
 @Component({
   selector: 'app-lista-funcionalidade',
@@ -20,7 +21,7 @@ import { FuncionalidadeService } from './../../app_business/service/funcionalida
 export class ListaFuncionalidadeComponent implements OnInit {
 
   public cardCabecalhoDTO: CardCabecalhoDTO = new CardCabecalhoDTO();
-  public displayedColumns: string[] = ['descricao', 'role', 'dataCriacao', '#'];
+  public displayedColumns: arrString = ['descricao', 'role', 'dataCriacao', '#'];
   public dataSource: MatTableDataSource<Funcionalidade>;
   public funcionalidade: Funcionalidade;
 

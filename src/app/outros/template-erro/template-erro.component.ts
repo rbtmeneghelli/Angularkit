@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
 })
 export class TemplateErroComponent implements OnInit {
 
-  constructor(private route: Router) { }
+  constructor(private readonly route: Router) { }
 
   ngOnInit() {
   }

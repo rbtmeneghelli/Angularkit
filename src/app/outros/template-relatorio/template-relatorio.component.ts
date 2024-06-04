@@ -8,6 +8,7 @@ import { ExportadorService } from '../../app_business/service/exportador.service
 import { SharedService } from '../../app_business/service/shared.service';
 import { MatDialog } from '@angular/material/dialog';
 import { SharedNotificationService } from 'src/app/app_business/service/shared-notification.service';
+import { arrString } from 'src/app/app_business/shared/shared-types';
 
 export interface Food {
   value: string;
@@ -52,7 +53,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
 
 export class TemplateRelatorioComponent implements OnInit {
 
-  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
+  displayedColumns: arrString = ['position', 'name', 'weight', 'symbol'];
   dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
 
   foods: Food[] = [

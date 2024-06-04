@@ -5,7 +5,7 @@ import { Directive, ElementRef, HostListener } from '@angular/core';
 })
 export class OnlyNumberPtBrDirective {
 
-    constructor(private el: ElementRef) { }
+    constructor(private readonly el: ElementRef) { }
 
     // tslint:disable-next-line: typedef
     @HostListener('input', ['$event']) onInputChange(event) {

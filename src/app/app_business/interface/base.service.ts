@@ -1,12 +1,15 @@
-import { DropDownList } from 'src/app/app_entities/generic/dropdownlist';
 import { EnumTypeAction } from 'src/app/app_entities/enum/EnumTypeAction';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
+import { arrDropDownList, arrString } from '../shared/shared-types';
 
 export abstract class BaseService<T> {
 
-  constructor(protected http: HttpClient, protected actionUrl: string) {
+  constructor(
+    protected readonly http: HttpClient, 
+    protected actionUrl: string
+  ) {
   }
 
   getAll(): Observable<T[]> {
@@ -45,15 +48,15 @@ export abstract class BaseService<T> {
     return this.http.put<T>(apiUrl, { headers: this.getOptions() });
   }
 
-  getList(url: string): Observable<DropDownList[]> {
-    return this.http.get<DropDownList[]>(this.actionUrl + url, { headers: this.getOptions() });
+  getList(url: string): Observable<arrDropDownList> {
+    return this.http.get<arrDropDownList>(this.actionUrl + url, { headers: this.getOptions() });
   }
 
-  getListToCookie(url: string): Observable<DropDownList[]> {
-    return this.http.get<DropDownList[]>(this.actionUrl + url, { headers: this.getOptions() }).pipe(tap(response => console.log('retorno do backend: ', response)));
+  getListToCookie(url: string): Observable<arrDropDownList> {
+    return this.http.get<arrDropDownList>(this.actionUrl + url, { headers: this.getOptions() }).pipe(tap(response => console.log('retorno do backend: ', response)));
   }
 
-  exportExcel(sheet?: string, data?: string[], dataFilters?: string[]): Observable<any> {
+  exportExcel(sheet?: string, data?: arrString, dataFilters?: arrString): Observable<any> {
     const objectJSON = { columns: data, filters: dataFilters };
     const columns = { columns: data };
     // tslint:disable-next-line: max-line-length
@@ -76,10 +79,6 @@ export abstract class BaseService<T> {
   private getIpAddress(): Observable<string> {
     // Deixar a responsabilidade de pegar o IP pro backend, fazer isso dentro do codigo.
     return this.http.get('http://api.ipify.org/?format=json').pipe(map((res: any) => { return res.ip }), catchError((error: any) => { return 'Erro ao capturar seu IP' }));
-  }
-
-  private getUrl(): string {
-    return window.location.href;
   }
 
   private getMapActions(key: EnumTypeAction): string {
@@ -215,39 +214,4 @@ function makeReplaceSpecialCharactersInRequest(prop: string, spCharacter: string
   return prop.replace(new RegExp(spCharacter, "g"), convertStringToBase64(spCharacter));
 }
 
-function makeReplaceLeftBracket(prop: string, spCharacter: string): string {
-  return prop.replace(/\(/g, convertStringToBase64(spCharacter));
-}
 
-function makeReplaceRightBracket(prop: string, spCharacter: string): string {
-  return prop.replace(/\)/g, convertStringToBase64(spCharacter));
-}
-
-function convertStringToBase64(char: string): string {
-  return btoa(unescape(encodeURIComponent(char)));
-}
-
-function convertBase64ToString(char: string): string {
-  return decodeURIComponent(escape(atob(char)))
-}
-
-function makeReplaceSpecialCharactersInResponse(prop: string, spCharacter: string): string {
-  return prop.replace(new RegExp(spCharacter, "g"), convertBase64ToString(spCharacter));
-}
-
-function isStringHasNonAsciiCharacters(text: string): boolean {
-  return /[\w\s\u00C0-\u017F]/gi.test(text);
-}
-
-function getSpecialCharactersFromString(text: string): any {
-  var spCharactersStringList: any[] = [];
-  var exceptionCharactersList: any[] = ['/', ':', '-', '+', '*', ',', '.']
-  var specialCharactersFromText = text.replace(/[\w\s\u00C0-\u017F]/gi, '').trim();
-  for (var i = 0; i <= specialCharactersFromText.length; i++) {
-    var character = specialCharactersFromText.substr(i, 1);
-    if (exceptionCharactersList.includes(character) === false && !!character) {
-      spCharactersStringList.push(character);
-    }
-  }
-  return spCharactersStringList;
-}

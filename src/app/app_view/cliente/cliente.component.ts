@@ -9,6 +9,9 @@ import { DropDownList } from '../../app_entities/generic/dropdownlist';
 import { Cliente } from '../../app_entities/model/cliente.model';
 import { take } from 'rxjs/operators';
 import { SharedNotificationService } from 'src/app/app_business/service/shared-notification.service';
+import { arrDropDownList } from 'src/app/app_business/shared/shared-types';
+import { statusList } from 'src/app/app_business/shared/shared-lists';
+import { SharedVariables } from 'src/app/app_business/shared/shared-variables';
 
 @Component({
   selector: 'app-cliente',
@@ -19,7 +22,7 @@ export class ClienteComponent implements OnInit, AfterViewInit {
   public cardCabecalhoDTO: CardCabecalhoDTO = new CardCabecalhoDTO();
   public registroNovo: boolean;
   public formulario: FormGroup;
-  public listaStatus: Array<DropDownList>;
+  public listaStatus: arrDropDownList = statusList;
   public bloquearCampo: boolean;
   constructor(
     private sharedNotificationService: SharedNotificationService,
@@ -48,7 +51,6 @@ export class ClienteComponent implements OnInit, AfterViewInit {
     this.cardCabecalhoDTO.tituloCard = 'Formulario Cliente';
     this.cardCabecalhoDTO.tituloModulo = 'Cadastro';
     this.cardCabecalhoDTO.nomeTela = 'Cliente';
-    this.listaStatus = this.sharedService.getListaStatus();
     this.activatedRoute.params.subscribe(params => {
       if (params.id !== undefined && params.id !== null) {
         this.updateForm(params.id);
@@ -88,7 +90,7 @@ export class ClienteComponent implements OnInit, AfterViewInit {
     cliente.cpf = this.formulario.get('CPF').value;
     cliente.nomeCliente = this.formulario.get('NOME').value;
     cliente.status = this.formulario.get('STATUS').value === '0' ? false : true;
-    cliente.dataCriacao = new Date();
+    cliente.dataCriacao = SharedVariables.CURRENT_DATE;
     return cliente;
   }
 

@@ -11,7 +11,7 @@ export class CardCabecalhoComponent implements OnInit {
 
   @Input() cardCabecalhoDTO: CardCabecalhoDTO;
 
-  constructor(private route: Router) { }
+  constructor(private readonly route: Router) { }
 
   ngOnInit() {
   }

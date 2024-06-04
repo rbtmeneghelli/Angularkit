@@ -1,6 +1,5 @@
 import { environment } from './../../environments/environment.prod';
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
 import { AuthService } from '../guards/auth.guard.service';
 @Component({
     selector: 'app-footer',
@@ -10,7 +9,7 @@ import { AuthService } from '../guards/auth.guard.service';
 
 export class AppFooterComponent implements OnInit {
     versao: string = environment.version;
-    constructor(private authService: AuthService) { }
+    constructor(private readonly authService: AuthService) { }
 
     ngOnInit() {
     }

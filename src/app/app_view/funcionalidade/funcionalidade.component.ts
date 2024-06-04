@@ -8,6 +8,9 @@ import { CardCabecalhoDTO } from '../../app_entities/dto/cardCabecalho.dto';
 import { DropDownList } from '../../app_entities/generic/dropdownlist';
 import { take } from 'rxjs/operators';
 import { SharedNotificationService } from 'src/app/app_business/service/shared-notification.service';
+import { arrDropDownList } from 'src/app/app_business/shared/shared-types';
+import { statusList } from 'src/app/app_business/shared/shared-lists';
+import { SharedVariables } from 'src/app/app_business/shared/shared-variables';
 
 @Component({
   selector: 'app-funcionalidade',
@@ -18,7 +21,7 @@ export class FuncionalidadeComponent implements OnInit {
   public cardCabecalhoDTO: CardCabecalhoDTO = new CardCabecalhoDTO();
   public registroNovo: boolean;
   public formulario: FormGroup;
-  public listaStatus: Array<DropDownList>;
+  public listaStatus: arrDropDownList = statusList;
   public bloquearCampo: boolean;
   constructor(
     private sharedService: SharedService,
@@ -37,9 +40,8 @@ export class FuncionalidadeComponent implements OnInit {
     this.cardCabecalhoDTO.tituloCard = 'Formulario Funcionalidade';
     this.cardCabecalhoDTO.tituloModulo = 'Cadastro';
     this.cardCabecalhoDTO.nomeTela = 'Funcionalidade';
-    this.listaStatus = this.sharedService.getListaStatus();
     this.activatedRoute.params.subscribe(params => {
-      if (params.id !== undefined && params.id !== null) {
+      if (!!params.id) {
         this.updateForm(params.id);
       } else {
         this.registroNovo = true;
@@ -65,9 +67,9 @@ export class FuncionalidadeComponent implements OnInit {
     funcionalidade.role = this.formulario.get('ROLE').value;
     funcionalidade.status = true;
     if (this.registroNovo) {
-      funcionalidade.dataCriacao = new Date();
+      funcionalidade.dataCriacao = SharedVariables.CURRENT_DATE;
     } else {
-      funcionalidade.dataAtualizacao = new Date();
+      funcionalidade.dataAtualizacao = SharedVariables.CURRENT_DATE;
     }
     return funcionalidade;
   }

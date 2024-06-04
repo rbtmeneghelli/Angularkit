@@ -14,6 +14,7 @@ import { CardCabecalhoDTO } from '../../app_entities/dto/cardCabecalho.dto';
 import { SharedService } from './../../app_business/service/shared.service';
 import { BancoService } from '../../app_business/service/banco.service';
 import { SharedNotificationService } from 'src/app/app_business/service/shared-notification.service';
+import { arrString } from 'src/app/app_business/shared/shared-types';
 
 @Component({
   selector: 'app-lista-banco',
@@ -23,7 +24,7 @@ import { SharedNotificationService } from 'src/app/app_business/service/shared-n
 export class ListaBancoComponent implements OnInit {
 
   public cardCabecalhoDTO: CardCabecalhoDTO = new CardCabecalhoDTO();
-  public displayedColumns: string[] = ['nomeBanco', 'Status', '#'];
+  public displayedColumns: arrString = ['nomeBanco', 'Status', '#'];
   public dataSource: MatTableDataSource<Banco>;
   public closeModal: string;
   public banco: Banco;

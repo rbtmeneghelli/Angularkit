@@ -12,6 +12,7 @@ import { CardCabecalhoDTO } from '../../app_entities/dto/cardCabecalho.dto';
 
 // Service
 import { take } from 'rxjs/operators';
+import { arrString } from 'src/app/app_business/shared/shared-types';
 
 
 @Component({
@@ -22,7 +23,7 @@ import { take } from 'rxjs/operators';
 export class ListaClienteComponent implements OnInit {
 
   public cardCabecalhoDTO: CardCabecalhoDTO = new CardCabecalhoDTO();
-  public displayedColumns: string[] = ['Cpf', 'Nome', 'Status', '#'];
+  public displayedColumns: arrString = ['Cpf', 'Nome', 'Status', '#'];
   public dataSource: MatTableDataSource<Cliente>;
   public closeModal: string;
   public cliente: Cliente;

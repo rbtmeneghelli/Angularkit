@@ -2,6 +2,7 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
+import { arrString } from 'src/app/app_business/shared/shared-types';
 
 export interface UserData {
   id: string;
@@ -11,11 +12,11 @@ export interface UserData {
 }
 
 /** Constants used to fill up our data base. */
-const COLORS: string[] = [
+const COLORS: arrString = [
   'maroon', 'red', 'orange', 'yellow', 'olive', 'green', 'purple', 'fuchsia', 'lime', 'teal',
   'aqua', 'blue', 'navy', 'black', 'gray'
 ];
-const NAMES: string[] = [
+const NAMES: arrString = [
   'Maia', 'Asher', 'Olivia', 'Atticus', 'Amelia', 'Jack', 'Charlotte', 'Theodore', 'Isla', 'Oliver',
   'Isabella', 'Jasper', 'Cora', 'Levi', 'Violet', 'Arthur', 'Mia', 'Thomas', 'Elizabeth'
 ];
@@ -27,7 +28,7 @@ const NAMES: string[] = [
 })
 export class TemplateTabelaComponent implements OnInit {
   
-  displayedColumns: string[] = ['id', 'name', 'progress', 'color', 'Editar', 'Excluir'];
+  displayedColumns: arrString = ['id', 'name', 'progress', 'color', 'Editar', 'Excluir'];
   dataSource: MatTableDataSource<UserData>;
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;

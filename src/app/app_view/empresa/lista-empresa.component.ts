@@ -14,6 +14,7 @@ import { EmpresaService } from 'src/app/app_business/service/empresa.service';
 import Swal from 'sweetalert2';
 import { Empresa } from 'src/app/app_entities/model/empresa.model';
 import { SharedNotificationService } from 'src/app/app_business/service/shared-notification.service';
+import { arrString } from 'src/app/app_business/shared/shared-types';
 
 
 @Component({
@@ -24,7 +25,7 @@ import { SharedNotificationService } from 'src/app/app_business/service/shared-n
 export class ListaEmpresaComponent implements OnInit {
 
     public cardCabecalhoDTO: CardCabecalhoDTO = new CardCabecalhoDTO();
-    public displayedColumns: string[] = ['cnpj', 'nomeEmpresa', 'nomeFantasia', 'dataCriacao', '#'];
+    public displayedColumns: arrString = ['cnpj', 'nomeEmpresa', 'nomeFantasia', 'dataCriacao', '#'];
     public dataSource: MatTableDataSource<Empresa>;
     public closeModal: string;
 

@@ -10,7 +10,7 @@ export class PasteDateDirective {
 
     private regexToValidateDate = new RegExp('^(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[012])/[12][0-9]{3}$');
 
-    constructor(private _ElementRef: ElementRef) { }
+    constructor(private readonly _ElementRef: ElementRef) { }
 
     @HostListener('paste', ['$event']) OnPaste($event) {
 

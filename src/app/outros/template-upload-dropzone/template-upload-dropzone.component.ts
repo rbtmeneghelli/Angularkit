@@ -1,6 +1,7 @@
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { ValidarSelect } from '../../app_business/service/shared.service';
+import { arrString } from 'src/app/app_business/shared/shared-types';
 @Component({
     selector: 'app-template-upload-dropzone',
     templateUrl: './template-upload-dropzone.component.html'
@@ -9,7 +10,7 @@ import { ValidarSelect } from '../../app_business/service/shared.service';
 export class UploadComponent implements OnInit {
 
     public carregando = true;
-    public erros: string[];
+    public erros: arrString[];
     public titulo: string;
     public files: File[] = [];
     public formulario: FormGroup;
@@ -17,7 +18,7 @@ export class UploadComponent implements OnInit {
     public enableBtnCancelar: boolean;
 
     // tslint:disable-next-line: max-line-length
-    constructor(protected formBuilder: FormBuilder) {
+    constructor(private formBuilder: FormBuilder) {
         this.formulario = this.formBuilder.group({
             OBRIGACAO: ['0', [Validators.required, ValidarSelect]]
         });

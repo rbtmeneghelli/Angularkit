@@ -13,7 +13,11 @@ export class AuthService {
 
     private credencialModel: CredenciaisDTO;
 
-    constructor(private httpClient: HttpClient, private sharedService: SharedService, private router: Router) { }
+    constructor(
+        private readonly httpClient: HttpClient, 
+        private readonly sharedService: SharedService, 
+        private readonly router: Router
+    ) { }
 
     public get credencial(): CredenciaisDTO {
         if (this.credencialModel != null) {

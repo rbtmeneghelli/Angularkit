@@ -11,6 +11,7 @@ import { CardCabecalhoDTO } from '../../app_entities/dto/cardCabecalho.dto';
 
 // Service
 import { ContaService } from './../../app_business/service/conta.service';
+import { arrString } from 'src/app/app_business/shared/shared-types';
 
 @Component({
   selector: 'app-lista-conta',
@@ -20,7 +21,7 @@ import { ContaService } from './../../app_business/service/conta.service';
 export class ListaContaComponent implements OnInit {
 
   public cardCabecalhoDTO: CardCabecalhoDTO = new CardCabecalhoDTO();
-  public displayedColumns: string[] = ['Cpf', 'Nome', 'Status', '#'];
+  public displayedColumns: arrString = ['Cpf', 'Nome', 'Status', '#'];
   public dataSource: MatTableDataSource<Conta>;
   public conta: Conta;
 

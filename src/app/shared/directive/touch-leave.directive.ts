@@ -8,7 +8,7 @@ import { Directive, ElementRef, HostListener, Output, EventEmitter } from '@angu
 export class TouchLeaveDirective {
     @Output() touchLeave = new EventEmitter<void>();
 
-    constructor(private el: ElementRef) { }
+    constructor(private readonly el: ElementRef) { }
 
     @HostListener('touchend', ['$event'])
     onTouchEnd(event: TouchEvent): void {
