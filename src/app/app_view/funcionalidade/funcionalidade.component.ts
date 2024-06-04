@@ -1,16 +1,17 @@
 import { Funcionalidade } from './../../app_entities/model/funcionalidade.model';
 import { FuncionalidadeService } from './../../app_business/service/funcionalidade.service';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { SharedService } from '../../app_business/service/shared.service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CardCabecalhoDTO } from '../../app_entities/dto/cardCabecalho.dto';
-import { DropDownList } from '../../app_entities/generic/dropdownlist';
 import { take } from 'rxjs/operators';
 import { SharedNotificationService } from 'src/app/app_business/service/shared-notification.service';
-import { arrDropDownList } from 'src/app/app_business/shared/shared-types';
-import { statusList } from 'src/app/app_business/shared/shared-lists';
-import { SharedVariables } from 'src/app/app_business/shared/shared-variables';
+import { statusList } from 'src/app/app_entities/shared/shared-lists';
+import { arrDropDownList } from 'src/app/app_entities/shared/shared-types';
+import { getHeaderSettings } from 'src/app/app_business/shared/shared-functions';
+import { SharedVariables } from 'src/app/app_entities/shared/shared-variables';
+import { hasErrorFormControl } from 'src/app/app_business/shared/shared-functions-string';
 
 @Component({
   selector: 'app-funcionalidade',
@@ -18,17 +19,18 @@ import { SharedVariables } from 'src/app/app_business/shared/shared-variables';
 })
 
 export class FuncionalidadeComponent implements OnInit {
-  public cardCabecalhoDTO: CardCabecalhoDTO = new CardCabecalhoDTO();
+  public cardCabecalhoDTO: CardCabecalhoDTO = getHeaderSettings('Formulario Funcionalidade', 'Cadastro', 'Funcionalidade');
   public registroNovo: boolean;
   public formulario: FormGroup;
   public listaStatus: arrDropDownList = statusList;
   public bloquearCampo: boolean;
   constructor(
-    private sharedService: SharedService,
+    private readonly sharedService: SharedService,
     private formBuilder: FormBuilder,
-    public funcionalidadeService: FuncionalidadeService,
-    private activatedRoute: ActivatedRoute,
-    private sharedNotificationService: SharedNotificationService) {
+    public readonly funcionalidadeService: FuncionalidadeService,
+    private readonly activatedRoute: ActivatedRoute,
+    private readonly sharedNotificationService: SharedNotificationService
+  ) {
     this.formulario = this.formBuilder.group({
       ID: [''],
       DESCRICAO: ['', Validators.required],
@@ -37,9 +39,6 @@ export class FuncionalidadeComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.cardCabecalhoDTO.tituloCard = 'Formulario Funcionalidade';
-    this.cardCabecalhoDTO.tituloModulo = 'Cadastro';
-    this.cardCabecalhoDTO.nomeTela = 'Funcionalidade';
     this.activatedRoute.params.subscribe(params => {
       if (!!params.id) {
         this.updateForm(params.id);
@@ -86,11 +85,7 @@ export class FuncionalidadeComponent implements OnInit {
     }
   }
 
-  getDescricao() {
-    return this.formulario.get('DESCRICAO').hasError('required') ? 'O campo nome da funcionalidade é obrigatório' : '';
-  }
-
-  getRole() {
-    return this.formulario.get('ROLE').hasError('required') ? 'O campo nome da role é obrigatório' : '';
+  hasErrorFormControl(formControl: AbstractControl): string{
+    return hasErrorFormControl(formControl);
   }
 }

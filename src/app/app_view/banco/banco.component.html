@@ -11,7 +11,7 @@
                                 <input matInput placeholder="Nome Banco" id="txtBanco" #txtBanco maxlength="80"
                                     formControlName="NOMEBANCO">
                                 <mat-hint align="end">{{txtBanco.value.length}} / 80</mat-hint>
-                                <mat-error>{{getNome()}}</mat-error>
+                                <mat-error>{{hasErrorFormControl(formulario.get('NOMEBANCO'))}}</mat-error>
                             </mat-form-field>
                         </div>
                     </div>
@@ -21,7 +21,7 @@
                                 <input matInput placeholder="Url do banco" id="txtUrl" #txtUrl maxlength="80"
                                     formControlName="URL">
                                 <mat-hint align="end">{{txtUrl.value.length}} / 80</mat-hint>
-                                <mat-error>{{getNome()}}</mat-error>
+                                <mat-error>{{hasErrorFormControl(formulario.get('URL'))}}</mat-error>
                             </mat-form-field>
                         </div>
                     </div>
@@ -31,7 +31,7 @@
                                 <input matInput placeholder="Login" id="txtLogin" #txtLogin maxlength="80"
                                     formControlName="LOGIN">
                                 <mat-hint align="end">{{txtLogin.value.length}} / 80</mat-hint>
-                                <mat-error>{{getNome()}}</mat-error>
+                                <mat-error>{{hasErrorFormControl(formulario.get('LOGIN'))}}</mat-error>
                             </mat-form-field>
                         </div>
                         <div class="col-lg-6 col-md-6 col-xl-6 col-xs-6 col-sm-6">
@@ -39,7 +39,7 @@
                                 <input matInput placeholder="Senha" id="txtSenha" #txtSenha maxlength="80"
                                     formControlName="SENHA">
                                 <mat-hint align="end">{{txtSenha.value.length}} / 80</mat-hint>
-                                <mat-error>{{getNome()}}</mat-error>
+                                <mat-error>{{hasErrorFormControl(formulario.get('SENHA'))}}</mat-error>
                             </mat-form-field>
                         </div>
                     </div>
@@ -49,7 +49,7 @@
                                 <input matInput placeholder="Credito" id="txtCredito" #txtCredito maxlength="80"
                                     formControlName="CREDITO">
                                 <mat-hint align="end">{{txtCredito.value.length}} / 80</mat-hint>
-                                <mat-error>{{getNome()}}</mat-error>
+                                <mat-error>{{hasErrorFormControl(formulario.get('CREDITO'))}}</mat-error>
                             </mat-form-field>
                         </div>
                         <div class="col-lg-6 col-md-6 col-xl-6 col-xs-6 col-sm-6">
@@ -57,7 +57,7 @@
                                 <input matInput placeholder="Debito" id="txtDebito" #txtDebito maxlength="80"
                                     formControlName="DEBITO">
                                 <mat-hint align="end">{{txtDebito.value.length}} / 80</mat-hint>
-                                <mat-error>{{getNome()}}</mat-error>
+                                <mat-error>{{hasErrorFormControl(formulario.get('DEBITO'))}}</mat-error>
                             </mat-form-field>
                         </div>
                     </div>
@@ -70,7 +70,7 @@
                                         {{item.viewValue}}
                                     </mat-option>
                                 </mat-select>
-                                <mat-error>{{getStatus()}}</mat-error>
+                                <mat-error>{{hasErrorFormControl(formulario.get('STATUS'))}}</mat-error>
                             </mat-form-field>
                         </div>
                     </div>

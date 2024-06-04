@@ -11,7 +11,7 @@
                                 <input matInput placeholder="Nome funcionalidade" id="txtDescricao" #txtDescricao maxlength="80"
                                     formControlName="DESCRICAO">
                                 <mat-hint align="end">{{txtDescricao.value.length}} / 80</mat-hint>
-                                <mat-error>{{getDescricao()}}</mat-error>
+                                <mat-error>{{hasErrorFormControl(formulario.get('DESCRICAO'))}}</mat-error>
                             </mat-form-field>
                         </div>
                     </div>
@@ -21,7 +21,7 @@
                                 <input matInput placeholder="Nome role" id="txtRole" #txtRole maxlength="80"
                                     formControlName="ROLE">
                                 <mat-hint align="end">{{txtRole.value.length}} / 80</mat-hint>
-                                <mat-error>{{getRole()}}</mat-error>
+                                <mat-error>{{hasErrorFormControl(formulario.get('ROLE'))}}</mat-error>
                             </mat-form-field>
                         </div>
                     </div>

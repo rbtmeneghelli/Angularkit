@@ -1,6 +1,7 @@
-import { SharedVariables } from 'src/app/app_business/shared/shared-variables';
 import { CardCabecalhoDTO } from './../../app_entities/dto/cardCabecalho.dto';
 import { Component, OnInit } from '@angular/core';
+import { getHeaderSettings } from 'src/app/app_business/shared/shared-functions';
+import { SharedVariables } from 'src/app/app_entities/shared/shared-variables';
 
 @Component({
     selector: 'app-lista',
@@ -21,16 +22,12 @@ export class ListaComponent implements OnInit {
         { Id: 7, Nome: 'RST', Idade: 40, DataNascimento: SharedVariables.CURRENT_DATE}
     ];
     public columnHeader?: any = {Id: 'Id', Nome: 'Nome', Idade: 'Idade', DataNascimento: 'Ano'}; // Objeto
-    public pageSize?: number;
+    public pageSize?: number = 7;
 
     constructor() {
-        this.cardCabecalhoDTO = new CardCabecalhoDTO();
+        this.cardCabecalhoDTO = getHeaderSettings('Lista de resultados','Formulários','Resultados');
     }
-
+    
     ngOnInit(): void {
-        this.cardCabecalhoDTO.tituloCard = 'Lista de resultados';
-        this.cardCabecalhoDTO.tituloModulo = 'Formulários';
-        this.cardCabecalhoDTO.nomeTela = 'Resultados';
-        this.pageSize = 7;
     }
 }

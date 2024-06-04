@@ -1,6 +1,6 @@
-import { Base, IBase } from './base.model';
+import { Base } from '../generic/base.model';
 
-export interface IBanco extends IBase {
+export interface IBanco {
     nomeBanco?: string;
     url?: string;
     login?: string;
@@ -11,7 +11,7 @@ export interface IBanco extends IBase {
     saldo?: number;
 }
 
-export class Banco extends Base {
+export class Banco extends Base implements IBanco {
     nomeBanco?: string;
     url?: string;
     login?: string;

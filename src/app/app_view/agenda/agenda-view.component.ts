@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { CardCabecalhoDTO } from '../../app_entities/dto/cardCabecalho.dto';
 import { take } from 'rxjs/operators';
 import { Agenda } from '../../app_entities/model/agenda.model';
+import { getHeaderSettings } from 'src/app/app_business/shared/shared-functions';
 
 @Component({
   selector: 'app-agenda-view',
@@ -11,16 +12,13 @@ import { Agenda } from '../../app_entities/model/agenda.model';
 })
 
 export class AgendaViewComponent implements OnInit {
-  public cardCabecalhoDTO: CardCabecalhoDTO = new CardCabecalhoDTO();
+  public cardCabecalhoDTO: CardCabecalhoDTO = getHeaderSettings('Formulario Agenda','Cadastro','Agenda');
   public agenda: Agenda = new Agenda();
   constructor(
-    private agendaService: AgendaService,
-    private activatedRoute: ActivatedRoute) {
+    private readonly agendaService: AgendaService,
+    private readonly activatedRoute: ActivatedRoute) {
   }
   ngOnInit() {
-    this.cardCabecalhoDTO.tituloCard = 'Formulario Agenda';
-    this.cardCabecalhoDTO.tituloModulo = 'Cadastro';
-    this.cardCabecalhoDTO.nomeTela = 'Agenda';
     this.activatedRoute.params.subscribe(params => {
       this.load(params.id);
     });

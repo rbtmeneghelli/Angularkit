@@ -1,6 +1,3 @@
-import { SharedService } from './../../app_business/service/shared.service';
-
-
 // Padrão
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
@@ -16,7 +13,9 @@ import { CardCabecalhoDTO } from '../../app_entities/dto/cardCabecalho.dto';
 import { AgendaService } from './../../app_business/service/agenda.service';
 import Swal from 'sweetalert2';
 import { SharedNotificationService } from 'src/app/app_business/service/shared-notification.service';
-import { arrString } from 'src/app/app_business/shared/shared-types';
+import { arrString } from 'src/app/app_entities/shared/shared-types';
+import { getHeaderSettings } from 'src/app/app_business/shared/shared-functions';
+import { SharedVariables } from 'src/app/app_entities/shared/shared-variables';
 
 @Component({
   selector: 'app-lista-agenda',
@@ -25,7 +24,7 @@ import { arrString } from 'src/app/app_business/shared/shared-types';
 
 export class ListaAgendaComponent implements OnInit {
 
-  public cardCabecalhoDTO: CardCabecalhoDTO = new CardCabecalhoDTO();
+  public cardCabecalhoDTO: CardCabecalhoDTO = getHeaderSettings('Lista de Agenda', 'Cadastro', 'Agenda');
   public displayedColumns: arrString = ['data', 'local', 'hora', '#'];
   public dataSource: MatTableDataSource<Agenda>;
   public agenda: Agenda;
@@ -34,13 +33,10 @@ export class ListaAgendaComponent implements OnInit {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   constructor(
-    private agendaService: AgendaService,
-    private sharedNotificationService: SharedNotificationService) { }
+    private readonly agendaService: AgendaService,
+    private readonly sharedNotificationService: SharedNotificationService) { }
 
   ngOnInit() {
-    this.cardCabecalhoDTO.tituloCard = 'Lista de Agenda';
-    this.cardCabecalhoDTO.tituloModulo = 'Cadastro';
-    this.cardCabecalhoDTO.nomeTela = 'Agenda';
     this.loadAll();
   }
 
@@ -55,11 +51,11 @@ export class ListaAgendaComponent implements OnInit {
   configDataTable(lista: Array<Agenda>) {
     this.dataSource = new MatTableDataSource(lista);
     this.dataSource.paginator = this.paginator;
-    this.dataSource.paginator._intl.firstPageLabel = 'Primeira pagina';
-    this.dataSource.paginator._intl.lastPageLabel = 'Ultima pagina';
-    this.dataSource.paginator._intl.itemsPerPageLabel = 'Itens por pagina';
-    this.dataSource.paginator._intl.nextPageLabel = 'Próxima pagina';
-    this.dataSource.paginator._intl.previousPageLabel = 'Voltar pagina';
+    this.dataSource.paginator._intl.firstPageLabel = SharedVariables.FIRST_PAGE_LABEL;
+    this.dataSource.paginator._intl.lastPageLabel = SharedVariables.LAST_PAGE_LABEL;
+    this.dataSource.paginator._intl.itemsPerPageLabel = SharedVariables.ITEMS_PAGE_LABEL;
+    this.dataSource.paginator._intl.nextPageLabel = SharedVariables.NEXT_PAGE_LABEL;
+    this.dataSource.paginator._intl.previousPageLabel = SharedVariables.PREVIOUS_PAGE_LABEL;
     // tslint:disable-next-line: max-line-length
     this.paginator._intl.getRangeLabel = (page: number, pageSize: number, length: number) => { if (length === 0 || pageSize === 0) { return `0 de ${length}`; } length = Math.max(length, 0); const startIndex = page * pageSize; const endIndex = startIndex < length ? Math.min(startIndex + pageSize, length) : startIndex + pageSize; return `${startIndex + 1} – ${endIndex} de ${length}`; };
     this.dataSource.sort = this.sort;

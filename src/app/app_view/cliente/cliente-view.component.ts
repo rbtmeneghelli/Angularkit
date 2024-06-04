@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../../guards/auth.guard.service';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { CardCabecalhoDTO } from '../../app_entities/dto/cardCabecalho.dto';
 import { ClienteService } from '../../app_business/service/cliente.service';
 import { Cliente } from '../../app_entities/model/cliente.model';
 import { take } from 'rxjs/operators';
+import { getHeaderSettings } from 'src/app/app_business/shared/shared-functions';
 
 @Component({
   selector: 'app-cliente-view',
@@ -12,16 +12,13 @@ import { take } from 'rxjs/operators';
 })
 
 export class ClienteViewComponent implements OnInit {
-  public cardCabecalhoDTO: CardCabecalhoDTO = new CardCabecalhoDTO();
+  public cardCabecalhoDTO: CardCabecalhoDTO = getHeaderSettings('Formulario Cliente','Cadastro','Cliente');
   public cliente: Cliente = new Cliente();
   constructor(
-    private clienteService: ClienteService,
-    private activatedRoute: ActivatedRoute) {
+    private readonly clienteService: ClienteService,
+    private readonly activatedRoute: ActivatedRoute) {
   }
   ngOnInit() {
-    this.cardCabecalhoDTO.tituloCard = 'Formulario Cliente';
-    this.cardCabecalhoDTO.tituloModulo = 'Cadastro';
-    this.cardCabecalhoDTO.nomeTela = 'Cliente';
     this.activatedRoute.params.subscribe(params => {
       this.load(params.id);
     });

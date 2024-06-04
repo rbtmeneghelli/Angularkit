@@ -1,5 +1,6 @@
+import { hasErrorFormControl } from './../../app_business/shared/shared-functions-string';
 import { AgendaService } from './../../app_business/service/agenda.service';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { SharedService } from '../../app_business/service/shared.service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
@@ -7,10 +8,10 @@ import { CardCabecalhoDTO } from '../../app_entities/dto/cardCabecalho.dto';
 import { take } from 'rxjs/operators';
 import { Agenda } from 'src/app/app_entities/model/agenda.model';
 import { SharedNotificationService } from 'src/app/app_business/service/shared-notification.service';
-import { arrDropDownList } from 'src/app/app_business/shared/shared-types';
 import { getHeaderSettings } from 'src/app/app_business/shared/shared-functions';
-import { statusList } from 'src/app/app_business/shared/shared-lists';
-import { SharedValidators, SharedVariables } from 'src/app/app_business/shared/shared-variables';
+import { statusList } from 'src/app/app_entities/shared/shared-lists';
+import { arrDropDownList } from 'src/app/app_entities/shared/shared-types';
+import { SharedVariables } from 'src/app/app_entities/shared/shared-variables';
 
 @Component({
   selector: 'app-agenda',
@@ -24,7 +25,6 @@ export class AgendaComponent implements OnInit {
   public listaStatus: arrDropDownList = statusList;
   public bloquearCampo: boolean;
   constructor(
-    private readonly sharedService: SharedService,
     private formBuilder: FormBuilder,
     public readonly agendaService: AgendaService,
     private readonly activatedRoute: ActivatedRoute,
@@ -32,12 +32,12 @@ export class AgendaComponent implements OnInit {
   ) {
     this.formulario = this.formBuilder.group({
       ID: [''],
-      DESCRICAO: ['', [SharedValidators.FRM_REQUIRED]],
-      LOCAL: ['', SharedValidators.FRM_REQUIRED],
-      DATA: ['', SharedValidators.FRM_REQUIRED],
-      HORA: ['', SharedValidators.FRM_REQUIRED],
+      DESCRICAO: ['', [Validators.required]],
+      LOCAL: ['', Validators.required],
+      DATA: ['', Validators.required],
+      HORA: ['', Validators.required],
       ALERTA: [''],
-      STATUS: ['', SharedValidators.FRM_REQUIRED]
+      STATUS: ['', Validators.required]
     });
   }
 
@@ -94,12 +94,8 @@ export class AgendaComponent implements OnInit {
     }
   }
 
-  getDescricao() {
-    return this.formulario.get('DESCRICAO').hasError('required') ? 'O campo descrição é obrigatório' : '';
-  }
-
-  getStatus() {
-    return this.formulario.get('STATUS').hasError('required') ? 'O campo status é obrigatório' : '';
+  hasErrorFormControl(formControl: AbstractControl): string{
+    return hasErrorFormControl(formControl);
   }
 
   chkboxAlerta(checked) {

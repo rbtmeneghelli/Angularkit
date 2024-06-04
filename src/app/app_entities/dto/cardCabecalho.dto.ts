@@ -4,7 +4,7 @@ export interface ICardCabecalhoDTO {
     nomeTela?: string;
 }
 
-export class CardCabecalhoDTO {
+export class CardCabecalhoDTO implements ICardCabecalhoDTO {
     tituloCard?: string;
     tituloModulo?: string;
     nomeTela?: string;

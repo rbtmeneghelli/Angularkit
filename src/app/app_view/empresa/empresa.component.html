@@ -11,7 +11,7 @@
                                 <input matInput placeholder="Cnpj" id="txtCnpj" #txtCnpj maxlength="20"
                                     formControlName="CNPJ" [readonly]="bloquearCampo" mask="00.000.000.0000-00">
                                 <mat-hint align="end">{{txtCnpj.value.length}} / 20</mat-hint>
-                                <mat-error>{{getCnpj()}}</mat-error>
+                                <mat-error>{{hasErrorFormControl(formulario.get('CNPJ'))}}</mat-error>
                             </mat-form-field>
                         </div>
                     </div>
@@ -21,7 +21,7 @@
                                 <input matInput placeholder="Nome Empresa" id="txtNomeEmpresa" #txtNomeEmpresa maxlength="80"
                                     formControlName="NOMEEMPRESA">
                                 <mat-hint align="end">{{txtNomeEmpresa.value.length}} / 80</mat-hint>
-                                <mat-error>{{getNomeEmpresa()}}</mat-error>
+                                <mat-error>{{hasErrorFormControl(formulario.get('NOMEEMPRESA'))}}</mat-error>
                             </mat-form-field>
                         </div>
                     </div>
@@ -31,7 +31,7 @@
                                 <input matInput placeholder="Nome Fantasia" id="txtNomeFantasia" #txtNomeFantasia maxlength="80"
                                     formControlName="NOMEFANTASIA">
                                 <mat-hint align="end">{{txtNomeFantasia.value.length}} / 80</mat-hint>
-                                <mat-error>{{getNomeFantasia()}}</mat-error>
+                                <mat-error>{{hasErrorFormControl(formulario.get('NOMEFANTASIA'))}}</mat-error>
                             </mat-form-field>
                         </div>
                     </div>         
@@ -44,7 +44,7 @@
                                         {{item.viewValue}}
                                     </mat-option>
                                 </mat-select>
-                                <mat-error>{{getStatus()}}</mat-error>
+                                <mat-error>{{hasErrorFormControl(formulario.get('STATUS'))}}</mat-error>
                             </mat-form-field>
                         </div>
                     </div>

@@ -3,4 +3,4 @@ export enum EnumStatus {
     Inativo = 2
 }
 
-// COLOCAR A DESCRICAO DO ENUM
+

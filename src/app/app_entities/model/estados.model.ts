@@ -1,6 +1,11 @@
-import { Base } from './base.model';
+import { Base } from "../generic/base.model";
 
-export class Estados extends Base {
+export interface IEstados{
+    sigla?: string;
+    nome?: string;
+}
+
+export class Estados extends Base implements IEstados {
     sigla?: string;
     nome?: string;
 }

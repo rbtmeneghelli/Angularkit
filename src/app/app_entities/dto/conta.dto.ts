@@ -1,13 +1,13 @@
 
 import { EnumTipoConta } from '../enum/EnumTipoConta';
-import { IBase, Base } from '../model/base.model';
+import { IGenericDTO } from '../generic/genericDTO.model';
 
-export interface IConta extends IBase {
+export interface IConta extends IGenericDTO {
     descricao?: string;
     tipoConta?: EnumTipoConta;
 }
 
-export class Conta extends Base {
+export class Conta implements IConta {
     descricao?: string;
     tipoConta?: EnumTipoConta;
 }

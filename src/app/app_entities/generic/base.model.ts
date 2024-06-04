@@ -6,7 +6,7 @@ export interface IBase {
     acoes?: string;
 }
 
-export class Base {
+export class Base implements IBase {
     id?: number;
     status?: boolean;
     dataCriacao?: Date;

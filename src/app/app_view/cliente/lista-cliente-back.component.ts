@@ -4,7 +4,7 @@ import { ClienteService } from './../../app_business/service/cliente.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatTableDataSource } from '@angular/material/table';
-import { ClienteFilterData } from '../../app_entities/filter/cliente-filter-data';
+import { ClienteFilterData } from '../../app_entities/filter/cliente-filter-data.model';
 import { MatDialog } from '@angular/material/dialog';
 import { ClienteFilterComponent } from './cliente-filter.component';
 
@@ -37,10 +37,10 @@ export class ListaClienteBackComponent implements OnInit {
   displayedColumns = this.columns.map(a => a.columnDef);
 
   constructor(
-    private clienteService: ClienteService,
-    private router: Router,
-    private utilService: SharedService,
-    private dialog: MatDialog
+    private readonly clienteService: ClienteService,
+    private readonly router: Router,
+    private readonly utilService: SharedService,
+    private readonly dialog: MatDialog
   ) { }
 
   async ngOnInit() {

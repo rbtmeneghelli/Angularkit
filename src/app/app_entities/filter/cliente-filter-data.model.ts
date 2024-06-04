@@ -1,4 +1,4 @@
-import { BaseFilterData } from './base-filter-data';
+import { BaseFilterData } from './base-filter-data.model';
 
 export class ClienteFilterData extends BaseFilterData {
     public cpf ?: string;

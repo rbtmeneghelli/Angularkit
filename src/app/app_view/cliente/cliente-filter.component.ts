@@ -1,4 +1,4 @@
-import { ClienteFilterData } from './../../app_entities/filter/cliente-filter-data';
+import { ClienteFilterData } from '../../app_entities/filter/cliente-filter-data.model';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';

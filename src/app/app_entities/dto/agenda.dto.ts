@@ -1,6 +1,6 @@
-import { IBase, Base } from '../model/base.model';
+import { IGenericDTO } from '../generic/genericDTO.model';
 
-export interface IAgendaDTO extends IBase {
+export interface IAgendaDTO extends IGenericDTO {
     descricao?: string;
     local?: string;
     data?: Date;
@@ -8,7 +8,7 @@ export interface IAgendaDTO extends IBase {
     alerta?: boolean;
 }
 
-export class AgendaDTO extends Base {
+export class AgendaDTO implements IAgendaDTO {
     descricao?: string;
     local?: string;
     data?: Date;

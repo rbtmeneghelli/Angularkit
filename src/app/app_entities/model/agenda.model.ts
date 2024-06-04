@@ -1,6 +1,6 @@
-import { IBase, Base } from './base.model';
+import { Base } from '../generic/base.model';
 
-export interface IAgenda extends IBase {
+export interface IAgenda {
     descricao?: string;
     local?: string;
     data?: Date;
@@ -8,7 +8,7 @@ export interface IAgenda extends IBase {
     alert?: boolean;
 }
 
-export class Agenda extends Base {
+export class Agenda extends Base implements IAgenda {
     descricao?: string;
     local?: string;
     data?: Date;

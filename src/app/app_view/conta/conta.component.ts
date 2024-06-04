@@ -4,10 +4,10 @@ import { SharedService } from '../../app_business/service/shared.service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CardCabecalhoDTO } from '../../app_entities/dto/cardCabecalho.dto';
-import { DropDownList } from '../../app_entities/generic/dropdownlist';
 import { take } from 'rxjs/operators';
-import { arrDropDownList } from 'src/app/app_business/shared/shared-types';
-import { statusList } from 'src/app/app_business/shared/shared-lists';
+import { statusList } from 'src/app/app_entities/shared/shared-lists';
+import { getHeaderSettings } from 'src/app/app_business/shared/shared-functions';
+import { arrDropDownList } from 'src/app/app_entities/shared/shared-types';
 
 @Component({
   selector: 'app-conta',
@@ -15,7 +15,7 @@ import { statusList } from 'src/app/app_business/shared/shared-lists';
 })
 
 export class ContaComponent implements OnInit {
-  public cardCabecalhoDTO: CardCabecalhoDTO = new CardCabecalhoDTO();
+  public cardCabecalhoDTO: CardCabecalhoDTO = getHeaderSettings('Formulario Conta','Cadastro','Conta');
   public registroNovo: boolean;
   public formulario: FormGroup;
   public listaStatus: arrDropDownList = statusList;
@@ -24,7 +24,8 @@ export class ContaComponent implements OnInit {
     private readonly sharedService: SharedService,
     private readonly formBuilder: FormBuilder,
     public readonly clienteService: ClienteService,
-    private readonly activatedRoute: ActivatedRoute) {
+    private readonly activatedRoute: ActivatedRoute
+  ) {
     this.formulario = this.formBuilder.group({
       ID: [''],
       CPF: ['', Validators.required],
@@ -34,11 +35,8 @@ export class ContaComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.cardCabecalhoDTO.tituloCard = 'Formulario Conta';
-    this.cardCabecalhoDTO.tituloModulo = 'Cadastro';
-    this.cardCabecalhoDTO.nomeTela = 'Conta';
     this.activatedRoute.params.subscribe(params => {
-      if (params.id !== undefined && params.id !== null) {
+      if (!!params.id) {
         this.updateForm(params.id);
       } else {
         this.registroNovo = true;

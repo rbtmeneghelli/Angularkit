@@ -11,7 +11,7 @@
                                 <input matInput placeholder="Local" id="txtLocal" #txtLocal maxlength="80"
                                     formControlName="LOCAL">
                                 <mat-hint align="end">{{txtLocal.value.length}} / 80</mat-hint>
-                                <mat-error>{{getDescricao()}}</mat-error>
+                                <mat-error>{{hasErrorFormControl(formulario.get('LOCAL'))}}</mat-error>
                             </mat-form-field>
                         </div>
                     </div>
@@ -21,7 +21,7 @@
                                 <textarea matInput placeholder="Descrição" id="txtDescricao" #txtDescricao
                                     maxlength="80" formControlName="DESCRICAO"></textarea>
                                 <mat-hint align="end">{{txtDescricao.value.length}} / 80</mat-hint>
-                                <mat-error>{{getDescricao()}}</mat-error>
+                                <mat-error>{{hasErrorFormControl(formulario.get('DESCRICAO'))}}</mat-error>
                             </mat-form-field>
                         </div>
                     </div>
@@ -31,7 +31,7 @@
                                 <input matInput placeholder="Data" id="txtData" #txtData maxlength="80"
                                     formControlName="DATA">
                                 <mat-hint align="end">{{txtData.value.length}} / 80</mat-hint>
-                                <mat-error>{{getDescricao()}}</mat-error>
+                                <mat-error>{{hasErrorFormControl(formulario.get('DATA'))}}</mat-error>
                             </mat-form-field>
                         </div>
                         <div class="col-lg-4 col-md-4 col-xl-4 col-xs-4 col-sm-4">
@@ -39,7 +39,7 @@
                                 <input matInput placeholder="Hora" id="txtHora" #txtHora maxlength="80"
                                     formControlName="HORA">
                                 <mat-hint align="end">{{txtHora.value.length}} / 80</mat-hint>
-                                <mat-error>{{getDescricao()}}</mat-error>
+                                <mat-error>{{hasErrorFormControl(formulario.get('HORA'))}}</mat-error>
                             </mat-form-field>
                         </div>
                         <div class="col-lg-4 col-md-4 col-xl-4 col-xs-4 col-sm-4" style="align-self: center !important;">
@@ -55,7 +55,7 @@
                                         {{item.viewValue}}
                                     </mat-option>
                                 </mat-select>
-                                <mat-error>{{getStatus()}}</mat-error>
+                                <mat-error>{{hasErrorFormControl(formulario.get('STATUS'))}}</mat-error>
                             </mat-form-field>
                         </div>
                     </div>

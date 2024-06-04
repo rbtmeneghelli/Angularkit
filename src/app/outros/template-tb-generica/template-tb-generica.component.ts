@@ -1,7 +1,7 @@
 import { Component, ViewChild, OnInit, Input } from '@angular/core';
 import { MatPaginator, MatTableDataSource, MatSort } from '@angular/material';
-import { Column } from '../../app_entities/generic/column';
-import { Service } from '../../app_entities/generic/service';
+import { Column } from '../../app_entities/generic/column.model';
+import { Service } from '../../app_entities/generic/service.model';
 import { ExportadorService } from 'src/app/app_business/service/exportador.service';
 import { arrString } from 'src/app/app_business/shared/shared-types';
 

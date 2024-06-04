@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { CardCabecalhoDTO } from '../../app_entities/dto/cardCabecalho.dto';
 import { take } from 'rxjs/operators';
 import { Auditoria } from '../../app_entities/model/auditoria.model';
+import { getHeaderSettings } from 'src/app/app_business/shared/shared-functions';
 
 @Component({
     selector: 'app-auditoria-view',
@@ -11,17 +12,14 @@ import { Auditoria } from '../../app_entities/model/auditoria.model';
 })
 
 export class AuditoriaViewComponent implements OnInit {
-    public cardCabecalhoDTO: CardCabecalhoDTO = new CardCabecalhoDTO();
+    public cardCabecalhoDTO: CardCabecalhoDTO = getHeaderSettings('Formulario Auditoria','Cadastro','Auditoria');
     public auditoria: Auditoria = new Auditoria();
     constructor(
-        private auditoriaService: AuditoriaService,
-        private activatedRoute: ActivatedRoute) {
+        private readonly auditoriaService: AuditoriaService,
+        private readonly activatedRoute: ActivatedRoute) {
     }
 
     ngOnInit() {
-        this.cardCabecalhoDTO.tituloCard = 'Formulario Auditoria';
-        this.cardCabecalhoDTO.tituloModulo = 'Cadastro';
-        this.cardCabecalhoDTO.nomeTela = 'Auditoria';
         this.activatedRoute.params.subscribe(params => {
             this.load(params.id);
         });

@@ -1,0 +1,22 @@
+export const SharedVariables = {
+    REGEX_DATE: '\^((0[1-9]|[12][0-9]|3[01])[/]?(0[1-9]|1[0-2])[/]?[12][0-9]{3})',
+    REGEX_HOUR: '\^([0-1]{1}[0-9]{1}|[2][0-3]{1})[:]?([0-5]{1}[0-9]{1})',
+    REGEX_SAFRA: '\^[A-Z]{2}[0-9]{2}',
+    REGEX_LOTERW: '\[a-zA-Z]{2}[0-9]{7}',
+    REGEX_SCORE_BOARD: '\[A-Z a-z]{3}[0-9][0-9A-Z a-z][0-9]{2}',
+    REQUIRED: '*',
+    formFieldAppearance: 'outline',
+    formFieldFloatLabel: 'always',
+    iconBarCodeField: 'fa fa-barcode fa-1x btnIcon',
+    PAGE_SIZE_OPTION: [25, 50, 100, 500, 1000, 2000],
+    CURRENT_DATE: new Date(),
+    REGEX_ONLY_NUMBER: new RegExp(/[^0-9]+/g),
+    REGEX_ONLY_ALPHANUMERIC: new RegExp(/[^a-zA-Z0-9]+/g),
+    REGEX_NOT_REPEATED_SPACE: new RegExp(/\s+/g),
+    REGEX_NOT_SPECIAL_CHARACTER: new RegExp(/[^a-zA-Záàãâäéèêëíìîïóòõôöúùûü0-9-çÇ\p{P}\s]+/g),
+    FIRST_PAGE_LABEL: 'Primeira pagina',
+    LAST_PAGE_LABEL: 'Ultima pagina',
+    ITEMS_PAGE_LABEL: 'Itens por pagina',
+    NEXT_PAGE_LABEL: 'Próxima pagina',
+    PREVIOUS_PAGE_LABEL: 'Voltar pagina'
+}

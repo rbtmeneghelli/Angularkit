@@ -1,9 +1,10 @@
 import { BancoService } from '../../app_business/service/banco.service';
 import { Banco } from '../../app_entities/model/banco.model';
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { CardCabecalhoDTO } from '../../app_entities/dto/cardCabecalho.dto';
 import { take } from 'rxjs/operators';
+import { getHeaderSettings } from 'src/app/app_business/shared/shared-functions';
 
 @Component({
   selector: 'app-banco-view',
@@ -11,16 +12,13 @@ import { take } from 'rxjs/operators';
 })
 
 export class BancoViewComponent implements OnInit {
-  public cardCabecalhoDTO: CardCabecalhoDTO = new CardCabecalhoDTO();
+  public cardCabecalhoDTO: CardCabecalhoDTO = getHeaderSettings('Formulario Banco','Cadastro','Banco');
   public banco: Banco = new Banco();
   constructor(
-    private bancoService: BancoService,
-    private activatedRoute: ActivatedRoute) {
+    private readonly bancoService: BancoService,
+    private readonly activatedRoute: ActivatedRoute) {
   }
   ngOnInit() {
-    this.cardCabecalhoDTO.tituloCard = 'Formulario Banco';
-    this.cardCabecalhoDTO.tituloModulo = 'Cadastro';
-    this.cardCabecalhoDTO.nomeTela = 'Banco';
     this.activatedRoute.params.subscribe(params => {
       this.load(params.id);
     });

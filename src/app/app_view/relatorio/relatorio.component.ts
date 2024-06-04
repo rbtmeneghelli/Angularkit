@@ -1,7 +1,7 @@
-import { FiltroArquivo } from './../../app_entities/generic/filtro-arquivo';
+import { arrString } from 'src/app/app_entities/shared/shared-types';
+import { FiltroArquivo } from '../../app_entities/generic/filtro-arquivo.model';
 import { DownloadService } from './../../app_business/service/download.service';
 import { Component, OnInit } from '@angular/core';
-import { arrString } from 'src/app/app_business/shared/shared-types';
 // import JSZip from 'jszip';
 
 @Component({

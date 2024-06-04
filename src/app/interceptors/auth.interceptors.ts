@@ -5,7 +5,8 @@ import { Observable, throwError } from 'rxjs';
 import { Router } from '@angular/router';
 import { SharedService } from '../app_business/service/shared.service';
 import { AuthService } from '../guards/auth.guard.service';
-import { arrString } from '../app_business/shared/shared-types';
+import { arrString } from '../app_entities/shared/shared-types';
+import { SharedNotificationService } from '../app_business/service/shared-notification.service';
 
 /** Pass untouched request through to the next request handler. */
 @Injectable()
@@ -16,7 +17,7 @@ export class AuthInterceptor implements HttpInterceptor {
     constructor(
         private readonly authService: AuthService, 
         private readonly router: Router, 
-        private readonly sharedService: SharedService
+        private readonly sharedNotificationService: SharedNotificationService
     ) { }
 
     intercept(req: HttpRequest<any>, next: HttpHandler):
@@ -34,7 +35,7 @@ export class AuthInterceptor implements HttpInterceptor {
 
                 if (e.status === 403) {
                     // tslint:disable-next-line: max-line-length
-                    this.sharedService.enviarNotificacaoToRoute('Acesso negado', 'Você não possui acesso a este recurso', 'warning', 'home');
+                    this.sharedNotificationService.enviarNotificacaoToRoute('Acesso negado', 'Você não possui acesso a este recurso', 'warning', 'home');
                 }
 
                 return throwError(e);

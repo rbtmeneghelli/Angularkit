@@ -1,11 +1,11 @@
-import { IBase, Base } from './base.model';
+import { Base } from '../generic/base.model';
 
-export interface IFuncionalidade extends IBase {
+export interface IFuncionalidade {
     descricao?: string;
     role?: string;
 }
 
-export class Funcionalidade extends Base {
+export class Funcionalidade extends Base implements IFuncionalidade {
     descricao?: string;
     role?: string;
 }

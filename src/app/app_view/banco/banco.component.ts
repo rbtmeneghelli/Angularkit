@@ -1,16 +1,17 @@
 import { Banco } from '../../app_entities/model/banco.model';
 import { BancoService } from '../../app_business/service/banco.service';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { SharedService } from '../../app_business/service/shared.service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CardCabecalhoDTO } from '../../app_entities/dto/cardCabecalho.dto';
-import { DropDownList } from '../../app_entities/generic/dropdownlist';
 import { take } from 'rxjs/operators';
 import { SharedNotificationService } from 'src/app/app_business/service/shared-notification.service';
-import { arrDropDownList } from 'src/app/app_business/shared/shared-types';
-import { statusList } from 'src/app/app_business/shared/shared-lists';
-import { SharedVariables } from 'src/app/app_business/shared/shared-variables';
+import { statusList } from 'src/app/app_entities/shared/shared-lists';
+import { getHeaderSettings } from 'src/app/app_business/shared/shared-functions';
+import { arrDropDownList } from 'src/app/app_entities/shared/shared-types';
+import { SharedVariables } from 'src/app/app_entities/shared/shared-variables';
+import { hasErrorFormControl } from 'src/app/app_business/shared/shared-functions-string';
 
 @Component({
   selector: 'app-banco',
@@ -18,17 +19,17 @@ import { SharedVariables } from 'src/app/app_business/shared/shared-variables';
 })
 
 export class BancoComponent implements OnInit {
-  public cardCabecalhoDTO: CardCabecalhoDTO = new CardCabecalhoDTO();
+  public cardCabecalhoDTO: CardCabecalhoDTO = getHeaderSettings('Formulario Banco', 'Cadastro', 'Banco');
   public registroNovo: boolean;
   public formulario: FormGroup;
   public listaStatus: arrDropDownList = statusList;
   public bloquearCampo: boolean;
   constructor(
-    private sharedService: SharedService,
+    private readonly sharedService: SharedService,
     private formBuilder: FormBuilder,
-    public bancoService: BancoService,
-    private activatedRoute: ActivatedRoute,
-    private sharedNotificationService: SharedNotificationService) {
+    public readonly bancoService: BancoService,
+    private readonly activatedRoute: ActivatedRoute,
+    private readonly sharedNotificationService: SharedNotificationService) {
     this.formulario = this.formBuilder.group({
       ID: [''],
       NOMEBANCO: ['', Validators.required],
@@ -42,11 +43,8 @@ export class BancoComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.cardCabecalhoDTO.tituloCard = 'Formulario Banco';
-    this.cardCabecalhoDTO.tituloModulo = 'Cadastro';
-    this.cardCabecalhoDTO.nomeTela = 'Banco';
     this.activatedRoute.params.subscribe(params => {
-      if (params.id !== undefined && params.id !== null) {
+      if (!!params.id) {
         this.updateForm(params.id);
       } else {
         this.registroNovo = true;
@@ -70,12 +68,8 @@ export class BancoComponent implements OnInit {
     }).catch(error => alert('erro'));
   }
 
-  getNome() {
-    return this.formulario.get('NOMEBANCO').hasError('required') ? 'O campo nome do banco é obrigatório' : '';
-  }
-
-  getStatus() {
-    return this.formulario.get('STATUS').hasError('required') ? 'O campo status é obrigatório' : '';
+  hasErrorFormControl(formControl: AbstractControl): string{
+    return hasErrorFormControl(formControl);
   }
 
   buildEntity(): Banco {

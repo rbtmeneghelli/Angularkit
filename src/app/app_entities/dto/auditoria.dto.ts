@@ -6,7 +6,7 @@ export interface IAuditoria {
     nomeUsuario?: string;
 }
 
-export class Auditoria {
+export class Auditoria implements IAuditoria {
     dataCriacao?: string;
     tela?: string;
     classe?: boolean;

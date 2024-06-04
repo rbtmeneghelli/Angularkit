@@ -1,4 +1,4 @@
-import { SharedVariables } from "src/app/app_business/shared/shared-variables";
+import { SharedVariables } from "../shared/shared-variables";
 
 export interface ICookie {
     tipoacao: string;

@@ -10,7 +10,7 @@ export interface IAuditoria {
     dataCriacao?: Date;
 }
 
-export class Auditoria {
+export class Auditoria implements IAuditoria{
     id?: number;
     tela?: string;
     classe?: string;

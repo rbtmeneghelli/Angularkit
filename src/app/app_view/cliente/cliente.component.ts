@@ -2,16 +2,16 @@ import { ClienteService } from '../../app_business/service/cliente.service';
 import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { SharedService } from '../../app_business/service/shared.service';
 import { Component, OnInit, AfterViewInit } from '@angular/core';
-import { AuthService } from '../../guards/auth.guard.service';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { CardCabecalhoDTO } from '../../app_entities/dto/cardCabecalho.dto';
-import { DropDownList } from '../../app_entities/generic/dropdownlist';
 import { Cliente } from '../../app_entities/model/cliente.model';
 import { take } from 'rxjs/operators';
 import { SharedNotificationService } from 'src/app/app_business/service/shared-notification.service';
-import { arrDropDownList } from 'src/app/app_business/shared/shared-types';
-import { statusList } from 'src/app/app_business/shared/shared-lists';
-import { SharedVariables } from 'src/app/app_business/shared/shared-variables';
+import { statusList } from 'src/app/app_entities/shared/shared-lists';
+import { arrDropDownList } from 'src/app/app_entities/shared/shared-types';
+import { getHeaderSettings } from 'src/app/app_business/shared/shared-functions';
+import { SharedVariables } from 'src/app/app_entities/shared/shared-variables';
+import { hasErrorFormControl } from 'src/app/app_business/shared/shared-functions-string';
 
 @Component({
   selector: 'app-cliente',
@@ -19,18 +19,18 @@ import { SharedVariables } from 'src/app/app_business/shared/shared-variables';
 })
 
 export class ClienteComponent implements OnInit, AfterViewInit {
-  public cardCabecalhoDTO: CardCabecalhoDTO = new CardCabecalhoDTO();
+  public cardCabecalhoDTO: CardCabecalhoDTO = getHeaderSettings('Formulario Cliente','Cadastro','Cliente');
   public registroNovo: boolean;
   public formulario: FormGroup;
   public listaStatus: arrDropDownList = statusList;
   public bloquearCampo: boolean;
   constructor(
-    private sharedNotificationService: SharedNotificationService,
+    private readonly sharedNotificationService: SharedNotificationService,
     private formBuilder: FormBuilder,
-    public clienteService: ClienteService,
-    private activatedRoute: ActivatedRoute,
-    private sharedService: SharedService,
-    private route: ActivatedRoute) {
+    public readonly clienteService: ClienteService,
+    private readonly activatedRoute: ActivatedRoute,
+    private readonly sharedService: SharedService,
+    private readonly route: ActivatedRoute) {
     this.formulario = this.formBuilder.group({
       ID: [''],
       CPF: ['', [Validators.required, this.validarCpf]],
@@ -48,11 +48,8 @@ export class ClienteComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-    this.cardCabecalhoDTO.tituloCard = 'Formulario Cliente';
-    this.cardCabecalhoDTO.tituloModulo = 'Cadastro';
-    this.cardCabecalhoDTO.nomeTela = 'Cliente';
     this.activatedRoute.params.subscribe(params => {
-      if (params.id !== undefined && params.id !== null) {
+      if (!!params.id) {
         this.updateForm(params.id);
       } else {
         this.registroNovo = true;
@@ -72,17 +69,8 @@ export class ClienteComponent implements OnInit, AfterViewInit {
     });
   }
 
-  getCpf() {
-    return this.formulario.get('CPF').hasError('required') ? 'O campo cpf é obrigatório' :
-      this.formulario.get('CPF').hasError('cpfInvalido') ? 'O cpf digitado é invalido' : '';
-  }
-
-  getNome() {
-    return this.formulario.get('NOME').hasError('required') ? 'O campo nome é obrigatório' : '';
-  }
-
-  getStatus() {
-    return this.formulario.get('STATUS').hasError('required') ? 'O campo status é obrigatório' : '';
+  hasErrorFormControl(formControl: AbstractControl): string{
+    return hasErrorFormControl(formControl);
   }
 
   buildEntity(): Cliente {

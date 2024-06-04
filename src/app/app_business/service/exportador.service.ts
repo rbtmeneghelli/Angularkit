@@ -1,4 +1,4 @@
-import { ClienteFilterData } from './../../app_entities/filter/cliente-filter-data';
+import { ClienteFilterData } from '../../app_entities/filter/cliente-filter-data.model';
 import { Input } from '@angular/core';
 import localePtBr from '@angular/common/locales/pt';
 import { registerLocaleData } from '@angular/common';
@@ -8,7 +8,7 @@ import { registerLocaleData } from '@angular/common';
 // import { saveAs } from 'file-saver';
 // import { Document, Paragraph, Packer, TextRun } from 'docx';
 import { Injectable } from '@angular/core';
-import { Column } from '../../app_entities/generic/column';
+import { Column } from '../../app_entities/generic/column.model';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { map } from 'rxjs/operators';

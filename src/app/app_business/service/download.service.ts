@@ -1,7 +1,7 @@
 import { catchError, map } from 'rxjs/operators';
 import { SharedService } from 'src/app/app_business/service/shared.service';
 import { Observable, EMPTY } from 'rxjs';
-import { FiltroArquivo } from './../../app_entities/generic/filtro-arquivo';
+import { FiltroArquivo } from '../../app_entities/generic/filtro-arquivo.model';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../../environments/environment';

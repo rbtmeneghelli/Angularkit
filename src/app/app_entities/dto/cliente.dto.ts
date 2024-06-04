@@ -1,12 +1,12 @@
-import { IBase, Base } from '../model/base.model';
+import { IGenericDTO } from '../generic/genericDTO.model';
 
-export interface IClienteDTO extends IBase {
+export interface IClienteDTO extends IGenericDTO {
     cpf?: string;
     nomeCliente?: string;
     status?: boolean;
 }
 
-export class ClienteDTO extends Base {
+export class ClienteDTO implements IClienteDTO {
     cpf?: string;
     nomeCliente?: string;
     status?: boolean;

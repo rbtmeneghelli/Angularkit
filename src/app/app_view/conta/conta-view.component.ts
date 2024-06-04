@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { CardCabecalhoDTO } from '../../app_entities/dto/cardCabecalho.dto';
 import { take } from 'rxjs/operators';
 import { Conta } from 'src/app/app_entities/model/conta.model';
+import { getHeaderSettings } from 'src/app/app_business/shared/shared-functions';
 
 @Component({
     selector: 'app-conta-view',
@@ -11,16 +12,14 @@ import { Conta } from 'src/app/app_entities/model/conta.model';
 })
 
 export class ContaViewComponent implements OnInit {
-    public cardCabecalhoDTO: CardCabecalhoDTO = new CardCabecalhoDTO();
+    public cardCabecalhoDTO: CardCabecalhoDTO = getHeaderSettings('Formulario Conta','Cadastro','Conta');
     public conta: Conta = new Conta();
     constructor(
-        private contaService: ContaService,
-        private activatedRoute: ActivatedRoute) {
+        private readonly contaService: ContaService,
+        private readonly activatedRoute: ActivatedRoute
+    ) {
     }
     ngOnInit() {
-        this.cardCabecalhoDTO.tituloCard = 'Formulario Conta';
-        this.cardCabecalhoDTO.tituloModulo = 'Cadastro';
-        this.cardCabecalhoDTO.nomeTela = 'Conta';
         this.activatedRoute.params.subscribe(params => {
             this.load(params.id);
         });

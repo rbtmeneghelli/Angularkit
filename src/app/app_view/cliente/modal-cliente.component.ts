@@ -3,7 +3,6 @@ import { Cliente } from '../../app_entities/model/cliente.model';
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { SharedService } from '../../app_business/service/shared.service';
 import { SharedNotificationService } from 'src/app/app_business/service/shared-notification.service';
 
 @Component({
@@ -17,8 +16,8 @@ export class ModalClienteComponent implements OnInit {
     @Input() closeModal: any;
     @Output() statusModal: EventEmitter<boolean> = new EventEmitter();
     constructor(
-        private sharedNotificationService: SharedNotificationService,
-        private clienteService: ClienteService
+        private readonly sharedNotificationService: SharedNotificationService,
+        private readonly clienteService: ClienteService
     ) { }
 
     ngOnInit() {

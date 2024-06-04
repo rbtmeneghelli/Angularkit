@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { CardCabecalhoDTO } from '../../app_entities/dto/cardCabecalho.dto';
 import { take } from 'rxjs/operators';
 import { Empresa } from '../../app_entities/model/empresa.model';
+import { getHeaderSettings } from 'src/app/app_business/shared/shared-functions';
 
 @Component({
     selector: 'app-empresa-view',
@@ -11,16 +12,14 @@ import { Empresa } from '../../app_entities/model/empresa.model';
 })
 
 export class EmpresaViewComponent implements OnInit {
-    public cardCabecalhoDTO: CardCabecalhoDTO = new CardCabecalhoDTO();
+    public cardCabecalhoDTO: CardCabecalhoDTO = getHeaderSettings('Formulario Empresa','Cadastro', 'Empresa');
     public empresa: Empresa = new Empresa();
     constructor(
-        private empresaService: EmpresaService,
-        private activatedRoute: ActivatedRoute) {
+        private readonly empresaService: EmpresaService,
+        private readonly activatedRoute: ActivatedRoute
+    ) {
     }
     ngOnInit() {
-        this.cardCabecalhoDTO.tituloCard = 'Formulario Empresa';
-        this.cardCabecalhoDTO.tituloModulo = 'Cadastro';
-        this.cardCabecalhoDTO.nomeTela = 'Empresa';
         this.activatedRoute.params.subscribe(params => {
             this.load(params.id);
         });

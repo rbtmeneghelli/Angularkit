@@ -11,7 +11,7 @@
                                 <input matInput placeholder="Cpf" id="txtCpf" #txtCpf maxlength="20"
                                     formControlName="CPF" [readonly]="bloquearCampo" mask="000.000.000-00">
                                 <mat-hint align="end">{{txtCpf.value.length}} / 20</mat-hint>
-                                <mat-error>{{getCpf()}}</mat-error>
+                                <mat-error>{{hasErrorFormControl(formulario.get('CPF'))}}</mat-error>
                             </mat-form-field>
                         </div>
                     </div>
@@ -21,7 +21,7 @@
                                 <input matInput placeholder="Nome Completo" id="txtNome" #txtNome maxlength="80"
                                     formControlName="NOME">
                                 <mat-hint align="end">{{txtNome.value.length}} / 80</mat-hint>
-                                <mat-error>{{getNome()}}</mat-error>
+                                <mat-error>{{hasErrorFormControl(formulario.get('NOME'))}}</mat-error>
                             </mat-form-field>
                         </div>
                     </div>
@@ -34,7 +34,7 @@
                                         {{item.viewValue}}
                                     </mat-option>
                                 </mat-select>
-                                <mat-error>{{getStatus()}}</mat-error>
+                                <mat-error>{{hasErrorFormControl(formulario.get('STATUS'))}}</mat-error>
                             </mat-form-field>
                         </div>
                     </div>

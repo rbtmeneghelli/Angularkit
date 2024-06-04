@@ -9,7 +9,7 @@ import { take } from 'rxjs/operators';
 import { ServicoService } from '../../app_business/service/servico.service';
 import { SharedNotificationService } from 'src/app/app_business/service/shared-notification.service';
 import { arrDropDownList } from 'src/app/app_business/shared/shared-types';
-import { statusList } from 'src/app/app_business/shared/shared-lists';
+import { statusList } from 'src/app/app_entities/shared/shared-lists';
 import { SharedVariables } from 'src/app/app_business/shared/shared-variables';
 
 @Component({
@@ -45,8 +45,8 @@ export class ServicoComponent implements OnInit {
     this.cardCabecalhoDTO.tituloModulo = 'Cadastro';
     this.cardCabecalhoDTO.nomeTela = 'Serviço';
     this.activatedRoute.params.subscribe(params => {
-      if (params.id !== undefined && params.id !== null) {
-        this.updateForm(params.id);
+      if (!!params.id) {
+        this.updateForm();
       } else {
         this.registroNovo = true;
         this.bloquearCampo = false;

@@ -3,14 +3,15 @@ import { EmpresaService } from './../../app_business/service/empresa.service';
 import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { SharedService } from '../../app_business/service/shared.service';
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { CardCabecalhoDTO } from '../../app_entities/dto/cardCabecalho.dto';
-import { DropDownList } from '../../app_entities/generic/dropdownlist';
 import { take } from 'rxjs/operators';
 import { SharedNotificationService } from 'src/app/app_business/service/shared-notification.service';
-import { arrDropDownList } from 'src/app/app_business/shared/shared-types';
-import { statusList } from 'src/app/app_business/shared/shared-lists';
-import { SharedVariables } from 'src/app/app_business/shared/shared-variables';
+import { statusList } from 'src/app/app_entities/shared/shared-lists';
+import { arrDropDownList } from 'src/app/app_entities/shared/shared-types';
+import { getHeaderSettings } from 'src/app/app_business/shared/shared-functions';
+import { SharedVariables } from 'src/app/app_entities/shared/shared-variables';
+import { hasErrorFormControl } from 'src/app/app_business/shared/shared-functions-string';
 
 @Component({
     selector: 'app-empresa',
@@ -18,7 +19,7 @@ import { SharedVariables } from 'src/app/app_business/shared/shared-variables';
 })
 
 export class EmpresaComponent implements OnInit {
-    public cardCabecalhoDTO: CardCabecalhoDTO = new CardCabecalhoDTO();
+    public cardCabecalhoDTO: CardCabecalhoDTO = getHeaderSettings('Formulario Empresa', 'Cadastro', 'Empresa');
     public registroNovo: boolean;
     public formulario: FormGroup;
     public listaStatus: arrDropDownList = statusList;
@@ -40,9 +41,6 @@ export class EmpresaComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.cardCabecalhoDTO.tituloCard = 'Formulario Empresa';
-        this.cardCabecalhoDTO.tituloModulo = 'Cadastro';
-        this.cardCabecalhoDTO.nomeTela = 'Empresa';
         this.activatedRoute.params.subscribe(params => {
             if (!!params.id) {
                 this.updateForm(params.id);
@@ -65,22 +63,10 @@ export class EmpresaComponent implements OnInit {
         }).catch(error => alert('erro'));
     }
 
-    getCnpj() {
-        return this.formulario.get('CNPJ').hasError('required') ? 'O campo cnpj é obrigatório' :
-            this.formulario.get('CNPJ').hasError('cnpjInvalido') ? 'O cnpj digitado é invalido' : '';
+    hasErrorFormControl(formControl: AbstractControl): string {
+        return hasErrorFormControl(formControl);
     }
 
-    getNomeEmpresa() {
-        return this.formulario.get('NOMEEMPRESA').hasError('required') ? 'O campo nome da empresa é obrigatório' : '';
-    }
-
-    getNomeFantasia() {
-        return this.formulario.get('NOMEFANTASIA').hasError('required') ? 'O campo nome fantasia é obrigatório' : '';
-    }
-
-    getStatus() {
-        return this.formulario.get('STATUS').hasError('required') ? 'O campo status é obrigatório' : '';
-    }
 
     buildEntity(): Empresa {
         const empresa: Empresa = new Empresa();

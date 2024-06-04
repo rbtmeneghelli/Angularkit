@@ -6,7 +6,7 @@ export interface ICredenciaisDTO {
   token?: string;
 }
 
-export class CredenciaisDTO {
+export class CredenciaisDTO implements ICredenciaisDTO{
   login?: string;
   senha?: string;
   perfil?: string;

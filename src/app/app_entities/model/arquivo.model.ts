@@ -1,7 +1,7 @@
-import { Base, IBase } from './base.model';
+import { Base } from '../generic/base.model';
 import { EnumTipoDocumento } from '../enum/EnumTipoDocumento';
 
-export interface IArquivo extends IBase {
+export interface IArquivo {
     nomeArquivo?: string;
     descricaoArquivo?: string;
     tipoArquivo?: EnumTipoDocumento;
@@ -9,7 +9,7 @@ export interface IArquivo extends IBase {
     downloadUri?: string;
 }
 
-export class Arquivo extends Base {
+export class Arquivo extends Base implements IArquivo {
     nomeArquivo: string;
     tipoArquivo?: EnumTipoDocumento;
     tamanhoArquivo: string;

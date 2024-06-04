@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 
 @Injectable()
 export class ServicoService extends BaseService<Servico> {
-    constructor(http: HttpClient) {
+    constructor(protected readonly http: HttpClient) {
         super(http, `${environment.API}servico`);
     }
 

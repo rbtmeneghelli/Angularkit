@@ -1,11 +1,11 @@
-import { Base, IBase } from './base.model';
+import { Base } from '../generic/base.model';
 
-export interface IPermissao extends IBase {
+export interface IPermissao {
     nome?: string;
     status?: boolean;
 }
 
-export class Permissao extends Base {
+export class Permissao extends Base implements IPermissao {
     nome: string;
     status: boolean;
 }

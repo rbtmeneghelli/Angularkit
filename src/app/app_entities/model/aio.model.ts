@@ -1,6 +1,6 @@
-import { Base, IBase } from './base.model';
+import { Base } from '../generic/base.model';
 
-export interface IAios extends IBase {
+export interface IAios {
   Protocolo: string;
   Inicio: Date;
   Termino: Date;
@@ -15,7 +15,7 @@ export interface IAios extends IBase {
   Status: string;
 }
 
-export class Aios extends Base {
+export class Aios extends Base implements IAios{
   Protocolo: string;
   Inicio: Date;
   Termino: Date;

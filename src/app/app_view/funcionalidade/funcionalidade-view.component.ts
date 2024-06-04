@@ -1,9 +1,10 @@
 import { FuncionalidadeService } from './../../app_business/service/funcionalidade.service';
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { CardCabecalhoDTO } from '../../app_entities/dto/cardCabecalho.dto';
 import { take } from 'rxjs/operators';
 import { Funcionalidade } from 'src/app/app_entities/model/funcionalidade.model';
+import { getHeaderSettings } from 'src/app/app_business/shared/shared-functions';
 
 @Component({
     selector: 'app-funcionalidade-view',
@@ -11,16 +12,14 @@ import { Funcionalidade } from 'src/app/app_entities/model/funcionalidade.model'
 })
 
 export class FuncionalidadeViewComponent implements OnInit {
-    public cardCabecalhoDTO: CardCabecalhoDTO = new CardCabecalhoDTO();
+    public cardCabecalhoDTO: CardCabecalhoDTO = getHeaderSettings('Formulario Funcionalidade','Cadastro','Funcionalidade');
     public funcionalidade: Funcionalidade = new Funcionalidade();
     constructor(
-        private funcionalidadeService: FuncionalidadeService,
-        private activatedRoute: ActivatedRoute) {
+        private readonly funcionalidadeService: FuncionalidadeService,
+        private readonly activatedRoute: ActivatedRoute
+    ) {
     }
     ngOnInit() {
-        this.cardCabecalhoDTO.tituloCard = 'Formulario Funcionalidade';
-        this.cardCabecalhoDTO.tituloModulo = 'Cadastro';
-        this.cardCabecalhoDTO.nomeTela = 'Funcionalidade';
         this.activatedRoute.params.subscribe(params => {
             this.load(params.id);
         });
