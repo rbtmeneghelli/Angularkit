@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { arrString } from 'src/app/app_business/shared/shared-types';
+import { arrString } from 'src/app/app_entities/shared/shared-types';
 
 @Component({
     selector: 'app-template-tabela-material-generica-filter',

@@ -2,7 +2,7 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
-import { arrString } from 'src/app/app_business/shared/shared-types';
+import { arrString } from 'src/app/app_entities/shared/shared-types';
 
 export interface UserData {
   id: string;
@@ -26,6 +26,7 @@ const NAMES: arrString = [
   templateUrl: './template-tabela.component.html',
   styleUrls: ['./template-tabela.component.css']
 })
+
 export class TemplateTabelaComponent implements OnInit {
   
   displayedColumns: arrString = ['id', 'name', 'progress', 'color', 'Editar', 'Excluir'];

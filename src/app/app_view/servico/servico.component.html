@@ -11,7 +11,7 @@
                                 <input matInput placeholder="Nome Serviço" id="txtDescricao" #txtDescricao
                                     maxlength="80" formControlName="DESCRICAO">
                                 <mat-hint align="end">{{txtDescricao.value.length}} / 80</mat-hint>
-                                <mat-error>{{getDescricao()}}</mat-error>
+                                <mat-error>{{hasErrorFormControl(formulario.get('DESCRICAO'))}}</mat-error>
                             </mat-form-field>
                         </div>
                     </div>
@@ -24,7 +24,7 @@
                                         {{eTipoServico[key]}}
                                     </mat-option>
                                 </mat-select>
-                                <mat-error>{{getTipoServico()}}</mat-error>
+                                <mat-error>{{hasErrorFormControl(formulario.get('TIPOSERVICO'))}}</mat-error>
                             </mat-form-field>
                         </div>
                     </div>
@@ -37,7 +37,7 @@
                                         {{item.viewValue}}
                                     </mat-option>
                                 </mat-select>
-                                <mat-error>{{getStatus()}}</mat-error>
+                                <mat-error>{{hasErrorFormControl(formulario.get('STATUS'))}}</mat-error>
                             </mat-form-field>
                         </div>
                     </div>

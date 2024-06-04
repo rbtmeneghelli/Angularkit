@@ -4,8 +4,8 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Arquivo } from '../../app_entities/model/arquivo.model';
 import { SharedService } from '../../app_business/service/shared.service';
-import { arrString } from 'src/app/app_business/shared/shared-types';
-import { SharedVariables } from 'src/app/app_business/shared/shared-variables';
+import { arrString } from 'src/app/app_entities/shared/shared-types';
+import { SharedVariables } from 'src/app/app_entities/shared/shared-variables';
 // import { saveAs } from 'file-saver';
 
 @Component({
@@ -58,12 +58,12 @@ export class TemplateUploadComponent implements OnInit {
     this.sharedService.download(url).subscribe(res => {
       const blob = new Blob([res], { type: tipoMime });
       // detect whether the browser is IE/Edge or another browser
-      if (window.navigator && window.navigator.msSaveOrOpenBlob) {
-        // To IE or Edge browser, using msSaveorOpenBlob method to download file.
-        window.navigator.msSaveOrOpenBlob(blob, filename + this.sharedService.getArquivoExtensao(url));
-      } else {
-        // saveAs(blob, filename);
-      }
+      // if (window.navigator && window.navigator.msSaveOrOpenBlob) {
+      //   // To IE or Edge browser, using msSaveorOpenBlob method to download file.
+      //   window.navigator.msSaveOrOpenBlob(blob, filename + this.sharedService.getArquivoExtensao(url));
+      // } else {
+      //   // saveAs(blob, filename);
+      // }
     });
   }
 

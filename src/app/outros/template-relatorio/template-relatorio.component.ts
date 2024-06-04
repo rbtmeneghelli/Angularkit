@@ -8,7 +8,8 @@ import { ExportadorService } from '../../app_business/service/exportador.service
 import { SharedService } from '../../app_business/service/shared.service';
 import { MatDialog } from '@angular/material/dialog';
 import { SharedNotificationService } from 'src/app/app_business/service/shared-notification.service';
-import { arrString } from 'src/app/app_business/shared/shared-types';
+import { arrString } from 'src/app/app_entities/shared/shared-types';
+
 
 export interface Food {
   value: string;
@@ -65,10 +66,10 @@ export class TemplateRelatorioComponent implements OnInit {
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   constructor(
-    private exportadorService: ExportadorService, 
-    private sharedNotificationService: SharedNotificationService, 
+    private readonly exportadorService: ExportadorService, 
+    private readonly sharedNotificationService: SharedNotificationService, 
     private dialog: MatDialog,
-    private sharedService: SharedService) {
+    private readonly sharedService: SharedService) {
     registerLocaleData(localePtBr);
   }
 

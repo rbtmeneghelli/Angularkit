@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Permissao } from '../../app_entities/model/permissao.model';
-import { SharedVariables } from 'src/app/app_business/shared/shared-variables';
+import { SharedVariables } from 'src/app/app_entities/shared/shared-variables';
 
 @Component({
   selector: 'app-template-perfil-acesso',

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { AuthService } from './auth.guard.service';
-import { SharedService } from '../app_business/service/shared.service';
+import { SharedNotificationService } from '../app_business/service/shared-notification.service';
 
 @Injectable({
     providedIn: 'root'
@@ -12,7 +12,7 @@ export class RoleGuard implements CanActivate {
     constructor(
         private readonly authService: AuthService, 
         private readonly router: Router, 
-        private readonly sharedService: SharedService
+        private readonly sharedNotificationService: SharedNotificationService
     ) { }
 
     canActivate(
@@ -29,7 +29,7 @@ export class RoleGuard implements CanActivate {
         if (this.authService.hasRole(role)) {
             return true;
         } else {
-            this.sharedService.enviarNotificacaoToRoute('Acesso negado', 'Você não possui acesso a este recurso!', 'error', 'home');
+            this.sharedNotificationService.enviarNotificacaoToRoute('Acesso negado', 'Você não possui acesso a este recurso!', 'error', 'home');
             return false;
         }
     }

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { AuthService } from './auth.guard.service';
-import { SharedVariables } from '../app_business/shared/shared-variables';
+import { SharedVariables } from '../app_entities/shared/shared-variables';
 
 @Injectable({
     providedIn: 'root'

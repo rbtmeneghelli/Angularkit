@@ -1,9 +1,12 @@
 import { Component, ViewChild, OnInit, Input } from '@angular/core';
-import { MatPaginator, MatTableDataSource, MatSort } from '@angular/material';
 import { Column } from '../../app_entities/generic/column.model';
 import { Service } from '../../app_entities/generic/service.model';
 import { ExportadorService } from 'src/app/app_business/service/exportador.service';
-import { arrString } from 'src/app/app_business/shared/shared-types';
+import { arrString } from 'src/app/app_entities/shared/shared-types';
+import { SharedVariables } from 'src/app/app_entities/shared/shared-variables';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
 
 @Component({
   selector: 'app-template-tb-generica',
@@ -68,11 +71,11 @@ export class TemplateTbGenericaComponent implements OnInit {
   }
 
   ConfigurarDataTable() {
-    this.paginator._intl.itemsPerPageLabel = 'Itens por página';
-    this.paginator._intl.firstPageLabel = 'Primeira página';
-    this.paginator._intl.previousPageLabel = 'Página anterior';
-    this.paginator._intl.nextPageLabel = 'Próxima página';
-    this.paginator._intl.lastPageLabel = 'Última página';
+    this.dataSource.paginator._intl.firstPageLabel = SharedVariables.FIRST_PAGE_LABEL;
+    this.dataSource.paginator._intl.lastPageLabel = SharedVariables.LAST_PAGE_LABEL;
+    this.dataSource.paginator._intl.itemsPerPageLabel = SharedVariables.ITEMS_PAGE_LABEL;
+    this.dataSource.paginator._intl.nextPageLabel = SharedVariables.NEXT_PAGE_LABEL;
+    this.dataSource.paginator._intl.previousPageLabel = SharedVariables.PREVIOUS_PAGE_LABEL;
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }

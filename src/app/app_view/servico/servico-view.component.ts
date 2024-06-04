@@ -1,9 +1,10 @@
 import { Servico } from './../../app_entities/model/servico.model';
 import { ServicoService } from './../../app_business/service/servico.service';
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { CardCabecalhoDTO } from '../../app_entities/dto/cardCabecalho.dto';
 import { take } from 'rxjs/operators';
+import { getHeaderSettings } from 'src/app/app_business/shared/shared-functions';
 
 @Component({
   selector: 'app-servico-view',
@@ -11,16 +12,15 @@ import { take } from 'rxjs/operators';
 })
 
 export class ServicoViewComponent implements OnInit {
-  public cardCabecalhoDTO: CardCabecalhoDTO = new CardCabecalhoDTO();
+  public cardCabecalhoDTO: CardCabecalhoDTO = getHeaderSettings('Formulario Serviço','Cadastro','Serviço');
   public servico: Servico = new Servico();
+
   constructor(
-    private servicoService: ServicoService,
-    private activatedRoute: ActivatedRoute) {
+    private readonly servicoService: ServicoService,
+    private readonly activatedRoute: ActivatedRoute) {
   }
+
   ngOnInit() {
-    this.cardCabecalhoDTO.tituloCard = 'Formulario Serviço';
-    this.cardCabecalhoDTO.tituloModulo = 'Cadastro';
-    this.cardCabecalhoDTO.nomeTela = 'Serviço';
     this.activatedRoute.params.subscribe(params => {
       this.load(params.id);
     });

@@ -6,8 +6,9 @@ import { MatTableDataSource } from '@angular/material/table';
 // tslint:disable-next-line: max-line-length
 import { TemplateTabelaMaterialGenericaFilterComponent } from './template-tabela-material-generica-filter/template-tabela-material-generica-filter.component';
 import { CardFilterComponent } from '../../shared/card-filter/card-filter.component';
-import { arrNumber } from 'src/app/app_business/shared/shared-types';
-import { SharedVarTable } from 'src/app/app_business/shared/shared-constants';
+import { arrNumber } from 'src/app/app_entities/shared/shared-types';
+import { SharedVariables } from 'src/app/app_entities/shared/shared-variables';
+
 @Component({
     selector: 'app-template-tabela-material-generica',
     templateUrl: './template-tabela-material-generica.component.html',
@@ -19,7 +20,7 @@ export class TemplateTabelaMaterialGenericaComponent implements AfterViewInit {
     @Input() columnHeader;
     @Input() pageSize;
 
-    public pageSizeOptions?: arrNumber = SharedVarTable.PAGE_SIZE_OPTION;
+    public pageSizeOptions?: arrNumber = SharedVariables.PAGE_SIZE_OPTION;
     public objectKeys = Object.keys;
     public dataSource?: any = new MatTableDataSource();
     public arrHeaders: any[] = [];
@@ -50,11 +51,11 @@ export class TemplateTabelaMaterialGenericaComponent implements AfterViewInit {
     configDataTable(lista: Array<any>): void {
         this.dataSource = new MatTableDataSource(lista);
         this.dataSource.paginator = this.paginator;
-        this.dataSource.paginator._intl.firstPageLabel = 'Primeira pagina';
-        this.dataSource.paginator._intl.lastPageLabel = 'Ultima pagina';
-        this.dataSource.paginator._intl.itemsPerPageLabel = 'Itens por pagina';
-        this.dataSource.paginator._intl.nextPageLabel = 'Próxima pagina';
-        this.dataSource.paginator._intl.previousPageLabel = 'Voltar pagina';
+        this.dataSource.paginator._intl.firstPageLabel = SharedVariables.FIRST_PAGE_LABEL;
+        this.dataSource.paginator._intl.lastPageLabel = SharedVariables.LAST_PAGE_LABEL;
+        this.dataSource.paginator._intl.itemsPerPageLabel = SharedVariables.ITEMS_PAGE_LABEL;
+        this.dataSource.paginator._intl.nextPageLabel = SharedVariables.NEXT_PAGE_LABEL;
+        this.dataSource.paginator._intl.previousPageLabel = SharedVariables.PREVIOUS_PAGE_LABEL;
         // tslint:disable-next-line: max-line-length
         this.paginator._intl.getRangeLabel = (page: number, pageSize: number, length: number) => {
             if (length === 0 || pageSize === 0) { return `0 de ${length}`; }

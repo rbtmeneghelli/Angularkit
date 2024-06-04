@@ -19,8 +19,9 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private authService: AuthService,
-    private router: Router) {
+    private readonly authService: AuthService,
+    private readonly router: Router
+  ) {
     this.formulario = this.formBuilder.group({
       usuario: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(40)]],
       senha: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(10)]],

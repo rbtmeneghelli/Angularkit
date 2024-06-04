@@ -5,6 +5,7 @@ import { environment } from 'src/environments/environment';
 import { CredenciaisDTO } from '../app_entities/dto/credencial.dto';
 import { SharedService } from '../app_business/service/shared.service';
 import { Router } from '@angular/router';
+import { b64DecodeUnicode } from '../app_business/shared/shared-functions-string';
 
 @Injectable({
     providedIn: 'root'
@@ -55,7 +56,7 @@ export class AuthService {
 
     public getTokenData(accessToken: string): any {
         if (accessToken != null) {
-            return JSON.parse(this.sharedService.b64DecodeUnicode(accessToken.split('.')[1]));
+            return JSON.parse(b64DecodeUnicode(accessToken.split('.')[1]));
         }
         return null;
     }

@@ -4,7 +4,8 @@ import { EstadosFilterData } from '../../app_entities/model/estados-filter-data'
 import { CardCabecalhoDTO } from '../../app_entities/dto/cardCabecalho.dto';
 import { EstadosService } from 'src/app/app_business/service/estados.service';
 import { Estados } from 'src/app/app_entities/model/estados.model';
-import { arrNumber } from 'src/app/app_business/shared/shared-types';
+import { getHeaderSettings } from 'src/app/app_business/shared/shared-functions';
+import { arrNumber } from 'src/app/app_entities/shared/shared-types';
 
 @Component({
   selector: 'app-template-tabela-boostrap',
@@ -24,7 +25,7 @@ export class TemplateTabelaBootstrapComponent implements OnInit {
   public disableBtnNextPage?: boolean;
   public orderbyAsc?: boolean;
   public formulario: FormGroup;
-  public cardCabecalhoDTO: CardCabecalhoDTO = new CardCabecalhoDTO();
+  public cardCabecalhoDTO: CardCabecalhoDTO = getHeaderSettings('States','Table with Boostrap','Pipeline');
 
   constructor(
     private readonly estadosService: EstadosService, 
@@ -41,9 +42,6 @@ export class TemplateTabelaBootstrapComponent implements OnInit {
   }
 
   setDefaultValues() {
-    this.cardCabecalhoDTO.nomeTela = 'States';
-    this.cardCabecalhoDTO.tituloCard = 'Table with Boostrap';
-    this.cardCabecalhoDTO.tituloModulo = 'Pipeline';
     this.lista.pageIndex = this.page;
     this.lista.pageSize = this.pageSize;
     this.disableBtnLastPage = true;
