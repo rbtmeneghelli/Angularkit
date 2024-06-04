@@ -85,7 +85,6 @@ export class TemplateRelatorioComponent implements OnInit {
   //     const doc = new jsPDF('p', 'pt', 'a4', true);
   //     let rows = [];
   //     let xOffset = (doc.internal.pageSize.width / 2) - (doc.getStringUnitWidth("") * doc.internal.getFontSize() / 2);
-  // debugger;
   //     doc.setTextColor('#47825e');
   //     doc.text("", xOffset, 30);
   //     let colunas = [

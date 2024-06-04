@@ -12,7 +12,7 @@ import { Column } from '../../app_entities/generic/column.model';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { map } from 'rxjs/operators';
-import { SharedVariables } from '../shared/shared-variables';
+import { SharedVariables } from 'src/app/app_entities/shared/shared-variables';
 
 @Injectable({
   providedIn: 'root'

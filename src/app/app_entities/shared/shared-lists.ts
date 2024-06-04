@@ -1,4 +1,4 @@
-import { arrDropDownList, arrMultSelect } from "../../app_business/shared/shared-types";
+import { arrDropDownList, arrMultSelect } from "./shared-types";
 
 export const multSelectList: arrMultSelect =
     [

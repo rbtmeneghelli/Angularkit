@@ -55,7 +55,7 @@ export class AuthService {
     }
 
     public getTokenData(accessToken: string): any {
-        if (accessToken != null) {
+        if (!!accessToken) {
             return JSON.parse(b64DecodeUnicode(accessToken.split('.')[1]));
         }
         return null;
@@ -63,7 +63,7 @@ export class AuthService {
 
     public isAuthenticated(): boolean {
         const payload = this.getTokenData(this.credencial.token);
-        if (payload !== null && payload !== undefined) {
+        if (!!payload) {
             return true;
         }
         return false;

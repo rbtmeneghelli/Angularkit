@@ -1,5 +1,5 @@
-import { DropDownList } from "src/app/app_entities/generic/dropdownlist";
-import { MultSelectList } from "src/app/app_entities/generic/multselectlist";
+import { DropDownList } from "../generic/dropdownlist.model";
+import { MultSelectList } from "../generic/multselectlist.model";
 
 export type arrString = string[];
 export type arrDropDownList = DropDownList[];

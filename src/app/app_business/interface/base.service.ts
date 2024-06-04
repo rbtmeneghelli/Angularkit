@@ -2,7 +2,7 @@ import { EnumTypeAction } from 'src/app/app_entities/enum/EnumTypeAction';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
-import { arrDropDownList, arrString } from '../shared/shared-types';
+import { arrDropDownList, arrString } from 'src/app/app_entities/shared/shared-types';
 
 export abstract class BaseService<T> {
 

@@ -3,11 +3,11 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { AbstractControl, FormControl, FormGroup, ValidationErrors } from '@angular/forms';
 import { MatDialogConfig } from '@angular/material/dialog';
-import { ClienteFilterData } from 'src/app/app_entities/filter/cliente-filter-data';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { arrString } from '../shared/shared-types';
 import { validarCNPJ, validarCpf } from '../shared/shared-functions-boolean';
 import { b64DecodeUnicode } from '../shared/shared-functions-string';
+import { ClienteFilterData } from 'src/app/app_entities/filter/cliente-filter-data.model';
+import { arrString } from 'src/app/app_entities/shared/shared-types';
 
 @Injectable({
     providedIn: 'root'
