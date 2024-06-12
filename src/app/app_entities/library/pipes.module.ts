@@ -1,4 +1,5 @@
 import { NgModule } from "@angular/core";
+import { CpfPipe } from "src/app/shared/pipes/cpf.pipe";
 import { CpfCnpjPipe } from "src/app/shared/pipes/cpfcnpj.pipe";
 import { DashIfEmptyPipe } from "src/app/shared/pipes/dash-if-empty.pipe";
 import { DiaSemanaPipe } from "src/app/shared/pipes/diasemana.pipe";
@@ -7,7 +8,6 @@ import { PhonePipe } from "src/app/shared/pipes/phone.pipe";
 import { SafePipe } from "src/app/shared/pipes/safe.pipe";
 import { StatusClassPipe } from "src/app/shared/pipes/status-class.pipe";
 import { StatusPipe } from "src/app/shared/pipes/status.pipe";
-
 
 @NgModule({
     declarations: [
@@ -18,7 +18,8 @@ import { StatusPipe } from "src/app/shared/pipes/status.pipe";
         SafePipe,
         StatusClassPipe,
         StatusPipe,
-        InputCheckPipe
+        InputCheckPipe,
+        CpfPipe
     ],
     exports: [
         CpfCnpjPipe,
@@ -28,7 +29,8 @@ import { StatusPipe } from "src/app/shared/pipes/status.pipe";
         SafePipe,
         StatusClassPipe,
         StatusPipe,
-        InputCheckPipe
+        InputCheckPipe,
+        CpfPipe
     ],
 })
 

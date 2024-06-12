@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   API: 'http://localhost:58448/api/',
-  version: 'versão 2.0'
+  version: 'versão 6.0'
 };
 
 /*
