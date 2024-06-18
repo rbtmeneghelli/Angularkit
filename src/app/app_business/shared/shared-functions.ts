@@ -150,3 +150,47 @@ export const createDate = (date?: string): Date => {
         return new Date(Number(date.substr(date.length - 4, 4)), Number(date.substr(2, 2)) - 1, Number(date.substr(0, 2)));
     }
 }
+
+/* Metodos para exportação de grafico pelo javascript 
+https://github.com/primefaces/primefaces/issues/920
+https://stackoverflow.com/questions/25304803/primefaces-print-doesnt-work-with-pchart
+https://stackoverflow.com/questions/12930731/generate-png-jpeg-image-of-primefaces-charts-in-backing-bean
+*/
+
+export const exportChartToBrowsers = (widgetVarDoChart):void => {
+//     var img = null;
+//    $('#output').empty().append(PF(widgetVarDoChart).exportAsImage());
+//     obj = $('#dlg_imagem_chart');
+//    $(obj).find("> div > div > img").each(function() {
+//        img = $(this).attr('src');
+//    });
+//    var link = document.createElement('a');
+//    link.href = img;
+//    link.download = 'grafico.jpg';
+//    document.body.appendChild(link);
+//    link.click();  
+//    $(link).remove();   
+//    PF('dlg_imagem_chart').show(); 
+} 
+
+
+export const exportChartToIE = (widgetVarDoChart): void => {
+//    var img = null;
+//    $('#output').empty().append(PF(widgetVarDoChart).exportAsImage());
+//     obj = $('#dlg_imagem_chart');
+//    $(obj).find("> div > div > img").each(function(dados,Valor) {
+//        var t = Valor.href.replace("data:image/png;base64,","");
+//        img = t;
+//    });
+
+//    // Convert from base64 to an ArrayBuffer
+//    var byteString = atob(img);
+//    var buffer = new ArrayBuffer(byteString.length);
+//    var intArray = new Uint8Array(buffer);
+//    for (var i = 0; i < byteString.length; i++) {
+//        intArray[i] = byteString.charCodeAt(i);
+//    }
+       
+//    var blobObject = new Blob([buffer], {type: "image/jpg"});
+//    window.navigator.msSaveOrOpenBlob(blobObject, "grafico.jpg");
+}

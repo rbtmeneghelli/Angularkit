@@ -11,7 +11,8 @@ import { AgendaService } from 'src/app/app_business/service/agenda.service';
 
 @Component({
   selector: 'app-agenda',
-  templateUrl: './agenda.component.html'
+  templateUrl: './agenda.component.html',
+  styleUrls: ['./agenda.scss']
 })
 
 export class AgendaComponent extends BaseFormComponent implements OnInit {

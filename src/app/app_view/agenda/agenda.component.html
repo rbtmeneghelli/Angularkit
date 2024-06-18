@@ -62,11 +62,11 @@
                     <div class="row marginDiv">
                         <div class="col-lg-12 col-md-12 col-xl-12 col-xs-12 col-sm-12 text-right">
                             <button mat-flat-button color="primary" matTooltip="Voltar" [routerLink]="['/agenda']"
-                                class="marginBetweenBtn">
+                                class="marginBetweenBtn tooltip-rule" matTooltipDisabled="btnVoltar.scrollWidth <= btnVoltar.clientWidth" #btnVoltar>
                                 <mat-icon>arrow_back</mat-icon> Voltar
                             </button>
-                            <button mat-flat-button color="primary" matTooltip="Salvar" (click)="salvar()"
-                                [disabled]="!formulario.valid">
+                            <button mat-flat-button color="primary" matTooltip="Salvar" (click)="salvar()" class="tooltip-rule"
+                                [disabled]="!formulario.valid" matTooltipDisabled="btnSalvar.scrollWidth <= btnSalvar.clientWidth" #btnSalvar>
                                 <mat-icon>save</mat-icon> Salvar
                             </button>
                         </div>
