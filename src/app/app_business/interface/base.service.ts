@@ -76,11 +76,6 @@ export abstract class BaseService<T> {
     return httpOptions;
   }
 
-  private getIpAddress(): Observable<string> {
-    // Deixar a responsabilidade de pegar o IP pro backend, fazer isso dentro do codigo.
-    return this.http.get('http://api.ipify.org/?format=json').pipe(map((res: any) => { return res.ip }), catchError((error: any) => { return 'Erro ao capturar seu IP' }));
-  }
-
   private getMapActions(key: EnumTypeAction): string {
     const map: Map<EnumTypeAction, string> = new Map<EnumTypeAction, string>();
     map.set(EnumTypeAction.Menu, 'Menu');

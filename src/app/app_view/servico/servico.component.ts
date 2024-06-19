@@ -10,6 +10,7 @@ import { SharedNotificationService } from 'src/app/app_business/service/shared-n
 import { SharedVariables } from 'src/app/app_entities/shared/shared-variables';
 import { hasErrorFormControl } from 'src/app/app_business/shared/shared-functions-string';
 import { BaseFormComponent } from 'src/app/shared/base-form/base-form.component';
+import { FORMULARIO_SERVICO } from 'src/app/app_entities/forms/servico.form';
 
 @Component({
   selector: 'app-servico',
@@ -20,23 +21,17 @@ export class ServicoComponent extends BaseFormComponent implements OnInit {
   public eTipoServico = EnumTipoServico;
   public keys: any[];
   constructor(
-    private readonly sharedService: SharedService,
-    private readonly formBuilder: FormBuilder,
-    public readonly servicoService: ServicoService,
+    private readonly servicoService: ServicoService,
     private readonly activatedRoute: ActivatedRoute,
     private readonly sharedNotificationService: SharedNotificationService
   ) {
-    super('Formulario Serviço','Cadastro','Serviço');
+    super();
     this.keys = Object.keys(this.eTipoServico).filter(k => !isNaN(Number(k)));
-    this.formulario = this.formBuilder.group({
-      ID: [''],
-      DESCRICAO: ['', Validators.required],
-      TIPOSERVICO: ['', Validators.required],
-      STATUS: ['', Validators.required],
-    });
+    this.formulario = FORMULARIO_SERVICO;
   }
 
   ngOnInit() {
+    this.getHeaderPage('Formulario Serviço','Cadastro','Serviço');
     this.activatedRoute.params.subscribe(params => {
       if (!!params.id) {
         this.updateForm(params.id);
@@ -71,7 +66,7 @@ export class ServicoComponent extends BaseFormComponent implements OnInit {
     return servico;
   }
 
-  salvar() {
+  saveForm() {
     if (this.registroNovo) {
       this.servicoService.create(this.buildEntity()).pipe(take(1)).toPromise().then(response => {
         this.sharedNotificationService.enviarNotificacaoToRoute('', 'serviço cadastrado com sucesso', 'success', '/servico');

@@ -1,18 +1,15 @@
 import { Empresa } from './../../app_entities/model/empresa.model';
 import { EmpresaService } from './../../app_business/service/empresa.service';
-import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
+import { FormBuilder, AbstractControl } from '@angular/forms';
 import { SharedService } from '../../app_business/service/shared.service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { CardCabecalhoDTO } from '../../app_entities/dto/cardCabecalho.dto';
 import { take } from 'rxjs/operators';
 import { SharedNotificationService } from 'src/app/app_business/service/shared-notification.service';
-import { statusList } from 'src/app/app_entities/shared/shared-lists';
-import { arrDropDownList } from 'src/app/app_entities/shared/shared-types';
-import { getHeaderSettings } from 'src/app/app_business/shared/shared-functions';
 import { SharedVariables } from 'src/app/app_entities/shared/shared-variables';
 import { hasErrorFormControl } from 'src/app/app_business/shared/shared-functions-string';
 import { BaseFormComponent } from 'src/app/shared/base-form/base-form.component';
+import { FORMULARIO_EMPRESA } from 'src/app/app_entities/forms/empresa.form';
 
 @Component({
     selector: 'app-empresa',
@@ -27,17 +24,12 @@ export class EmpresaComponent extends BaseFormComponent implements OnInit {
         private readonly activatedRoute: ActivatedRoute,
         private readonly sharedNotificationService: SharedNotificationService
     ) {
-        super('Formulario Empresa', 'Cadastro', 'Empresa');
-        this.formulario = this.formBuilder.group({
-            ID: [''],
-            CNPJ: ['', [Validators.required, this.ValidarCnpj]],
-            NOMEEMPRESA: ['', Validators.required],
-            NOMEFANTASIA: ['', Validators.required],
-            STATUS: ['', Validators.required]
-        });
+        super();
+        this.formulario = FORMULARIO_EMPRESA;
     }
 
     ngOnInit() {
+        this.getHeaderPage('Formulario Empresa', 'Cadastro', 'Empresa');
         this.activatedRoute.params.subscribe(params => {
             if (!!params.id) {
                 this.updateForm(params.id);
@@ -79,7 +71,7 @@ export class EmpresaComponent extends BaseFormComponent implements OnInit {
         return empresa;
     }
 
-    salvar() {
+    saveForm() {
         if (this.registroNovo) {
             this.empresaService.create(this.buildEntity()).pipe(take(1)).toPromise().then(response => {
                 this.sharedNotificationService.enviarNotificacaoToRoute('', 'empresa cadastrado com sucesso', 'success', '/empresa');
@@ -93,75 +85,5 @@ export class EmpresaComponent extends BaseFormComponent implements OnInit {
                 this.sharedNotificationService.enviarNotificacao('', 'Erro ao atualizar os dados do empresa', 'error');
             });
         }
-    }
-
-    ValidarCnpj(controle: AbstractControl) {
-        let cnpj = controle.value;
-
-        if (cnpj === undefined) {
-            return { cnpjInvalido: true };
-        }
-        if (cnpj === '' || cnpj.length !== 14 || cnpj === undefined) {
-            return { cnpjInvalido: true };
-        }
-
-        cnpj = cnpj.replace(/[^\d]+/g, '');
-
-        if (
-            cnpj === '00000000000000' ||
-            cnpj === '11111111111111' ||
-            cnpj === '22222222222222' ||
-            cnpj === '33333333333333' ||
-            cnpj === '44444444444444' ||
-            cnpj === '55555555555555' ||
-            cnpj === '66666666666666' ||
-            cnpj === '77777777777777' ||
-            cnpj === '88888888888888' ||
-            cnpj === '99999999999999'
-        ) {
-            return { cnpjInvalido: true };
-        }
-
-        let resultado = 0;
-        let tamanho: number = cnpj.length - 2;
-        let numeros: string = cnpj.substring(0, tamanho);
-        const digitos: string = cnpj.substring(tamanho);
-
-        let soma = 0;
-        let pos = tamanho - 7;
-        let resSoma: number;
-        for (let i = tamanho; i >= 1; i--) {
-            resSoma = tamanho - i;
-            // tslint:disable-next-line: radix
-            soma += parseInt(numeros.charAt(resSoma)) * pos--;
-            if (pos < 2) {
-                pos = 9;
-            }
-        }
-
-        resultado = soma % 11 < 2 ? 0 : 11 - (soma % 11);
-        if (resultado !== Number(digitos.charAt(0))) {
-            return { cnpjInvalido: true };
-        }
-
-        tamanho = tamanho + 1;
-        numeros = cnpj.substring(0, tamanho);
-        soma = 0;
-        pos = tamanho - 7;
-        for (let i = tamanho; i >= 1; i--) {
-            resSoma = tamanho - i;
-            // tslint:disable-next-line: radix
-            soma += parseInt(numeros.charAt(resSoma)) * pos--;
-            if (pos < 2) {
-                pos = 9;
-            }
-        }
-
-        resultado = soma % 11 < 2 ? 0 : 11 - (soma % 11);
-        if (resultado !== Number(digitos.charAt(1))) {
-            return { cnpjInvalido: true };
-        }
-
-        return null;
     }
 }

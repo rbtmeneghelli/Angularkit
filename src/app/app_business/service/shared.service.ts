@@ -8,6 +8,8 @@ import { validarCNPJ, validarCpf } from '../shared/shared-functions-boolean';
 import { b64DecodeUnicode } from '../shared/shared-functions-string';
 import { ClienteFilterData } from 'src/app/app_entities/filter/cliente-filter-data.model';
 import { arrString } from 'src/app/app_entities/shared/shared-types';
+import { catchError, map } from 'rxjs/operators';
+import { CardCabecalhoDTO } from 'src/app/app_entities/dto/cardCabecalho.dto';
 
 @Injectable({
     providedIn: 'root'
@@ -24,7 +26,7 @@ export class SharedService {
     ) {
         this.currentPage = new BehaviorSubject<string>('');
     }
-    
+
     public getCurrentPageValue(): Observable<string> {
         return this.currentPage.asObservable();
     }
@@ -267,6 +269,18 @@ export class SharedService {
                 );
             }
         }
+    }
+
+    getUserIpAddress(): Observable<string> {
+        return this.http.get('http://api.ipify.org/?format=json').pipe(map((res: any) => { return res.ip }), catchError((error: any) => { return 'Erro ao capturar seu IP' }));
+    }
+
+    getHeaderSettings(tituloCard: string, tituloModulo: string, nomeTela: string): CardCabecalhoDTO {
+        let cardCabecalhoDTO: CardCabecalhoDTO = new CardCabecalhoDTO();
+        cardCabecalhoDTO.tituloCard = tituloCard;
+        cardCabecalhoDTO.tituloModulo = tituloModulo;
+        cardCabecalhoDTO.nomeTela = nomeTela;
+        return cardCabecalhoDTO;
     }
 }
 

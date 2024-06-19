@@ -5,6 +5,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { take } from 'rxjs/operators';
 import { BaseFormComponent } from 'src/app/shared/base-form/base-form.component';
+import { FORMULARIO_CONTA } from 'src/app/app_entities/forms/conta.form';
 
 @Component({
   selector: 'app-conta',
@@ -14,20 +15,15 @@ import { BaseFormComponent } from 'src/app/shared/base-form/base-form.component'
 export class ContaComponent extends BaseFormComponent implements OnInit {
   constructor(
     private readonly sharedService: SharedService,
-    private readonly formBuilder: FormBuilder,
     public readonly clienteService: ClienteService,
     private readonly activatedRoute: ActivatedRoute
   ) {
-    super('Formulario Conta','Cadastro','Conta');
-    this.formulario = this.formBuilder.group({
-      ID: [''],
-      CPF: ['', Validators.required],
-      NOME: ['', Validators.required],
-      STATUS: ['', Validators.required],
-    });
+    super();
+    this.formulario = FORMULARIO_CONTA;
   }
 
   ngOnInit() {
+    this.getHeaderPage('Formulario Conta','Cadastro','Conta');
     this.activatedRoute.params.subscribe(params => {
       if (!!params.id) {
         this.updateForm(params.id);
@@ -49,7 +45,7 @@ export class ContaComponent extends BaseFormComponent implements OnInit {
     });
   }
 
-  salvar() {
+  saveForm() {
     throw new Error('Method not implemented.');
   }
 

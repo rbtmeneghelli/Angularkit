@@ -1,18 +1,15 @@
 import { Banco } from '../../app_entities/model/banco.model';
 import { BancoService } from '../../app_business/service/banco.service';
-import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
+import { AbstractControl } from '@angular/forms';
 import { SharedService } from '../../app_business/service/shared.service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { CardCabecalhoDTO } from '../../app_entities/dto/cardCabecalho.dto';
 import { take } from 'rxjs/operators';
 import { SharedNotificationService } from 'src/app/app_business/service/shared-notification.service';
-import { statusList } from 'src/app/app_entities/shared/shared-lists';
-import { getHeaderSettings } from 'src/app/app_business/shared/shared-functions';
-import { arrDropDownList } from 'src/app/app_entities/shared/shared-types';
 import { SharedVariables } from 'src/app/app_entities/shared/shared-variables';
 import { hasErrorFormControl } from 'src/app/app_business/shared/shared-functions-string';
 import { BaseFormComponent } from 'src/app/shared/base-form/base-form.component';
+import { FORMULARIO_BANCO } from 'src/app/app_entities/forms/banco.form';
 
 @Component({
   selector: 'app-banco',
@@ -22,24 +19,15 @@ import { BaseFormComponent } from 'src/app/shared/base-form/base-form.component'
 export class BancoComponent extends BaseFormComponent implements OnInit {
   constructor(
     private readonly sharedService: SharedService,
-    private formBuilder: FormBuilder,
     public readonly bancoService: BancoService,
     private readonly activatedRoute: ActivatedRoute,
     private readonly sharedNotificationService: SharedNotificationService) {
-    super('Formulario Banco', 'Cadastro', 'Banco');
-    this.formulario = this.formBuilder.group({
-      ID: [''],
-      NOMEBANCO: ['', Validators.required],
-      URL: ['', Validators.required],
-      LOGIN: ['', Validators.required],
-      SENHA: ['', Validators.required],
-      CREDITO: [0, Validators.required],
-      DEBITO: [0, Validators.required],
-      STATUS: ['', Validators.required],
-    });
+    super();
+    this.formulario = FORMULARIO_BANCO;
   }
 
   ngOnInit() {
+    this.getHeaderPage('Formulario Banco', 'Cadastro', 'Banco');
     this.activatedRoute.params.subscribe(params => {
       if (!!params.id) {
         this.updateForm(params.id);
@@ -87,7 +75,7 @@ export class BancoComponent extends BaseFormComponent implements OnInit {
     return banco;
   }
 
-  salvar() {
+  saveForm() {
     if (this.registroNovo) {
       this.bancoService.create(this.buildEntity()).pipe(take(1)).toPromise().then(response => {
         this.sharedNotificationService.enviarNotificacaoToRoute('', 'banco cadastrado com sucesso', 'success', '/banco');

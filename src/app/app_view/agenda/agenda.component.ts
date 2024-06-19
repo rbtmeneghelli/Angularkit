@@ -1,5 +1,5 @@
 import { hasErrorFormControl } from './../../app_business/shared/shared-functions-string';
-import { FormBuilder, Validators, AbstractControl } from '@angular/forms';
+import { FormBuilder, AbstractControl } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { take } from 'rxjs/operators';
@@ -8,6 +8,7 @@ import { SharedNotificationService } from 'src/app/app_business/service/shared-n
 import { SharedVariables } from 'src/app/app_entities/shared/shared-variables';
 import { BaseFormComponent } from 'src/app/shared/base-form/base-form.component';
 import { AgendaService } from 'src/app/app_business/service/agenda.service';
+import { FORMULARIO_AGENDA } from 'src/app/app_entities/forms/agenda.form';
 
 @Component({
   selector: 'app-agenda',
@@ -22,19 +23,12 @@ export class AgendaComponent extends BaseFormComponent implements OnInit {
     private readonly activatedRoute: ActivatedRoute,
     private readonly sharedNotificationService: SharedNotificationService
   ) {
-    super('Formulario Agenda','Cadastro','Agenda');
-    this.formulario = this.formBuilder.group({
-      ID: [''],
-      DESCRICAO: ['', [Validators.required]],
-      LOCAL: ['', Validators.required],
-      DATA: ['', Validators.required],
-      HORA: ['', Validators.required],
-      ALERTA: [''],
-      STATUS: ['', Validators.required]
-    });
+    super();
+    this.formulario = FORMULARIO_AGENDA;
   }
 
   ngOnInit() {
+    this.getHeaderPage('Formulario Agenda', 'Cadastro', 'Agenda');
     this.activatedRoute.params.subscribe(params => {
       if (!!params.id) {
         this.updateForm(params.id);
@@ -75,7 +69,7 @@ export class AgendaComponent extends BaseFormComponent implements OnInit {
     return agenda;
   }
 
-  salvar() {
+  saveForm() {
     if (this.registroNovo) {
       this.agendaService.create(this.buildEntity()).pipe(take(1)).toPromise().then(response => {
         this.sharedNotificationService.enviarNotificacaoToRoute('', 'agenda cadastrado com sucesso', 'success', '/agenda');
@@ -87,7 +81,7 @@ export class AgendaComponent extends BaseFormComponent implements OnInit {
     }
   }
 
-  hasErrorFormControl(formControl: AbstractControl): string{
+  hasErrorFormControl(formControl: AbstractControl): string {
     return hasErrorFormControl(formControl);
   }
 
