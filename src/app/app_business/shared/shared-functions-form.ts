@@ -21,15 +21,3 @@ export function urlValidator(): ValidatorFn {
 // this.formulario = this.fb.group({
 //     url: ['', [Validators.required, urlValidator()]]
 //   });
-
-export const validateURL = (url: string): boolean => {
-  const regexUrl =
-    /(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/gi;
-  if (url?.includes("https://") === false) {
-    return false; //this.form.setErrors({ errorHttps: true });
-  } else if (regexUrl.test(url)) {
-    return true;
-  } else {
-    return false; // this.controlVendaDiretaLink.setErrors({ invalidLink: true });
-  }
-};
