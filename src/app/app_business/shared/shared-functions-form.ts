@@ -1,17 +1,13 @@
-import { AbstractControl, ValidatorFn, ValidationErrors } from "@angular/forms";
+import { AbstractControl, ValidatorFn, ValidationErrors } from '@angular/forms';
 
 // Função que retorna o validador
 export function urlValidator(): ValidatorFn {
   return (control: AbstractControl): ValidationErrors | null => {
     const urlRegex = /^(ftp|http|https):\/\/[^ "]+$/;
-    const urlRegex2 =
-      /^(ftp|http|https):\/\/(?:www\.)?[a-zA-Z0-9-]+(?:\.[a-zA-Z]{2,})+(?:\/[^\s]*)?$/;
-    const urlRegex3 =
-      /^(ftp|http|https):\/\/(?:[\w-]+\.)+[a-z]{2,}(?:\/[\w\-._~,!$&'()*+\|;=:]*)?(?:\?[a-zA-Z0-9\-._~,!$&'()*+\|;=\/%]*)?(?:#[\w\-._~,!$&'()*+\|:;=\/]*)?$/;
-    const urlRegex4 =
-      /(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/gi;
+    const urlRegex2 = /^(ftp|http|https):\/\/(?:www\.)?[a-zA-Z0-9-]+(?:\.[a-zA-Z]{2,})+(?:\/[^\s]*)?$/;
+    const urlRegex3 = /^(ftp|http|https):\/\/(?:[\w-]+\.)+[a-z]{2,}(?:\/[\w\-._~,!$&'()*+\|;=:]*)?(?:\?[a-zA-Z0-9\-._~,!$&'()*+\|;=\/%]*)?(?:#[\w\-._~,!$&'()*+\|:;=\/]*)?$/;
     if (control.value && !urlRegex.test(control.value)) {
-      return { invalidUrl: true };
+      return { 'invalidUrl': true };
     }
     return null;
   };

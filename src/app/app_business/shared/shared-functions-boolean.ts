@@ -216,3 +216,7 @@ export const validateURL = (url: string): boolean => {
     return false; // this.form.setErrors({ invalidLink: true });
   }
 };
+
+export const isNullOrUndefined = (value: any): boolean => {
+  return value === null || value === undefined;
+}
