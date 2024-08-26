@@ -17,3 +17,23 @@ export function urlValidator(): ValidatorFn {
 // this.formulario = this.fb.group({
 //     url: ['', [Validators.required, urlValidator()]]
 //   });
+
+export function ValidarSelect(control: AbstractControl) {
+  if (control.value === '0') {
+      return { selectValido: true };
+  }
+  return null;
+}
+
+export function hexadecimalColor(control: AbstractControl) {
+  const regex = /^#([0-9A-F]{3}){1,2}$/i;
+
+  if (control?.value?.length === 0 || control?.value === undefined) return null;
+  return regex.test(control.value) ? null : { invalid: true };
+}
+
+export function noWhitespaceValidator(control: AbstractControl) {
+  if (control?.value?.length === 0 || control?.value === undefined) return null;
+  return (control.value || '')?.trim().length ? null : { invalid: true };
+}
+

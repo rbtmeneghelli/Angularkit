@@ -283,10 +283,3 @@ export class SharedService {
         return cardCabecalhoDTO;
     }
 }
-
-export function ValidarSelect(control: AbstractControl) {
-    if (control.value === '0') {
-        return { selectValido: true };
-    }
-    return null;
-}
