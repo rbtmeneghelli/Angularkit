@@ -66,6 +66,12 @@
           "configurations": {
             "production": {
               "browserTarget": "Angularkit:build:production"
+            },
+            "hml": {
+              "browserTarget": "Angularkit:build:hml"
+            },
+            "qa": {
+              "browserTarget": "Angularkit:build:qa"
             }
           }
         },
