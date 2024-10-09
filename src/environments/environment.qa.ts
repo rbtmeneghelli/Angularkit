@@ -1,7 +1,7 @@
 export const environment = {
   production: false,
   API: "http://localhost:58448/api/",
-  version: "versão 7.1",
+  version: "versão 7.2",
 };
 
 // Para rodar localmente, utilizar o comando >> ng serve --configuration-qa
