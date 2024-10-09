@@ -1,7 +1,7 @@
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
-import { ValidarSelect } from '../../app_business/service/shared.service';
 import { arrString } from 'src/app/app_entities/shared/shared-types';
+import { ValidarSelect } from 'src/app/app_business/shared/shared-functions-form';
 
 @Component({
     selector: 'app-template-upload-dropzone',

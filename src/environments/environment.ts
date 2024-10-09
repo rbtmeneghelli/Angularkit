@@ -1,4 +1,8 @@
 export const environment = {
-  API: window["env" as any]?.["API" as any] || "https://localhost:58448/api",
-  version: window["env" as any]?.["version" as any] || "versão 7.0",
+  production: false,
+  API: "http://localhost:58448/api/",
+  version: "versão 7.0",
 };
+
+// Para rodar localmente, utilizar o comando >> ng s ou ng serve
+// Para buildar localmente, utilizar o comando >> ng build
