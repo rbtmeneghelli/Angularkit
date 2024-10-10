@@ -35,8 +35,8 @@ $angularprimary: (
     A100: $color-white,
     A200: $color-white,
     A400: $color-white,
-    A700: $color-white
-  )
+    A700: $color-white,
+  ),
 );
 
 $angularsecundary: (
@@ -68,35 +68,44 @@ $angularsecundary: (
     A100: $color-white,
     A200: $color-white,
     A400: $color-white,
-    A700: $color-white
-  )
+    A700: $color-white,
+  ),
 );
 
 // Montagem das cores
 $Angularkit-primary: mat-palette($angularsecundary);
 $Angularkit-accent: mat-palette($angularsecundary);
 $Angularkit-warn: mat-palette($mat-red);
-$Angularkit-theme: mat-light-theme($Angularkit-primary, $Angularkit-accent, $Angularkit-warn);
+$Angularkit-theme: mat-light-theme(
+  $Angularkit-primary,
+  $Angularkit-accent,
+  $Angularkit-warn
+);
 @include angular-material-theme($Angularkit-theme);
 
 // Outros CSS
+
+@mixin setMsg($var-background-color, $var-color) {
+  background-color: $var-background-color !important;
+  color: $var-color !important;
+}
 
 footer {
   position: absolute;
   left: 0;
   bottom: 0;
-  width: 100%;
+  width: $width-100;
   background-color: mat-color($Angularkit-accent);
   color: $color-white;
   text-align: $center;
 }
 
 .marginDiv {
-  margin-top: 10px !important;
+  margin-top: $margin-top-10 !important;
 }
 
 .widthMax {
-  width: 100% !important;
+  width: $width-100 !important;
 }
 
 .marginBetweenBtn {
@@ -120,7 +129,7 @@ footer {
 }
 
 .alertChat {
-  width: 100% !important;
+  width: $width-100 !important;
   border-radius: $twenty-px !important;
 }
 
@@ -155,11 +164,9 @@ b {
 }
 
 .msg-error {
-  background-color: $color-error !important;
-  color: $color-white !important;
+  @include setMsg($color-error, $color-white);
 }
 
 .msg-success {
-  background-color: $color-success !important;
-  color: $color-white !important;
+  @include setMsg($color-success, $color-white);
 }
