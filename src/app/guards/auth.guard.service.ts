@@ -12,7 +12,7 @@ import { b64DecodeUnicode } from '../app_business/shared/shared-functions-string
 })
 export class AuthService {
 
-    private credencialModel: CredenciaisDTO;
+    private credencialModel!: CredenciaisDTO;
 
     constructor(
         private readonly httpClient: HttpClient, 

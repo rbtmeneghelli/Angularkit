@@ -90,6 +90,20 @@ $Angularkit-theme: mat-light-theme(
   color: $var-color !important;
 }
 
+@mixin set-scale-icon($var-transformation) {
+  /* 
+  transform: scale(1); tamanho padrão do icone 
+  transform: scale(1.5); aumenta o tamanho do icone em 50% 
+  transform: scale(0.5); reduz o tamanho do icone em 50% 
+  */
+  transform: scale($var-transformation);
+}
+
+@mixin set-rotate-icon($var-transformation) {
+  /* transform: rotate(0.5turn); gira o icone de cabeça para baixo */
+  transform: rotate($var-transformation);
+}
+
 footer {
   position: absolute;
   left: 0;
